@@ -27,7 +27,7 @@ const Header = () => {
   const showMobilemenu = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
-  const clearCookieOrStorage = () => {};
+
   return (
     <Navbar color="primary" dark expand="md">
       {/* nlb reikalinga ikonke? mest lauk */}
@@ -93,7 +93,12 @@ const Header = () => {
             )}
             <DropdownItem divider />
             {/*todo: isvalyt storage paspaudus atsijungt */}
-            <DropdownItem href="#/prisijungimas">Atsijungti</DropdownItem>
+            <DropdownItem
+              onClick={() => localStorage.clear()}
+              href="#/prisijungimas"
+            >
+              Atsijungti
+            </DropdownItem>
           </DropdownMenu>
         </Dropdown>
       ) : (

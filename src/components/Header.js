@@ -32,14 +32,13 @@ const Header = () => {
   };
 
   useEffect(() => {
-    if (userData.role === "User") return;
-    axios
-      .get(`https://localhost:44323/Customer/Client/${userData.userId}`)
-      .then((respone) => {
-        setShelterId(respone.data.ShelterId);
-        console.log(respone.data);
-      });
-    console.log(shelterId);
+    if (userData?.role === "Worker") {
+      axios
+        .get(`https://localhost:44323/Customer/Client/${userData.userId}`)
+        .then((respone) => {
+          setShelterId(respone.data.shelterId);
+        });
+    }
   });
 
   return (

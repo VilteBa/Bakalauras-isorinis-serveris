@@ -16,7 +16,7 @@ import {
 
 const Header = () => {
   //todo: kol kas ??? token thing
-  const userData = localStorage.getItem("user");
+  const userData = JSON.parse(localStorage.getItem("user"));
   const [isOpen, setIsOpen] = React.useState(false);
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
 

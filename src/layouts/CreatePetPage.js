@@ -55,9 +55,10 @@ const CreatePetPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post(`https://localhost:44323/Pet`, inputs);
-    console.log({ inputs });
-    // todo: redirect i to gyvuno page
+    axios.post(`https://localhost:44323/Pet`, inputs).then(
+      (response) => console.log(response.data.petId)
+      // todo: redirect i to gyvuno page
+    );
   };
 
   const handleChange = (e) => {

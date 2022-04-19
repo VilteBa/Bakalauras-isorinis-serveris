@@ -78,7 +78,6 @@ const Header = () => {
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem>Mano duomenys</DropdownItem>
-            {/* todo: neveikia rodymas pagal role */}
             {userData.role === "User" ? (
               // todo: reikalinga nuoroda i prisijungusio asmens pamegtu gyvunu sarasa - ner priority
               <DropdownItem>Pamėgti gyvūnai</DropdownItem>
@@ -92,7 +91,6 @@ const Header = () => {
               </>
             )}
             <DropdownItem divider />
-            {/*todo: isvalyt storage paspaudus atsijungt */}
             <DropdownItem
               onClick={() => localStorage.clear()}
               href="#/prisijungimas"

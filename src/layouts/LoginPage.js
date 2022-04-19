@@ -27,7 +27,7 @@ const LoginPage = () => {
           //nzn ar ok saugot tiek info localStorage?? token thing
           localStorage.setItem("user", JSON.stringify(response.data));
           navigate(`/main`);
-          // todo: reik rerender dropdown kad butu nebe prisijungti bet user data..?
+          // todo: reik rerender dropdown nes db rodp "Prisijungti" nors prisijungta..?
         }
       });
   };

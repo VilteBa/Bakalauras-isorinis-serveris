@@ -16,13 +16,16 @@ const ShelterPage = () => {
 
   return (
     <div>
-      <Card>
+      <Card className="text-center">
         <CardBody>
           <CardTitle tag="h1" className="border-bottom p-3 mb-0">
             <i class="bi bi-heart"> </i>
             {shelter.name}
           </CardTitle>
           <CardImg
+            // style={{ height: 30 }}
+            // style={{width: 150}}
+            style={{ width: "auto", height: 500 }} // todo: ant mobile 500 per daug
             alt="Card image cap"
             src="https://images-platform.99static.com//MZHbYJRflRKCRuhq-t2N6XblSRU=/157x206:1894x1943/fit-in/500x500/99designs-contests-attachments/87/87722/attachment_87722070"
           />
@@ -51,7 +54,7 @@ const ShelterPage = () => {
         </CardBody>
       </Card>
       {/* todo: jei darbuotojas perziuri savo prieglauda tai turi but edit button ir galejimas redaguot 
-      NERA priority, nera net edit shelter jokio page */}
+      NERA priority kol kas, nera net edit shelter jokio page */}
     </div>
   );
 };

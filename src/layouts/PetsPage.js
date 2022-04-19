@@ -16,7 +16,7 @@ const PetsPage = () => {
 
   useEffect(() => {
     // todo: jei prisijunges paprastas vartotojas sitas get'as ok,
-    // todo: bet jei darbuotojas jis turi gauti gyvunus pagal jo prieglaudos ids, not priority laikinai
+    // todo: bet jei darbuotojas jis turi gauti gyvunus pagal jo prieglaudos ids, not priority laikinai NERA priority kol kas
     const getPets = async () => {
       const res = await fetch(
         `https://localhost:44323/Pet?page=${currentPage}&pageLimit=${pageLimit}`
@@ -24,7 +24,7 @@ const PetsPage = () => {
       const data = await res.json();
       setPets(data);
 
-      // suzinot kiek tiksliai gyvunu yra
+      // suzinot kiek tiksliai gyvunu yra kad rodyt teisinga sk puslapiu
       const total = 11;
       setpageCount(Math.ceil(total / pageLimit));
     };

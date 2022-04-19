@@ -4,6 +4,7 @@ import {
   CardTitle,
   CardBody,
   UncontrolledCarousel,
+  Button,
   CardSubtitle,
 } from "reactstrap";
 import { useEffect, useState } from "react";
@@ -13,6 +14,13 @@ const PetPage = () => {
   const { id } = useParams();
   const [pet, setPet] = useState({});
   const [petShelter, setPetShelter] = useState({});
+  const userData = JSON.parse(localStorage.getItem("user"));
+
+  function lovePet() {
+    axios.put(
+      `https://localhost:44323/Pet/lovePet?petId=${id}&userId=${userData.userId}`
+    );
+  }
 
   useEffect(() => {
     axios
@@ -89,9 +97,14 @@ const PetPage = () => {
           <div>El. paštas - {petShelter.email}</div>
         </CardBody>
       </Card>
+      {userData.role === "User" ? (
+        <Button color="primary" onClick={lovePet}>
+          Pamėgti
+        </Button>
+      ) : (
+        <Button color="primary">Redaguoti</Button>
+      )}
     </div>
-    // todo: reik edit mygtuko - jei prisijunges asmuo darbuotojas jis turi galeti redaguoti gyvuna\
-    // todo: reik love mygutko - jei prisijunges paprastas vartotojas jis gali pamegti gyvunus ir veliau perziuret juos - ner priority
   );
 };
 

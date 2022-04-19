@@ -9,12 +9,14 @@ const PetsPage = () => {
   const [pets, setPets] = useState([]);
   const [pageCount, setpageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const userData = JSON.parse(localStorage.getItem("user"));
 
   // galima keist pagal ekrano dydi
   let pageLimit = 5;
 
   useEffect(() => {
-    // todo: jei prisijunges paprastas vartotojas sitas get'as ok, bet jei darbuotojas jis turi gauti gyvunus pagal jo prieglaudos ids
+    // todo: jei prisijunges paprastas vartotojas sitas get'as ok,
+    // todo: bet jei darbuotojas jis turi gauti gyvunus pagal jo prieglaudos ids, not priority laikinai
     const getPets = async () => {
       const res = await fetch(
         `https://localhost:44323/Pet?page=${currentPage}&pageLimit=${pageLimit}`
@@ -22,11 +24,10 @@ const PetsPage = () => {
       const data = await res.json();
       setPets(data);
 
+      // todo: kol kas pagination dzin ihardkodinta lai buna :Ds
       // suzinot kiek tiksliai gyvunu yra
       const total = 11;
       setpageCount(Math.ceil(total / pageLimit));
-
-      // todo: kol kas pagination dzin ihardkodinta lai buna :Ds
     };
 
     getPets();

@@ -10,10 +10,13 @@ import {
   Card,
   CardBody,
 } from "reactstrap";
+import { useNavigate } from "react-router-dom";
 // todo: reikia sutvarkyt refactorint bisk kad butu ne tik kaip post page - gyvuno kurimas
 // todo: bet kad ir kaip update page - gyvuno redagavimo page ir uzpilydti laukai turi but
 // todo: reiks atsinest petId ?? ir jei yra petid tai ne post pet o update
 const CreatePetPage = () => {
+  let navigate = useNavigate();
+
   const [sexes, setSexes] = useState([]);
   const [types, setTypes] = useState([]);
   const [sizes, setSizes] = useState([]);
@@ -55,10 +58,9 @@ const CreatePetPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post(`https://localhost:44323/Pet`, inputs).then(
-      (response) => console.log(response.data.petId)
-      // todo: redirect i to gyvuno page
-    );
+    axios
+      .post(`https://localhost:44323/Pet`, inputs)
+      .then((response) => navigate(`/suteik-namus/${response.data.petId}`));
   };
 
   const handleChange = (e) => {

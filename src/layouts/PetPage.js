@@ -9,8 +9,11 @@ import {
 } from "reactstrap";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const PetPage = () => {
+  let navigate = useNavigate();
+
   const { id } = useParams();
   const [pet, setPet] = useState({});
   const [petShelter, setPetShelter] = useState({});
@@ -20,6 +23,13 @@ const PetPage = () => {
     axios.put(
       `https://localhost:44323/Pet/lovePet?petId=${id}&userId=${userData.userId}`
     );
+  }
+
+  function deletePet() {
+    //todo: reiktu popup patvirtint pries trinant. not priority
+    axios.delete(`https://localhost:44323/Pet/${id}`);
+    navigate(`/suteik-namus`);
+    //todo: po navigate reik per naujo gaut pets nes sena rodo
   }
 
   useEffect(() => {
@@ -102,7 +112,12 @@ const PetPage = () => {
           Pamėgti
         </Button>
       ) : (
-        <Button color="primary">Redaguoti</Button>
+        <div class="button-group">
+          <Button color="primary">Redaguoti</Button>
+          <Button color="primary" onClick={deletePet}>
+            Trinti
+          </Button>
+        </div>
       )}
     </div>
   );

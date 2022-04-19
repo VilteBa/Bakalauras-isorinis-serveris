@@ -12,7 +12,7 @@ const PetsPage = () => {
   const userData = JSON.parse(localStorage.getItem("user"));
 
   // galima keist pagal ekrano dydi
-  let pageLimit = 5;
+  let pageLimit = 8;
 
   useEffect(() => {
     // todo: jei prisijunges paprastas vartotojas sitas get'as ok,
@@ -24,7 +24,6 @@ const PetsPage = () => {
       const data = await res.json();
       setPets(data);
 
-      // todo: kol kas pagination dzin ihardkodinta lai buna :Ds
       // suzinot kiek tiksliai gyvunu yra
       const total = 11;
       setpageCount(Math.ceil(total / pageLimit));

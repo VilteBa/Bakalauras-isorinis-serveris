@@ -16,7 +16,7 @@ const VolunteeringPage = () => {
   const [pageCount, setpageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // todo: galima keist pagal ekrano dydi
+  // galima keist pagal ekrano dydi
   let pageLimit = 5;
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const VolunteeringPage = () => {
       const data = await res.json();
       setShelters(data);
 
-      // todo: suzinot kiek tiksliai prieglaudu yra
+      // suzinot kiek tiksliai prieglaudu yra
       const total = 11;
       setpageCount(Math.ceil(total / pageLimit));
     };

@@ -1,0 +1,96 @@
+import { useParams } from "react-router-dom";
+import {
+  Card,
+  CardTitle,
+  CardBody,
+  UncontrolledCarousel,
+  CardSubtitle,
+} from "reactstrap";
+import { useEffect, useState } from 'react';
+import axios from "axios";
+
+
+
+const PetPage = () => {
+  const {id} = useParams();
+  const [pet, setPet] = useState({});
+  const [petShelter, setPetShelter] = useState({});
+
+  useEffect(() => {
+    axios.get(`https://localhost:44323/Pet/${id}`)
+    .then(respone => setPet(respone.data));
+
+    axios.get(`https://localhost:44323/Shelter/${pet.shelterId}`)
+    .then(respone => setPetShelter(respone.data));
+
+
+  }, [id, pet.shelterId]); // nes kai gaus per ta ireiks gauti pacia prieglauda
+
+  return (
+    <div>
+      <Card>
+        <CardBody>
+          <CardTitle tag="h1" className="border-bottom p-3 mb-0">
+            <i class="bi bi-heart"> </i>
+            {pet.name}
+          </CardTitle>
+          {/* pataisyt kad geriau veiktu nes neveikia rodykles!! */}
+          <CardSubtitle>
+            <UncontrolledCarousel
+              items={[
+                {
+                  altText: "",
+                  caption: "",
+                  key: 1,
+                  src: "https://post.healthline.com/wp-content/uploads/2020/09/1867-Pets_Vaccination-1296x728-header-1200x628.jpg",
+                },
+                {
+                  altText: "",
+                  caption: "",
+                  key: 2,
+                  src: "https://post.healthline.com/wp-content/uploads/2020/09/1867-Pets_Vaccination-1296x728-header-1200x628.jpg",
+                },
+                {
+                  altText: "",
+                  caption: "",
+                  key: 3,
+                  src: "https://post.healthline.com/wp-content/uploads/2020/09/1867-Pets_Vaccination-1296x728-header-1200x628.jpg",
+                },
+              ]}
+            />
+          </CardSubtitle>
+        </CardBody>
+      </Card>
+      <Card>
+        <CardTitle tag="h4" className="border-bottom p-3 mb-0">
+          <i className="bi bi-list-ul me-2"> </i>
+          Aprašas
+        </CardTitle>
+        <CardBody>
+          <div>Vardas - {pet.name}</div>
+          <div>Amžius - {pet.years} metai {pet.months} mėnesiai</div>
+          <div>Aprašymas - {pet.details}</div>          
+          <div>Dydis - {pet.size}</div>
+          <div>Spalva - {pet.color}</div>
+          <div>Lytis - {pet.sex}</div>
+          {/* todo: tipas kaip ir nereikalingas */}
+        </CardBody>
+      </Card>
+      <Card>
+        <CardTitle tag="h4" className="border-bottom p-3 mb-0">
+          <i className="bi bi-envelope-open-heart me-2"> </i>
+          Kontaktai
+        </CardTitle>
+        <CardBody>
+          <div>Prieglauda - {petShelter.name}</div>
+          <div>Miestas - {petShelter.city}</div>
+          <div>Adresas - {petShelter.adress}</div>
+          <div>Mobilusis numeris - {petShelter.phoneNumber}</div>
+          <div>El. paštas - {petShelter.email}</div>
+        </CardBody>
+      </Card>
+    </div>
+  );
+};
+
+export default PetPage;

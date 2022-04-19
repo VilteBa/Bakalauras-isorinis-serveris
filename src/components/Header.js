@@ -77,6 +77,7 @@ const Header = () => {
             <i class="bi bi-person-circle"></i>
           </DropdownToggle>
           <DropdownMenu>
+            {/* todo: sukurt asmeniniu duomenu puslapi*/}
             <DropdownItem>Mano duomenys</DropdownItem>
             {userData.role === "User" ? (
               // todo: reikalinga nuoroda i prisijungusio asmens pamegtu gyvunu sarasa - ner priority

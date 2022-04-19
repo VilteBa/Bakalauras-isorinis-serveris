@@ -15,6 +15,7 @@ const RegisterPage = () => {
     // todo: reik paziuret ar slaptazodziai sutampa
     // todo: jei registracija sekmimga reikia popup ir nukreipt i prisijungima
     // todo: reik ROLE pasirinkt butinai ar paprastas vartotojas ar darbuotojas
+    // todo: jei role darbuotojo tai reik pasirinkt kurioje prieglaudoje dirba
     // todo: gal daugiau duomenu suvest registracijos metu: ner priority
     e.preventDefault();
     const body = {

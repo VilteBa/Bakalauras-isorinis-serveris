@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import React from "react";
 import { Link } from "react-router-dom";
 import {
@@ -13,12 +14,14 @@ import {
   Dropdown,
   Button,
 } from "reactstrap";
+import axios from "axios";
 
 const Header = () => {
   //todo: kol kas ??? token thing
   const userData = JSON.parse(localStorage.getItem("user"));
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [dropdownOpen, setDropdownOpen] = React.useState(false);
+  const [shelterId, setShelterId] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const Handletoggle = () => {
@@ -27,6 +30,17 @@ const Header = () => {
   const showMobilemenu = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
+
+  useEffect(() => {
+    if (userData.role === "User") return;
+    axios
+      .get(`https://localhost:44323/Customer/Client/${userData.userId}`)
+      .then((respone) => {
+        setShelterId(respone.data.ShelterId);
+        console.log(respone.data);
+      });
+    console.log(shelterId);
+  });
 
   return (
     <Navbar color="primary" dark expand="md">

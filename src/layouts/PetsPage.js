@@ -3,6 +3,8 @@ import { Card, CardHeader, CardFooter } from "reactstrap";
 import ReactPaginate from "react-paginate";
 import { useEffect, useState } from "react";
 
+// todo: reiks filtavimo, is backo yra kazkiek padaryta
+
 const PetsPage = () => {
   const [pets, setPets] = useState([]);
   const [pageCount, setpageCount] = useState(0);

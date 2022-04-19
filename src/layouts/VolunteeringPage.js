@@ -41,16 +41,9 @@ const VolunteeringPage = () => {
     //window.scrollTo(0, 0)
   };
 
-  const save = () => {};
-  const savePhoto = (event) => {
-    console.log(event.target.files[0]);
-    imageSrc = event.target.files[0];
-  };
-
   let imageSrc = "";
   return (
     <div>
-      {/***Blog Cards***/}
       <Row>
         {shelters.map((shelter, index) => (
           <Col sm="6" lg="6" xl="3" key={index}>

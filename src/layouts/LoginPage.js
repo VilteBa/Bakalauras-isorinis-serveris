@@ -1,3 +1,4 @@
+import React from "react";
 import axios from "axios";
 import {
   Button,
@@ -9,10 +10,12 @@ import {
   Col,
   Label,
 } from "reactstrap";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  let navigate = useNavigate();
+
   const handleSubmit = (e) => {
-    e.preventDefault();
     const body = {
       emailAddress: e.target.email.value,
       password: e.target.password.value,
@@ -23,7 +26,8 @@ const LoginPage = () => {
         if (response.data.token) {
           //nzn ar ok saugot tiek info localStorage?? token thing
           localStorage.setItem("user", JSON.stringify(response.data));
-          // todo: redirect to main page?
+          navigate(`/main`);
+          // todo: reik rerender dropdown kad butu nebe prisijungti bet user data..?
         }
       });
   };

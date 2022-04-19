@@ -26,7 +26,7 @@ const PetPage = () => {
   }
 
   function deletePet() {
-    //todo: reiktu popup patvirtint pries trinant. not priority
+    //todo: reiktu popup patvirtint pries trinant. is reactstrap paziuret. not priority
     axios.delete(`https://localhost:44323/Pet/${id}`);
     navigate(`/suteik-namus`);
     //todo: po navigate reik per naujo gaut pets nes sena rodo

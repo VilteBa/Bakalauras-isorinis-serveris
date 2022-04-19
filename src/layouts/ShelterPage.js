@@ -2,8 +2,8 @@ import { useParams } from "react-router-dom";
 import { Card, CardTitle, CardBody, CardImg } from "reactstrap";
 import { useEffect, useState } from "react";
 import axios from "axios";
-// todo: truksta funkcionalumo nemazai ir is back, reik kazka sumastyt susijusio su savanoryste
-// todo: bet db dzin jei spesiu pridesiu :D
+
+// todo: truksta funkcionalumo nemazai ir is back, reik kazka sumastyt susijusio su savanoryste bet db dzin jei spesiu pridesiu :D
 const ShelterPage = () => {
   const { id } = useParams();
   const [shelter, setShelter] = useState({});

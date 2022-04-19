@@ -6,13 +6,11 @@ import { useEffect, useState } from "react";
 // todo: reiks filtavimo, is backo yra kazkiek padaryta
 
 const PetsPage = () => {
+  // galima keist pagal ekrano dydi
+  let pageLimit = 8;
   const [pets, setPets] = useState([]);
   const [pageCount, setpageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
-  const userData = JSON.parse(localStorage.getItem("user"));
-
-  // galima keist pagal ekrano dydi
-  let pageLimit = 8;
 
   useEffect(() => {
     // todo: jei prisijunges paprastas vartotojas sitas get'as ok,

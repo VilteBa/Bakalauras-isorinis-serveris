@@ -6,8 +6,6 @@ import {
   Collapse,
   Nav,
   NavItem,
-  NavbarBrand,
-  UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
@@ -27,9 +25,6 @@ const Header = () => {
   const Handletoggle = () => {
     setIsOpen(!isOpen);
   };
-  const showMobilemenu = () => {
-    document.getElementById("sidebarArea").classList.toggle("showSidebar");
-  };
 
   useEffect(() => {
     if (userData?.role === "Worker") {
@@ -43,13 +38,6 @@ const Header = () => {
 
   return (
     <Navbar color="primary" dark expand="md">
-      {/* nlb reikalinga ikonke? mest lauk */}
-      {/* <div className="d-flex align-items-center">
-        <NavbarBrand href="/" className="d-md-none">
-          <i class="bi-github" role="img" aria-label="GitHub"></i>
-        </NavbarBrand>
-      </div> */}
-      {/* X jei iskleisti  ooo bet reik sutvarkyt kad su userDropdown gerai butu*/}
       <div className="hstack gap-2">
         <Button
           color="primary"

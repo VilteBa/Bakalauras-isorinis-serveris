@@ -9,21 +9,50 @@ import {
   Col,
   Label,
 } from "reactstrap";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
-  const handleSubmit = (e) => {
-    // todo: reik paziuret ar slaptazodziai sutampa
-    // todo: jei registracija sekmimga reikia popup ir nukreipt i prisijungima
-    // todo: reik ROLE pasirinkt butinai ar paprastas vartotojas ar darbuotojas
-    // todo: jei role darbuotojo tai reik pasirinkt kurioje prieglaudoje dirba
-    // todo: gal daugiau duomenu suvest registracijos metu: ner priority
-    e.preventDefault();
-    const body = {
-      emailAddress: e.target.email.value,
-      password: e.target.password.value,
-    };
-    axios.post(`https://localhost:44323/Customer/Register`, body);
+  let navigate = useNavigate();
+  const [userRole, setRole] = useState("User");
+  const [shelters, setShelters] = useState([]);
+
+  const handleChange = (e) => {
+    if (e.target.checked) {
+      setRole("Worker");
+    } else {
+      setRole("User");
+    }
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // todo: gal daugiau duomenu suvest registracijos metu: ner priority
+    if (
+      (e.target.password.value === e.target.repeatPassword.value) &
+      !!e.target.email.value
+    ) {
+      const body = {
+        emailAddress: e.target.email.value,
+        password: e.target.password.value,
+        role: userRole,
+        shelterId: e.target.shelterid?.value,
+      };
+      axios.post(`https://localhost:44323/Customer/Register`, body).then(
+        // todo: jei registracija sekmimga reikia popup arba toast
+        navigate(`/prisijungimas`)
+      );
+    } else {
+      //todo: reiks erroro veliau
+      console.log("nesutampa slap");
+    }
+  };
+
+  useEffect(() => {
+    axios
+      .get(`https://localhost:44323/Shelter`)
+      .then((respone) => setShelters(respone.data));
+  }, []);
 
   return (
     <Row
@@ -48,6 +77,27 @@ const RegisterPage = () => {
               <Label for="repeatPassword">Slaptažodžio patvirtinimas</Label>
               <Input id="repeatPassword" type="password" />
             </FormGroup>
+            <FormGroup check>
+              <Label for="role" check>
+                Darbuotojo registracija
+              </Label>
+              <Input id="role" type="checkbox" onChange={handleChange} />
+            </FormGroup>
+            {userRole === "Worker" ? (
+              <FormGroup>
+                <Label for="shelterid">Prieglauda</Label>
+                <Input id="shelterid" type="select">
+                  <option />
+                  {shelters.map((s, i) => (
+                    <option key={i} value={s.shelterId}>
+                      {s.name}
+                    </option>
+                  ))}
+                </Input>
+              </FormGroup>
+            ) : (
+              <></>
+            )}
             <Button type="submit" size="lg" color="primary" block>
               Sukurti paskyrą
             </Button>

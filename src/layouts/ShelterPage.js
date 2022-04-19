@@ -1,23 +1,17 @@
 import { useParams } from "react-router-dom";
-import {
-  Card,
-  CardTitle,
-  CardBody,
-  UncontrolledCarousel,
-  CardImg,
-} from "reactstrap";
-import { useEffect, useState } from 'react';
+import { Card, CardTitle, CardBody, CardImg } from "reactstrap";
+import { useEffect, useState } from "react";
 import axios from "axios";
-
-
-
+// todo: truksta funkcionalumo nemazai ir is back, reik kazka sumastyt susijusio su savanoryste
+// todo: bet db dzin jei spesiu pridesiu :D
 const ShelterPage = () => {
-  const {id} = useParams();
+  const { id } = useParams();
   const [shelter, setShelter] = useState({});
 
   useEffect(() => {
-    axios.get(`https://localhost:44323/Shelter/${id}`)
-    .then(respone => setShelter(respone.data));
+    axios
+      .get(`https://localhost:44323/Shelter/${id}`)
+      .then((respone) => setShelter(respone.data));
   }, [id]);
 
   return (
@@ -28,9 +22,10 @@ const ShelterPage = () => {
             <i class="bi bi-heart"> </i>
             {shelter.name}
           </CardTitle>
-          {/* pataisyt kad geriau veiktu nes neveikia rodykles!! */}
-          <CardImg alt="Card image cap" src="https://images-platform.99static.com//MZHbYJRflRKCRuhq-t2N6XblSRU=/157x206:1894x1943/fit-in/500x500/99designs-contests-attachments/87/87722/attachment_87722070" />
-
+          <CardImg
+            alt="Card image cap"
+            src="https://images-platform.99static.com//MZHbYJRflRKCRuhq-t2N6XblSRU=/157x206:1894x1943/fit-in/500x500/99designs-contests-attachments/87/87722/attachment_87722070"
+          />
         </CardBody>
       </Card>
       <Card>
@@ -55,6 +50,8 @@ const ShelterPage = () => {
           <div>El. paštas - {shelter.email}</div>
         </CardBody>
       </Card>
+      {/* todo: jei darbuotojas perziuri savo prieglauda tai turi but edit button ir galejimas redaguot 
+      NERA priority, nera net edit shelter jokio page */}
     </div>
   );
 };

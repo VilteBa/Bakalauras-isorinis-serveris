@@ -6,24 +6,22 @@ import {
   UncontrolledCarousel,
   CardSubtitle,
 } from "reactstrap";
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import axios from "axios";
 
-
-
 const PetPage = () => {
-  const {id} = useParams();
+  const { id } = useParams();
   const [pet, setPet] = useState({});
   const [petShelter, setPetShelter] = useState({});
 
   useEffect(() => {
-    axios.get(`https://localhost:44323/Pet/${id}`)
-    .then(respone => setPet(respone.data));
+    axios
+      .get(`https://localhost:44323/Pet/${id}`)
+      .then((respone) => setPet(respone.data));
 
-    axios.get(`https://localhost:44323/Shelter/${pet.shelterId}`)
-    .then(respone => setPetShelter(respone.data));
-
-
+    axios
+      .get(`https://localhost:44323/Shelter/${pet.shelterId}`)
+      .then((respone) => setPetShelter(respone.data));
   }, [id, pet.shelterId]); // nes kai gaus per ta ireiks gauti pacia prieglauda
 
   return (
@@ -34,8 +32,9 @@ const PetPage = () => {
             <i class="bi bi-heart"> </i>
             {pet.name}
           </CardTitle>
-          {/* pataisyt kad geriau veiktu nes neveikia rodykles!! */}
           <CardSubtitle>
+            {/* todo: pataisyt kad geriau veiktu nes neveikia rodykles!!
+          ner priority db isvis neturiu foto */}
             <UncontrolledCarousel
               items={[
                 {
@@ -68,12 +67,13 @@ const PetPage = () => {
         </CardTitle>
         <CardBody>
           <div>Vardas - {pet.name}</div>
-          <div>Amžius - {pet.years} metai {pet.months} mėnesiai</div>
-          <div>Aprašymas - {pet.details}</div>          
+          <div>
+            Amžius - {pet.years} metai {pet.months} mėnesiai
+          </div>
+          <div>Aprašymas - {pet.details}</div>
           <div>Dydis - {pet.size}</div>
           <div>Spalva - {pet.color}</div>
           <div>Lytis - {pet.sex}</div>
-          {/* todo: tipas kaip ir nereikalingas */}
         </CardBody>
       </Card>
       <Card>
@@ -90,6 +90,8 @@ const PetPage = () => {
         </CardBody>
       </Card>
     </div>
+    // todo: reik edit mygtuko - jei prisijunges asmuo darbuotojas jis turi galeti redaguoti gyvuna\
+    // todo: reik love mygutko - jei prisijunges paprastas vartotojas jis gali pamegti gyvunus ir veliau perziuret juos - ner priority
   );
 };
 

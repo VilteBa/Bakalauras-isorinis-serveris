@@ -6,11 +6,8 @@ const FullLayout = () => {
   return (
     <main>
       <div className="pageWrapper d-lg-flex">
-        {/********Content Area**********/}
         <div className="contentArea">
-          {/********header**********/}
           <Header />
-          {/********Middle Content**********/}
           <Container className="p-4 wrapper" fluid>
             <Outlet />
           </Container>

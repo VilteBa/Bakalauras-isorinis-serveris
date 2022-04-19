@@ -10,8 +10,9 @@ import {
   Card,
   CardBody,
 } from "reactstrap";
-// todo: reikia sutvarkyt select, leist foto det, ir jei update cia tai 
-// todo: set petId ir jei yra pet id tai ne post pet o update
+// todo: reikia sutvarkyt refactorint bisk kad butu ne tik kaip post page - gyvuno kurimas
+// todo: bet kad ir kaip update page - gyvuno redagavimo page ir uzpilydti laukai turi but
+// todo: reiks atsinest petId ?? ir jei yra petid tai ne post pet o update
 const CreatePetPage = () => {
   const [sexes, setSexes] = useState([]);
   const [types, setTypes] = useState([]);
@@ -56,6 +57,7 @@ const CreatePetPage = () => {
     e.preventDefault();
     axios.post(`https://localhost:44323/Pet`, inputs);
     console.log({ inputs });
+    // todo: redirect i to gyvuno page
   };
 
   const handleChange = (e) => {
@@ -63,6 +65,7 @@ const CreatePetPage = () => {
     setInputs({ ...inputs, [id]: value });
   };
 
+  // todo: nera idedama dar foto, bet ner niekur nk su foto dar
   return (
     <Card>
       <CardBody>
@@ -171,5 +174,10 @@ const CreatePetPage = () => {
     </Card>
   );
 };
+
+// reiks kazkokio upluod photo */}
+// <img src={imageSrc}></img>
+// <input type="file" accept="image/*" onChange={savePhoto}></input>
+// <button onClick={save}></button>
 
 export default CreatePetPage;

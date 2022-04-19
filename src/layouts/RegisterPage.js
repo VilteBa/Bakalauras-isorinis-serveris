@@ -11,13 +11,17 @@ import {
 } from "reactstrap";
 
 const RegisterPage = () => {
-
-    const handleSubmit = (e) => {
-    e.preventDefault();
-    const body = {"emailAddress": e.target.email.value, "password": e.target.password.value};
-    axios.post(`https://localhost:44323/Customer/Register`, body); 
-    //veikia reg bet reik ziuret response
+  const handleSubmit = (e) => {
+    // todo: reik paziuret ar slaptazodziai sutampa
     // todo: jei registracija sekmimga reikia popup ir nukreipt i prisijungima
+    // todo: reik ROLE pasirinkt butinai ar paprastas vartotojas ar darbuotojas
+    // todo: gal daugiau duomenu suvest registracijos metu: ner priority
+    e.preventDefault();
+    const body = {
+      emailAddress: e.target.email.value,
+      password: e.target.password.value,
+    };
+    axios.post(`https://localhost:44323/Customer/Register`, body);
   };
 
   return (
@@ -31,19 +35,16 @@ const RegisterPage = () => {
       <Col md={6} lg={4}>
         <Card body>
           <Form onSubmit={handleSubmit}>
-            {/* idet logo kaip atrodo reduction */}
             <FormGroup>
-              <Label for="email">Vartotojo paštas???</Label>
-              <Input id="email" type="email"/>
+              <Label for="email">Vartotojo paštas</Label>
+              <Input id="email" type="email" />
             </FormGroup>
             <FormGroup>
               <Label for="password">Slaptažodis</Label>
               <Input id="password" type="password" />
             </FormGroup>
             <FormGroup>
-              <Label for="repeatPassword">
-                Slaptažodžio patvirtinimas (paieškoti kaip atrodo lt kitur)
-              </Label>
+              <Label for="repeatPassword">Slaptažodžio patvirtinimas</Label>
               <Input id="repeatPassword" type="password" />
             </FormGroup>
             <Button type="submit" size="lg" color="primary" block>
@@ -55,8 +56,6 @@ const RegisterPage = () => {
                 <a href="#/prisijungimas">Prisijungti</a>
               </h6>
             </div>
-            {/* kam tas vaikas bv reikalingas? */}
-            {/* {children} */}
           </Form>
         </Card>
       </Col>

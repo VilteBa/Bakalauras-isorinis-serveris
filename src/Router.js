@@ -3,7 +3,6 @@ import { Navigate } from "react-router-dom";
 import CreatePetPage from "./layouts/CreatePetPage";
 import ShelterPage from "./layouts/ShelterPage";
 
-
 /****Layouts*****/
 const FullLayout = lazy(() => import("./layouts/FullLayout"));
 const MainPage = lazy(() => import("./layouts/MainPage.js"));
@@ -28,23 +27,17 @@ const Routes = [
   {
     path: "/",
     element: <FullLayout />,
-    // registracija ir prisijungimas neturetu but po fulllayout
+    // todo: registracija ir prisijungimas neturetu but po fulllayout gaaal ?? kad nebutu header?
     children: [
-       { path: "/", element: <Navigate to="/main" /> },
-       { path: "/main", exact: true, element: <MainPage /> },
-       { path: "/suteik-namus", exact: true, element: <PetsPage /> },
-       { path: "/suteik-namus/:id", exact: true, element: <PetPage /> },
-       { path: "/savanoriauk", exact: true, element: <VolunteeringPage /> },
-       { path: "/savanoriauk/:id", exact: true, element: <ShelterPage /> },
-       { path: "/anketos-kurimas", exact: true, element: <CreatePetPage /> },
-       { path: "/prisijungimas", exact: true, element: <LoginPage /> },
-       { path: "/registracija", exact: true, element: <RegisterPage /> },
-    //   { path: "/buttons", exact: true, element: <Buttons /> },
-    //   { path: "/cards", exact: true, element: <Cards /> },
-    //   { path: "/grid", exact: true, element: <Grid /> },
-    //   { path: "/table", exact: true, element: <Tables /> },
-    //   { path: "/forms", exact: true, element: <Forms /> },
-    //   { path: "/breadcrumbs", exact: true, element: <Breadcrumbs /> },
+      { path: "/", element: <Navigate to="/main" /> },
+      { path: "/main", exact: true, element: <MainPage /> },
+      { path: "/suteik-namus", exact: true, element: <PetsPage /> },
+      { path: "/suteik-namus/:id", exact: true, element: <PetPage /> },
+      { path: "/savanoriauk", exact: true, element: <VolunteeringPage /> },
+      { path: "/savanoriauk/:id", exact: true, element: <ShelterPage /> },
+      { path: "/anketos-kurimas", exact: true, element: <CreatePetPage /> },
+      { path: "/prisijungimas", exact: true, element: <LoginPage /> },
+      { path: "/registracija", exact: true, element: <RegisterPage /> },
     ],
   },
 ];

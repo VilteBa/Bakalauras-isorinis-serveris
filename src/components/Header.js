@@ -15,7 +15,6 @@ import {
 } from "reactstrap";
 
 const Header = () => {
-  
   //todo: kol kas ??? token thing
   const userData = localStorage.getItem("user");
   const [isOpen, setIsOpen] = React.useState(false);
@@ -28,7 +27,7 @@ const Header = () => {
   const showMobilemenu = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
-  const clearCooieOrStorage = () =>{}
+  const clearCookieOrStorage = () => {};
   return (
     <Navbar color="primary" dark expand="md">
       {/* nlb reikalinga ikonke? mest lauk */}
@@ -69,53 +68,43 @@ const Header = () => {
             <Link to="/savanoriauk" className="nav-link">
               Savanoriauk
             </Link>
-          </NavItem>
-          <UncontrolledDropdown inNavbar nav>
-            <DropdownToggle caret nav>
-              LaikinaiPaliktas
-            </DropdownToggle>
-            <DropdownMenu end>
-              <DropdownItem>
-                <NavItem>
-                  <Link to="/anketos-kurimas">anketos kurimas</Link>
-                </NavItem>
-              </DropdownItem>
-              <DropdownItem>Option 2</DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem>Reset</DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown>
+          </NavItem>{" "}
         </Nav>
       </Collapse>
-        {/* prisijungimo  duom */}
-        {/* todo: BET neatsiranda uzsetinus cookie */}
-        
-        {userData ? (
-          <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-            <DropdownToggle color="primary">
-              <i class="bi bi-person-circle"></i>
-            </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem>Mano duomenys</DropdownItem>
-              {userData.role==="User" ? (
-                <DropdownItem>Pamėgti gyvūnai</DropdownItem>
-              ) : (
-                <><DropdownItem>Mano prieglauda</DropdownItem><DropdownItem>Pridėti gyvūną</DropdownItem></>
-              )
-              }
-              <DropdownItem divider />
-              <DropdownItem href="#/prisijungimas">Atsijungti</DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        ) : (
-          <Nav navbar>
-            <NavItem>
-              <Link to="/prisijungimas" className="nav-link" onClick={clearCooieOrStorage}>
-                Prisijungimas
-              </Link>
-            </NavItem>
-          </Nav>
-        )}
+      {userData ? (
+        <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+          <DropdownToggle color="primary">
+            <i class="bi bi-person-circle"></i>
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem>Mano duomenys</DropdownItem>
+            {/* todo: neveikia rodymas pagal role */}
+            {userData.role === "User" ? (
+              // todo: reikalinga nuoroda i prisijungusio asmens pamegtu gyvunu sarasa - ner priority
+              <DropdownItem>Pamėgti gyvūnai</DropdownItem>
+            ) : (
+              <>
+                {/* todo: reikalinga nuoroda i prisijungusio darbuotojo prieglauda */}
+                <DropdownItem>Mano prieglauda</DropdownItem>
+                <DropdownItem href="#/anketos-kurimas">
+                  Pridėti gyvūną
+                </DropdownItem>
+              </>
+            )}
+            <DropdownItem divider />
+            {/*todo: isvalyt storage paspaudus atsijungt */}
+            <DropdownItem href="#/prisijungimas">Atsijungti</DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+      ) : (
+        <Nav navbar>
+          <NavItem>
+            <Link to="/prisijungimas" className="nav-link">
+              Prisijungimas
+            </Link>
+          </NavItem>
+        </Nav>
+      )}
     </Navbar>
   );
 };

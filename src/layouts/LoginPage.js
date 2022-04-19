@@ -11,21 +11,22 @@ import {
 } from "reactstrap";
 
 const LoginPage = () => {
-  
   const handleSubmit = (e) => {
     e.preventDefault();
-    const body = {"emailAddress": e.target.email.value, "password": e.target.password.value};
+    const body = {
+      emailAddress: e.target.email.value,
+      password: e.target.password.value,
+    };
     axios
-    .post(`https://localhost:44323/Customer/Authenticate`, body)
-    .then(response => {
-      if(response.data.token)
-      {
-        //todo: nzn ar ok saugot tiek info localStorage?? token thing
-        localStorage.setItem("user", JSON.stringify(response.data));
-        
-      }
-    });
-  }
+      .post(`https://localhost:44323/Customer/Authenticate`, body)
+      .then((response) => {
+        if (response.data.token) {
+          //nzn ar ok saugot tiek info localStorage?? token thing
+          localStorage.setItem("user", JSON.stringify(response.data));
+          // todo: redirect to main page?
+        }
+      });
+  };
 
   return (
     <Row
@@ -38,10 +39,9 @@ const LoginPage = () => {
       <Col md={6} lg={4}>
         <Card body>
           <Form onSubmit={handleSubmit}>
-            {/* idet logo kaip atrodo reduction */}
             <FormGroup>
-              <Label for="email">Vartotojo paštas???</Label>
-              <Input id="email" type="email"/>
+              <Label for="email">Vartotojo paštas</Label>
+              <Input id="email" type="email" />
             </FormGroup>
             <FormGroup>
               <Label for="password">Slaptažodis</Label>

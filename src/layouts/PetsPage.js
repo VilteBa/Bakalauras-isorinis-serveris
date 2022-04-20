@@ -1,38 +1,60 @@
 import { Col, Row } from "reactstrap";
 import { Card, CardHeader, CardFooter } from "reactstrap";
 import ReactPaginate from "react-paginate";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 // todo: reiks filtavimo, is backo yra kazkiek padaryta
 
-const PetsPage = () => {
+const PetsPage = ({ userSpecific = false }) => {
   // galima keist pagal ekrano dydi
   let pageLimit = 8;
   const [pets, setPets] = useState([]);
   const [pageCount, setpageCount] = useState(0);
+  const userData = JSON.parse(localStorage.getItem("user"));
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
     // todo: jei prisijunges paprastas vartotojas sitas get'as ok,
     // todo: bet jei darbuotojas jis turi gauti gyvunus pagal jo prieglaudos ids, not priority laikinai NERA priority kol kas
-    const getPets = async () => {
-      const res = await fetch(
-        `https://localhost:44323/Pet?page=${currentPage}&pageLimit=${pageLimit}`
-      );
-      const data = await res.json();
-      setPets(data);
 
-      // suzinot kiek tiksliai gyvunu yra kad rodyt teisinga sk puslapiu
-      const total = 11;
-      setpageCount(Math.ceil(total / pageLimit));
-    };
+    if (userSpecific) {
+      if (userData.role === "User") {
+        axios
+          .get(
+            `https://localhost:44323/Customer/GetPetsLoved/${userData.userId}/lovedPets`
+          )
+          .then((respone) => setPets(respone.data));
+      } else {
+        axios
+          .get(`https://localhost:44323/Customer/Client/${userData.userId}`)
+          .then((userRespone) => {
+            axios
+              .get(
+                `https://localhost:44323/Shelter/Pets/${userRespone.data.shelterId}`
+              )
+              .then((respone) => {
+                setPets(respone.data);
+              });
+          });
+      }
+    } else {
+      axios
+        .get(
+          `https://localhost:44323/Pet?page=${currentPage}&pageLimit=${pageLimit}`
+        )
+        .then((respone) => setPets(respone.data));
+    }
 
-    getPets();
-  }, [currentPage, pageLimit]);
+    // suzinot kiek tiksliai gyvunu yra kad rodyt teisinga sk puslapiu
+    const total = 11;
+    setpageCount(Math.ceil(total / pageLimit));
+  }, [currentPage, pageLimit, userData, userSpecific]);
 
   const handlePageChange = async (data) => {
     setCurrentPage(data.selected);
-    // scroll to the top
+    // scroll to the top naudinga mobilkeje
     //window.scrollTo(0, 0)
   };
 

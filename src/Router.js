@@ -21,7 +21,21 @@ const Routes = [
     children: [
       { path: "/", element: <Navigate to="/main" /> },
       { path: "/main", exact: true, element: <MainPage /> },
-      { path: "/suteik-namus", exact: true, element: <PetsPage /> },
+      {
+        path: "/suteik-namus",
+        exact: true,
+        element: <PetsPage userSpecific={false} />,
+      },
+      {
+        path: "/pamegti-gyvunai",
+        exact: true,
+        element: <PetsPage userSpecific={true} />,
+      },
+      {
+        path: "/prieglaudos-gyvunai",
+        exact: true,
+        element: <PetsPage userSpecific={true} />,
+      },
       { path: "/suteik-namus/:id", exact: true, element: <PetPage /> },
       { path: "/savanoriauk", exact: true, element: <VolunteeringPage /> },
       { path: "/savanoriauk/:id", exact: true, element: <ShelterPage /> },

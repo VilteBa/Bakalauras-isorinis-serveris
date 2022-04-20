@@ -82,11 +82,16 @@ const Header = () => {
             <DropdownItem>Mano duomenys</DropdownItem>
             {userData.role === "User" ? (
               // todo: reikalinga nuoroda i prisijungusio asmens pamegtu gyvunu sarasa - ner priority
-              <DropdownItem>Pamėgti gyvūnai</DropdownItem>
+              <DropdownItem href="#/pamegti-gyvunai">
+                Pamėgti gyvūnai
+              </DropdownItem>
             ) : (
               <>
                 {/* todo: reikalinga nuoroda i prisijungusio darbuotojo prieglauda */}
                 <DropdownItem>Mano prieglauda</DropdownItem>
+                <DropdownItem href="#/prieglaudos-gyvunai">
+                  Mano prieglaudos gyvūnai
+                </DropdownItem>
                 <DropdownItem href="#/anketos-kurimas">
                   Pridėti gyvūną
                 </DropdownItem>

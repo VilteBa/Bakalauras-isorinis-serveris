@@ -4,7 +4,6 @@ import {
   CardBody,
   CardImg,
   CardSubtitle,
-  CardText,
   CardTitle,
   Button,
 } from "reactstrap";
@@ -55,7 +54,6 @@ const VolunteeringPage = () => {
               <CardBody className="p-4">
                 <CardTitle tag="h5">{shelter.name}</CardTitle>
                 <CardSubtitle>{shelter.city}</CardSubtitle>
-                <CardText className="mt-3">{shelter.about}</CardText>
                 <Button
                   href={"#/savanoriauk/" + shelter.shelterId}
                   color="primary"

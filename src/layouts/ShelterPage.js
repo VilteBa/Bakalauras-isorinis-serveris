@@ -1,18 +1,24 @@
 import { useParams } from "react-router-dom";
-import { Card, CardTitle, CardBody, CardImg } from "reactstrap";
+import { Card, CardTitle, CardBody, CardImg, Button } from "reactstrap";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 // todo: truksta funkcionalumo nemazai ir is back, reik kazka sumastyt susijusio su savanoryste bet db dzin jei spesiu pridesiu :D
 const ShelterPage = () => {
   const { id } = useParams();
+  const userData = JSON.parse(localStorage.getItem("user"));
   const [shelter, setShelter] = useState({});
+  const [editable, setEditable] = useState(false);
 
   useEffect(() => {
     axios
       .get(`https://localhost:44323/Shelter/${id}`)
       .then((respone) => setShelter(respone.data));
-  }, [id]);
+
+    axios
+      .get(`https://localhost:44323/Customer/Client/${userData.userId}`)
+      .then((respone) => setEditable(respone.data.shelterId === id));
+  }, [id, userData.userId]);
 
   return (
     <div>
@@ -55,6 +61,7 @@ const ShelterPage = () => {
       </Card>
       {/* todo: jei darbuotojas perziuri savo prieglauda tai turi but edit button ir galejimas redaguot 
       NERA priority kol kas, nera net edit shelter jokio page */}
+      {editable && <Button color="primary">Redaguoti</Button>}
     </div>
   );
 };

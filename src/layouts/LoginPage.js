@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import {
   Button,
+  Alert,
   Card,
   Form,
   Row,
@@ -10,10 +11,12 @@ import {
   Col,
   Label,
 } from "reactstrap";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   let navigate = useNavigate();
+  const [alert, setAlert] = useState(false); //todo: kaip paduot kad true po registracijos?
 
   const handleSubmit = (e) => {
     const body = {
@@ -62,6 +65,15 @@ const LoginPage = () => {
             </div>
           </Form>
         </Card>
+        <Alert
+          color="success"
+          isOpen={alert}
+          toggle={() => {
+            setAlert(false);
+          }}
+        >
+          I am an alert and I can be dismissed!
+        </Alert>
       </Col>
     </Row>
   );

@@ -6,6 +6,10 @@ import {
   UncontrolledCarousel,
   Button,
   CardSubtitle,
+  Modal,
+  ModalFooter,
+  ModalBody,
+  ModalHeader,
 } from "reactstrap";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -17,6 +21,8 @@ const PetPage = () => {
   const { id } = useParams();
   const [pet, setPet] = useState({});
   const [petShelter, setPetShelter] = useState({});
+  const [editable, setEditable] = useState(false);
+  const [toggle, setToggle] = useState(false);
   const userData = JSON.parse(localStorage.getItem("user"));
 
   function lovePet() {
@@ -26,10 +32,12 @@ const PetPage = () => {
   }
 
   function deletePet() {
-    //todo: reiktu popup patvirtint pries trinant. is reactstrap paziuret. not priority
     axios.delete(`https://localhost:44323/Pet/${id}`);
     navigate(`/suteik-namus`);
     //todo: po navigate reik per naujo gaut pets nes sena rodo
+  }
+  function changeToggle() {
+    setToggle(!toggle);
   }
 
   useEffect(() => {
@@ -40,7 +48,15 @@ const PetPage = () => {
     axios
       .get(`https://localhost:44323/Shelter/${pet.shelterId}`)
       .then((respone) => setPetShelter(respone.data));
-  }, [id, pet.shelterId]); // nes kai gaus per ta ireiks gauti pacia prieglauda
+
+    axios
+      .get(
+        `https://localhost:44323/Pet/Editable?petId=${id}&userId=${userData.userId}`
+      )
+      .then((respone) => {
+        setEditable(respone.data);
+      });
+  }, [id, pet.shelterId, userData.userId]); // nes kai gaus per ta ireiks gauti pacia prieglauda
 
   return (
     <div>
@@ -112,13 +128,34 @@ const PetPage = () => {
           Pamėgti
         </Button>
       ) : (
-        <div class="button-group">
-          <Button color="primary">Redaguoti</Button>
-          <Button color="primary" onClick={deletePet}>
+        editable && (
+          <div class="button-group">
+            {/* redaguoti truksta funkcionalumo */}
+            <Button color="primary">Redaguoti</Button>
+            <Button color="danger" onClick={changeToggle}>
+              Trinti
+            </Button>
+          </div>
+        )
+      )}
+      <Modal
+        centered
+        fullscreen="sm"
+        size=""
+        isOpen={toggle}
+        toggle={changeToggle}
+      >
+        <ModalHeader toggle={changeToggle}>Ištrinti?</ModalHeader>
+        <ModalBody>Ar tikrai norite ištrinti gyvūno anketą?</ModalBody>
+        <ModalFooter>
+          <Button color="danger" onClick={deletePet}>
             Trinti
           </Button>
-        </div>
-      )}
+          <Button color="primary" onClick={changeToggle}>
+            Atšaukti
+          </Button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 };

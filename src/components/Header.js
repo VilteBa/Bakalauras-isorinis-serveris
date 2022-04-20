@@ -20,7 +20,7 @@ const Header = () => {
   const [shelterId, setShelterId] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  let urlToShelter = `#/savanoriauk/${shelterId}`;
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const Handletoggle = () => {
     setIsOpen(!isOpen);
@@ -34,7 +34,7 @@ const Header = () => {
           setShelterId(respone.data.shelterId);
         });
     }
-  });
+  }, [userData]);
 
   return (
     <Navbar color="primary" dark expand="md">
@@ -81,14 +81,12 @@ const Header = () => {
             {/* todo: sukurt asmeniniu duomenu puslapi*/}
             <DropdownItem>Mano duomenys</DropdownItem>
             {userData.role === "User" ? (
-              // todo: reikalinga nuoroda i prisijungusio asmens pamegtu gyvunu sarasa - ner priority
               <DropdownItem href="#/pamegti-gyvunai">
                 Pamėgti gyvūnai
               </DropdownItem>
             ) : (
               <>
-                {/* todo: reikalinga nuoroda i prisijungusio darbuotojo prieglauda */}
-                <DropdownItem>Mano prieglauda</DropdownItem>
+                <DropdownItem href={urlToShelter}>Mano prieglauda</DropdownItem>
                 <DropdownItem href="#/prieglaudos-gyvunai">
                   Mano prieglaudos gyvūnai
                 </DropdownItem>

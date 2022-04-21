@@ -21,7 +21,6 @@ const CreatePetPage = () => {
   const [types, setTypes] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [colors, setColors] = useState([]);
-  const [shelters, setShelters] = useState([]);
   const [inputs, setInputs] = useState({
     petId: id ?? undefined,
     name: "",
@@ -53,10 +52,6 @@ const CreatePetPage = () => {
     axios
       .get(`https://localhost:44323/Pet/colors`)
       .then((respone) => setColors(respone.data));
-
-    axios
-      .get(`https://localhost:44323/Shelter`)
-      .then((respone) => setShelters(respone.data));
 
     if (id) {
       axios.get(`https://localhost:44323/Pet/${id}`).then((respone) => {

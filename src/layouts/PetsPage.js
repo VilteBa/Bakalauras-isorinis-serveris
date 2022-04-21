@@ -2,7 +2,6 @@ import { Col, Row } from "reactstrap";
 import { Card, CardHeader, CardFooter } from "reactstrap";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 // todo: reiks filtavimo, is backo yra kazkiek padaryta

@@ -124,6 +124,7 @@ const PetPage = () => {
         </CardBody>
       </Card>
       {userData.role === "User" ? (
+        // isimt is pamegtu saraso jei jau pamegtas truksta ir BE funkcionalumo
         <Button color="primary" onClick={lovePet}>
           Pamėgti
         </Button>

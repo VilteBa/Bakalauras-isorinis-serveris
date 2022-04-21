@@ -12,13 +12,10 @@ const PetsPage = ({ userSpecific = false }) => {
   let pageLimit = 8;
   const [pets, setPets] = useState([]);
   const [pageCount, setpageCount] = useState(0);
-  const userData = JSON.parse(localStorage.getItem("user"));
   const [currentPage, setCurrentPage] = useState(0);
+  const userData = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    // todo: jei prisijunges paprastas vartotojas sitas get'as ok,
-    // todo: bet jei darbuotojas jis turi gauti gyvunus pagal jo prieglaudos ids, not priority laikinai NERA priority kol kas
-
     if (userSpecific) {
       if (userData.role === "User") {
         axios
@@ -54,14 +51,9 @@ const PetsPage = ({ userSpecific = false }) => {
 
   const handlePageChange = async (data) => {
     setCurrentPage(data.selected);
-    // scroll to the top naudinga mobilkeje
+    // scroll to the top
     //window.scrollTo(0, 0)
   };
-
-  // const { isLoading, data } = useQuery("Pets", () => fetch(baseUrl).then((res) => res.json()));
-
-  // if(isLoading) return <h1>loading</h1>
-  // if(!data) return <h1>error</h1>
 
   return (
     <div>

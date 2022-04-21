@@ -40,6 +40,11 @@ const Routes = [
       { path: "/savanoriauk", exact: true, element: <VolunteeringPage /> },
       { path: "/savanoriauk/:id", exact: true, element: <ShelterPage /> },
       { path: "/anketos-kurimas", exact: true, element: <CreatePetPage /> },
+      {
+        path: "/anketos-redagavimas/:id",
+        exact: true,
+        element: <CreatePetPage />,
+      },
       { path: "/prisijungimas", exact: true, element: <LoginPage /> },
       { path: "/registracija", exact: true, element: <RegisterPage /> },
     ],

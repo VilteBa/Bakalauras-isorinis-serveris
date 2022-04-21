@@ -12,9 +12,6 @@ import {
 } from "reactstrap";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-// todo: reikia sutvarkyt refactorint bisk kad butu ne tik kaip post page - gyvuno kurimas
-// todo: bet kad ir kaip update page - gyvuno redagavimo page ir uzpilydti laukai turi but
-// todo: reiks atsinest petId ?? ir jei yra petid tai ne post pet o update
 
 //todo: sex, type, size... Rodo angliskai, reikia lt
 const CreatePetPage = () => {

@@ -17,7 +17,6 @@ const Routes = [
   {
     path: "/",
     element: <FullLayout />,
-    // todo: registracija ir prisijungimas neturetu but po fulllayout gaaal ?? kad nebutu header? ner priority
     children: [
       { path: "/", element: <Navigate to="/main" /> },
       { path: "/main", exact: true, element: <MainPage /> },

@@ -6,6 +6,7 @@ import {
   Col,
   Input,
   Label,
+  CardHeader,
   Button,
   Card,
   CardBody,
@@ -66,7 +67,7 @@ const CreatePetPage = () => {
         setInputs({ ...inputs, shelterId: respone.data.shelterId });
       });
   }, [id]);
-  //todo: puslapis uzkraunamas dar nespejus uzsetint duomenu. pataisyt!
+  //todo: puslapis uzkraunamas dar nespejus uzsetint duomenu. pataisyt !
   const handleSubmit = (e) => {
     e.preventDefault();
     if (id) {
@@ -85,9 +86,20 @@ const CreatePetPage = () => {
     setInputs({ ...inputs, [id]: value });
   };
 
+  const back = () => {
+    if (id) {
+      navigate(`/suteik-namus/${id}`);
+    } else {
+      navigate(`/main`);
+    }
+  };
+
   // todo: nera idedama dar foto, bet ner niekur nk su foto dar
   return (
     <Card>
+      <CardHeader tag="h3" className="text-center">
+        Gyvūno anketos kūrimas
+      </CardHeader>
       <CardBody>
         <Form onSubmit={handleSubmit}>
           <FormGroup row>
@@ -212,7 +224,19 @@ const CreatePetPage = () => {
               </Input>
             </Col>
           </FormGroup>
-          <Button type="submit">Išsaugoti</Button>
+          <div class="button-group">
+            <Button color="primary" type="submit">
+              Išsaugoti
+            </Button>
+            <Button
+              color="danger"
+              style={{ float: "right" }}
+              onClick={back}
+              right
+            >
+              Atšaukti
+            </Button>
+          </div>
         </Form>
       </CardBody>
     </Card>

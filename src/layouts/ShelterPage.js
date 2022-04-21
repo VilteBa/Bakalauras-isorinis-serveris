@@ -60,7 +60,7 @@ const ShelterPage = () => {
         </CardBody>
       </Card>
       {/* todo: jei darbuotojas perziuri savo prieglauda tai turi but edit button ir galejimas redaguot 
-      NERA priority kol kas, nera net edit shelter jokio page */}
+      dar nera net edit shelter jokio page */}
       {editable && <Button color="primary">Redaguoti</Button>}
     </div>
   );

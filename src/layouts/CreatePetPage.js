@@ -98,7 +98,7 @@ const CreatePetPage = () => {
   return (
     <Card>
       <CardHeader tag="h3" className="text-center">
-        Gyvūno anketos kūrimas
+        Gyvūno anketos {id ? "redagavimas" : "kūrimas"}
       </CardHeader>
       <CardBody>
         <Form onSubmit={handleSubmit}>
@@ -242,11 +242,5 @@ const CreatePetPage = () => {
     </Card>
   );
 };
-//todo: gal reiktu mygtuko atsaukti? jei edit tai grizt i pet page jei create tai i pets page
-
-// reiks kazkokio upluod photo */}
-// <img src={imageSrc}></img>
-// <input type="file" accept="image/*" onChange={savePhoto}></input>
-// <button onClick={save}></button>
 
 export default CreatePetPage;

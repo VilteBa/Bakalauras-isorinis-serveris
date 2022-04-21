@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import { Navigate } from "react-router-dom";
 import CreatePetPage from "./layouts/CreatePetPage";
+import EditShelterPage from "./layouts/EditShelterPage";
 import ShelterPage from "./layouts/ShelterPage";
 
 /****Layouts*****/
@@ -43,6 +44,11 @@ const Routes = [
         path: "/anketos-redagavimas/:id",
         exact: true,
         element: <CreatePetPage />,
+      },
+      {
+        path: "/prieglaudos-redagavimas",
+        exact: true,
+        element: <EditShelterPage />,
       },
       { path: "/prisijungimas", exact: true, element: <LoginPage /> },
       { path: "/registracija", exact: true, element: <RegisterPage /> },

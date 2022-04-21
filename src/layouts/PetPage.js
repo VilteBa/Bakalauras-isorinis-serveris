@@ -36,6 +36,11 @@ const PetPage = () => {
     navigate(`/suteik-namus`);
     //todo: po navigate reik per naujo gaut pets nes sena rodo
   }
+
+  function editPet() {
+    navigate(`/anketos-redagavimas/${id}`);
+  }
+
   function changeToggle() {
     setToggle(!toggle);
   }
@@ -132,7 +137,9 @@ const PetPage = () => {
         editable && (
           <div class="button-group">
             {/* redaguoti truksta funkcionalumo */}
-            <Button color="primary">Redaguoti</Button>
+            <Button color="primary" onClick={editPet}>
+              Redaguoti
+            </Button>
             <Button color="danger" onClick={changeToggle}>
               Trinti
             </Button>

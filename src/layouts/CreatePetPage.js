@@ -26,7 +26,7 @@ const CreatePetPage = () => {
   const [colors, setColors] = useState([]);
   const [shelters, setShelters] = useState([]);
   const [inputs, setInputs] = useState({
-    petid: id ?? undefined,
+    petId: id ?? undefined,
     name: "",
     details: "",
     years: "",
@@ -35,8 +35,9 @@ const CreatePetPage = () => {
     type: "",
     size: "",
     color: "",
-    shelterid: "",
+    shelterId: "",
   });
+  // nzn ar ok kad Id ar id
   const userData = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
@@ -62,20 +63,18 @@ const CreatePetPage = () => {
 
     if (id) {
       axios.get(`https://localhost:44323/Pet/${id}`).then((respone) => {
-        console.log(respone.data);
-        // kazkaip uzsetint
+        // sitas per daug dalyku pasetina :? kol kas dzin
         setInputs(respone.data);
       });
     }
 
     axios
       .get(`https://localhost:44323/Customer/Client/${userData.userId}`)
-      .then((userRespone) => {
-        setInputs({ ...inputs, shelterid: userData.userId.shelterId });
-        console.log(inputs.value);
+      .then((respone) => {
+        setInputs({ ...inputs, shelterId: respone.data.shelterId });
       });
   }, [id]);
-
+  //todo: puslapis uzkraunamas dar nespejus uzsetint duomenu. pataisyt!
   const handleSubmit = (e) => {
     e.preventDefault();
     if (id) {
@@ -221,33 +220,13 @@ const CreatePetPage = () => {
               </Input>
             </Col>
           </FormGroup>
-          {/* todo: gal net nereik sito?? o pagal tai koks vartotojas kuria tai prieglaudai ir priskirt */}
-          <FormGroup row>
-            <Label for="shelterid" sm={2}>
-              Prieglauda
-            </Label>
-            <Col sm={10}>
-              <Input
-                id="shelterid"
-                type="select"
-                onChange={handleChange}
-                value={inputs.shelterid}
-              >
-                <option />
-                {shelters.map((s, i) => (
-                  <option key={i} value={s.shelterId}>
-                    {s.name}
-                  </option>
-                ))}
-              </Input>
-            </Col>
-          </FormGroup>
           <Button type="submit">Išsaugoti</Button>
         </Form>
       </CardBody>
     </Card>
   );
 };
+//todo: gal reiktu mygtuko atsaukti? jei edit tai grizt i pet page jei create tai i pets page
 
 // reiks kazkokio upluod photo */}
 // <img src={imageSrc}></img>

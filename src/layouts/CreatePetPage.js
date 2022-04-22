@@ -67,7 +67,7 @@ const CreatePetPage = () => {
         setInputs({ ...inputs, shelterId: respone.data.shelterId });
       });
   }, [id]);
-  //todo: puslapis uzkraunamas dar nespejus uzsetint duomenu. pataisyt !
+  //todo: puslapis uzkraunamas dar nespejus uzsetint duomenu. pataisyt ! gal reik kaip edit shelter perdaryt?
   const handleSubmit = (e) => {
     e.preventDefault();
     if (id) {

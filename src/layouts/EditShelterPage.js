@@ -3,24 +3,20 @@ import { useEffect, useState } from "react";
 import {
   Form,
   FormGroup,
-  Col,
   Input,
   Label,
   CardHeader,
   Button,
   Card,
-  CardBody,
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 
-//todo: sex, type, size... Rodo angliskai, reikia lt
 const EditShelterPage = () => {
   let navigate = useNavigate();
   const [shelter, setShelter] = useState({});
 
-  const userData = JSON.parse(localStorage.getItem("user"));
-
   useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("user"));
     axios
       .get(`https://localhost:44323/Customer/Client/${userData.userId}`)
       .then((userRespone) => {
@@ -31,8 +27,6 @@ const EditShelterPage = () => {
           });
       });
   }, []);
-
-  //todo: puslapis uzkraunamas dar nespejus uzsetint duomenu. pataisyt !
 
   const handleSubmit = (e) => {
     const body = {
@@ -51,7 +45,6 @@ const EditShelterPage = () => {
   };
 
   const back = () => {
-    console.log(shelter);
     navigate(`/savanoriauk/${shelter.shelterId}`);
   };
 

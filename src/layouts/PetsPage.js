@@ -36,11 +36,19 @@ const PetsPage = ({ userSpecific = false }) => {
           });
       }
     } else {
+      let params = {
+        page: currentPage,
+        pageLimit: pageLimit,
+        // sexes: "Male", uz kiekviena nauja norima paduot sex reik kaip naujo parametro??
+      };
+
       axios
-        .get(
-          `https://localhost:44323/Pet?page=${currentPage}&pageLimit=${pageLimit}`
-        )
-        .then((respone) => setPets(respone.data));
+        .get(`https://localhost:44323/Pet`, {
+          params,
+        })
+        .then((respone) => {
+          setPets(respone.data);
+        });
     }
     //todo: suzinot kiek tiksliai gyvunu yra kad rodyt teisinga sk puslapiu
     const total = 11;

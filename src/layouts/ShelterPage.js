@@ -64,8 +64,6 @@ const ShelterPage = () => {
           <div>El. paštas - {shelter.email}</div>
         </CardBody>
       </Card>
-      {/* todo: jei darbuotojas perziuri savo prieglauda tai turi but edit button ir galejimas redaguot 
-      dar nera net edit shelter jokio page */}
       {editable && (
         <Button color="primary" onClick={editShelter}>
           Redaguoti

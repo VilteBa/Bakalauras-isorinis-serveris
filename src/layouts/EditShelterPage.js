@@ -36,29 +36,30 @@ const EditShelterPage = () => {
 
   const handleSubmit = (e) => {
     const body = {
+      shelterId: shelter.shelterId,
       name: e.target.name.value,
       city: e.target.city.value,
       adress: e.target.adress.value,
-      phone: e.target.phone.value,
+      phoneNumber: e.target.phoneNumber.value,
       email: e.target.email.value,
       about: e.target.about.value,
     };
-    //todo: dar ner tokio endpoint
-    // axios
-    //   .patch(`https://localhost:44323/Shelter`, body)
-    //   .then((response) => navigate(`/suteik-namus/${shelter.shelterId}`));
+    //todo: backend sutvarkyt kad eitu per multiple lines atsakymas about
+    axios
+      .patch(`https://localhost:44323/Shelter`, body)
+      .then(navigate(`/savanoriauk/${shelter.shelterId}`));
   };
 
   const back = () => {
     console.log(shelter);
-    navigate(`/savanoriauk/${shelter.shelterid})`);
+    navigate(`/savanoriauk/${shelter.shelterId}`);
   };
 
   // todo: nera idedama dar foto, bet ner niekur nk su foto dar
   return (
     <Card body>
       <CardHeader tag="h3" className="text-center">
-        Prieglaudos anketos kūrimas
+        Prieglaudos informacijos redagavimas
       </CardHeader>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
@@ -89,12 +90,7 @@ const EditShelterPage = () => {
           <Button color="primary" type="submit">
             Išsaugoti
           </Button>
-          <Button
-            color="danger"
-            style={{ float: "right" }}
-            onClick={back}
-            right
-          >
+          <Button color="danger" style={{ float: "right" }} onClick={back}>
             Atšaukti
           </Button>
         </div>

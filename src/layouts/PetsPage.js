@@ -12,9 +12,9 @@ const PetsPage = ({ userSpecific = false }) => {
   const [pets, setPets] = useState([]);
   const [pageCount, setpageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
-  const userData = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("user"));
     if (userSpecific) {
       if (userData.role === "User") {
         axios
@@ -42,16 +42,22 @@ const PetsPage = ({ userSpecific = false }) => {
         )
         .then((respone) => setPets(respone.data));
     }
-
-    // suzinot kiek tiksliai gyvunu yra kad rodyt teisinga sk puslapiu
+    //todo: suzinot kiek tiksliai gyvunu yra kad rodyt teisinga sk puslapiu
     const total = 11;
     setpageCount(Math.ceil(total / pageLimit));
-  }, [currentPage, pageLimit, userData, userSpecific]);
+  }, [currentPage, pageLimit, userSpecific]);
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, [pets]);
+
+  // gal cia nereik async
   const handlePageChange = async (data) => {
     setCurrentPage(data.selected);
-    // scroll to the top
-    //window.scrollTo(0, 0)
   };
 
   return (

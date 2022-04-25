@@ -44,7 +44,6 @@ const PetPage = () => {
   function deletePet() {
     axios.delete(`https://localhost:44323/Pet/${id}`);
     navigate(-1);
-    //todo: po navigate reik per naujo gaut pets nes sena rodo
   }
 
   function editPet() {

@@ -32,17 +32,25 @@ const CreatePetPage = () => {
     type: "",
     size: "",
     color: "",
-    shelterId: getShelterId(),
+    shelterId: "",
   });
 
-  function getShelterId() {
+  useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
+
+    if (id) {
+      axios.get(`https://localhost:44323/Pet/${id}`).then((respone) => {
+        // sitas per daug dalyku pasetina :? kol kas dzin
+        setInputs(respone.data);
+      });
+    }
+
     axios
       .get(`https://localhost:44323/Customer/Client/${userData.userId}`)
       .then((respone) => {
-        return respone.data.shelterId;
+        setInputs({ ...inputs, shelterId: respone.data.shelterId });
       });
-  }
+  }, [id]); // todo: reiktu kazkaip perdaryt
 
   useEffect(() => {
     axios
@@ -60,14 +68,7 @@ const CreatePetPage = () => {
     axios
       .get(`https://localhost:44323/Pet/colors`)
       .then((respone) => setColors(respone.data));
-
-    if (id) {
-      axios.get(`https://localhost:44323/Pet/${id}`).then((respone) => {
-        // sitas per daug dalyku pasetina :? kol kas dzin
-        setInputs(respone.data);
-      });
-    }
-  }, [id]);
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();

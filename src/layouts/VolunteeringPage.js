@@ -17,39 +17,34 @@ import ReactPaginate from "react-paginate";
 const VolunteeringPage = () => {
   const [shelters, setShelters] = useState([]);
   const [pageCount, setpageCount] = useState(0);
-  const [currentPage, setCurrentPage] = useState(0);
   const [cities, setCities] = useState([]);
-  // galima keist pagal ekrano dydi
-  let pageLimit = 2;
+  const [params, setParams] = useState({
+    page: 0,
+    pageLimit: 2,
+    cities: "",
+  });
+
+  const handlePageChange = async (data) => {
+    setParams({ ...params, page: data.selected });
+  };
 
   useEffect(() => {
     axios.get(`https://localhost:44323/Shelter/Cities`).then((respone) => {
       setCities(respone.data);
     });
+  }, []);
 
-    refresh();
-  }, [currentPage, pageLimit]);
-
-  const handlePageChange = async (data) => {
-    setCurrentPage(data.selected);
-    // scroll to the top
-    //window.scrollTo(0, 0)
-  };
-
-  const refresh = (city) => {
-    let params = {
-      page: currentPage,
-      pageLimit: pageLimit,
-      cities: city,
-    };
+  useEffect(() => {
     axios
       .get(`https://localhost:44323/Shelter`, { params })
       .then((respone) => setShelters(respone.data));
 
     axios
       .get(`https://localhost:44323/Shelter/Count`, { params })
-      .then((respone) => setpageCount(Math.ceil(respone.data / pageLimit)));
-  };
+      .then((respone) =>
+        setpageCount(Math.ceil(respone.data / params.pageLimit))
+      );
+  }, [params]);
 
   useEffect(() => {
     window.scrollTo({
@@ -63,7 +58,7 @@ const VolunteeringPage = () => {
     <div>
       <Form
         onSubmit={(e) => {
-          refresh(e.target.cities.value);
+          setParams({ ...params, cities: e.target.cities.value, page: 0 });
         }}
       >
         <Card>

@@ -16,15 +16,20 @@ import { useEffect, useState } from "react";
 //todo: get Pets perdaryt gal viena endpoint, kiuriam paduodamas parametras nurodantis ar is loved pets, ar shelter pets ar visi
 const PetsPage = ({ userSpecific = false }) => {
   // galima keist pagal ekrano dydi
-  let pageLimit = 8;
   const [pets, setPets] = useState([]);
   const [pageCount, setpageCount] = useState(0);
-  const [currentPage, setCurrentPage] = useState(0);
-
   const [sexes, setSexes] = useState([]);
   const [types, setTypes] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [colors, setColors] = useState([]);
+  const [params, setParams] = useState({
+    page: 0,
+    pageLimit: 4, // atkeist i 8
+    sexes: "",
+    types: "",
+    sizes: "",
+    colors: "",
+  });
 
   useEffect(() => {
     axios
@@ -42,7 +47,9 @@ const PetsPage = ({ userSpecific = false }) => {
     axios
       .get(`https://localhost:44323/Pet/colors`)
       .then((respone) => setColors(respone.data));
+  }, []);
 
+  useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
     if (userSpecific) {
       if (userData.role === "User") {
@@ -65,12 +72,6 @@ const PetsPage = ({ userSpecific = false }) => {
           });
       }
     } else {
-      let params = {
-        page: currentPage,
-        pageLimit: pageLimit,
-        // sexes: "Male", uz kiekviena nauja norima paduot sex reik kaip naujo parametro??
-      };
-
       axios
         .get(`https://localhost:44323/Pet`, {
           params,
@@ -78,12 +79,16 @@ const PetsPage = ({ userSpecific = false }) => {
         .then((respone) => {
           setPets(respone.data);
         });
-    }
-    let total = 11;
 
-    //todo: suzinot kiek tiksliai gyvunu yra kad rodyt teisinga sk puslapiu
-    setpageCount(Math.ceil(total / pageLimit));
-  }, [currentPage, pageLimit, userSpecific]);
+      axios
+        .get(`https://localhost:44323/Pet/Count`, {
+          params,
+        })
+        .then((respone) => {
+          setpageCount(Math.ceil(respone.data / params.pageLimit));
+        });
+    }
+  }, [params, userSpecific]);
 
   useEffect(() => {
     window.scrollTo({
@@ -95,43 +100,24 @@ const PetsPage = ({ userSpecific = false }) => {
 
   // gal cia nereik async
   const handlePageChange = async (data) => {
-    setCurrentPage(data.selected);
+    setParams({ ...params, page: data.selected });
   };
-
-  const refresh = (e) => {
-    // setCurrentPage(0);
-
-    let params = {
-      page: currentPage,
-      pageLimit: pageLimit,
-      sexes: e.target.sex.value,
-      types: e.target.type.value,
-      sizes: e.target.size.value,
-      colors: e.target.color.value,
-    };
-
-    axios
-      .get(`https://localhost:44323/Pet`, {
-        params,
-      })
-      .then((respone) => {
-        setPets(respone.data);
-      });
-
-    axios
-      .get(`https://localhost:44323/Pet/Count`, {
-        params,
-      })
-      .then((respone) => {
-        setpageCount(Math.ceil(respone.data / pageLimit));
-      });
-  };
-  // todo: PEREINANT I KITA PAGE NUSIMUSA VISI FILTRAI
   return (
     <div>
       {/* todo: kol kas filtrus rodau tik vartotojui, backe ner filtru kitiem (t.y. loved pets ar shelter pets) */}
       {!userSpecific && (
-        <Form onSubmit={refresh}>
+        <Form
+          onSubmit={(e) => {
+            setParams({
+              ...params,
+              page: 0,
+              sexes: e.target.sex.value,
+              types: e.target.type.value,
+              sizes: e.target.size.value,
+              colors: e.target.color.value,
+            });
+          }}
+        >
           <Card>
             <CardBody>
               <Row>

@@ -1,4 +1,4 @@
-import { Col, Row } from "reactstrap";
+import { CardTitle, Col, Row } from "reactstrap";
 import {
   Card,
   CardHeader,
@@ -81,7 +81,6 @@ const PetsPage = ({ userSpecific = false }) => {
           });
       }
     } else {
-      console.log(params);
       axios
         .get(`https://localhost:44323/Pet`, {
           params,
@@ -266,13 +265,13 @@ const PetsPage = ({ userSpecific = false }) => {
               rel="noopener noreferrer"
             >
               <Card className="text-center mt-5">
-                <CardHeader className="p-0">
+                <CardTitle className="p-0">
                   <img
                     className="card-img"
                     src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*"
                     alt="dog"
                   />
-                </CardHeader>
+                </CardTitle>
                 <CardFooter className="bg-white">
                   <h5 className="text-black">{pet.name}</h5>
                 </CardFooter>

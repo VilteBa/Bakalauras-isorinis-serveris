@@ -22,13 +22,23 @@ const PetPage = () => {
   const [pet, setPet] = useState({});
   const [petShelter, setPetShelter] = useState({});
   const [editable, setEditable] = useState(false);
+  const [isLoved, setIsLoved] = useState(false);
   const [toggle, setToggle] = useState(false);
   const userData = JSON.parse(localStorage.getItem("user"));
 
   function lovePet() {
-    axios.put(
-      `https://localhost:44323/Pet/lovePet?petId=${id}&userId=${userData.userId}`
-    );
+    axios
+      .put(
+        `https://localhost:44323/Pet/LovePet?petId=${id}&userId=${userData.userId}`
+      )
+      .then(setIsLoved(true));
+  }
+  function unlovePet() {
+    axios
+      .delete(
+        `https://localhost:44323/Pet/UnlovePet?petId=${id}&userId=${userData.userId}`
+      )
+      .then(setIsLoved(false));
   }
 
   function deletePet() {
@@ -53,6 +63,14 @@ const PetPage = () => {
     axios
       .get(`https://localhost:44323/Shelter/${pet.shelterId}`)
       .then((respone) => setPetShelter(respone.data));
+
+    axios
+      .get(
+        `https://localhost:44323/Pet/isLovedPet?petId=${id}&userId=${userData.userId}`
+      )
+      .then((respone) => {
+        setIsLoved(respone.data);
+      });
 
     axios
       .get(
@@ -129,10 +147,15 @@ const PetPage = () => {
         </CardBody>
       </Card>
       {userData.role === "User" ? (
-        // isimt is pamegtu saraso jei jau pamegtas truksta ir BE funkcionalumo
-        <Button color="primary" onClick={lovePet}>
-          Pamėgti
-        </Button>
+        isLoved ? (
+          <Button color="danger" onClick={unlovePet}>
+            Išimti iš pamėgtų sąrašo
+          </Button>
+        ) : (
+          <Button color="primary" onClick={lovePet}>
+            Pamėgti
+          </Button>
+        )
       ) : (
         editable && (
           <div class="button-group">

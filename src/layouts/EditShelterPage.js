@@ -5,9 +5,10 @@ import {
   FormGroup,
   Input,
   Label,
-  CardHeader,
   Button,
   Card,
+  CardTitle,
+  CardBody,
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -51,43 +52,45 @@ const EditShelterPage = () => {
   // todo: nera idedama dar foto, bet ner niekur nk su foto dar
   return (
     <Card body>
-      <CardHeader tag="h3" className="text-center">
+      <CardTitle tag="h4" className="border-bottom p-3 mb-0 text-center">
         Prieglaudos informacijos redagavimas
-      </CardHeader>
-      <Form onSubmit={handleSubmit}>
-        <FormGroup>
-          <Label for="name">Prieglaudos pavadinimas</Label>
-          <Input id="name" defaultValue={shelter.name} />
-        </FormGroup>
-        <FormGroup>
-          <Label for="city">Miestas</Label>
-          <Input id="city" defaultValue={shelter.city} />
-        </FormGroup>
-        <FormGroup>
-          <Label for="adress">Adresas</Label>
-          <Input id="adress" defaultValue={shelter.adress} />
-        </FormGroup>
-        <FormGroup>
-          <Label for="phoneNumber">Mobilusis numeris</Label>
-          <Input id="phoneNumber" defaultValue={shelter.phoneNumber} />
-        </FormGroup>
-        <FormGroup>
-          <Label for="email">El. paštas</Label>
-          <Input id="email" type="email" defaultValue={shelter.email} />
-        </FormGroup>
-        <FormGroup>
-          <Label for="about">Aprašas</Label>
-          <Input id="about" type="textarea" defaultValue={shelter.about} />
-        </FormGroup>
-        <div class="button-group">
-          <Button color="primary" type="submit">
-            Išsaugoti
-          </Button>
-          <Button color="danger" style={{ float: "right" }} onClick={back}>
-            Atšaukti
-          </Button>
-        </div>
-      </Form>
+      </CardTitle>
+      <CardBody>
+        <Form onSubmit={handleSubmit}>
+          <FormGroup>
+            <Label for="name">Prieglaudos pavadinimas</Label>
+            <Input id="name" defaultValue={shelter.name} />
+          </FormGroup>
+          <FormGroup>
+            <Label for="city">Miestas</Label>
+            <Input id="city" defaultValue={shelter.city} />
+          </FormGroup>
+          <FormGroup>
+            <Label for="adress">Adresas</Label>
+            <Input id="adress" defaultValue={shelter.adress} />
+          </FormGroup>
+          <FormGroup>
+            <Label for="phoneNumber">Mobilusis numeris</Label>
+            <Input id="phoneNumber" defaultValue={shelter.phoneNumber} />
+          </FormGroup>
+          <FormGroup>
+            <Label for="email">El. paštas</Label>
+            <Input id="email" type="email" defaultValue={shelter.email} />
+          </FormGroup>
+          <FormGroup>
+            <Label for="about">Aprašas</Label>
+            <Input id="about" type="textarea" defaultValue={shelter.about} />
+          </FormGroup>
+          <div class="button-group">
+            <Button color="primary" type="submit">
+              Išsaugoti
+            </Button>
+            <Button color="danger" style={{ float: "right" }} onClick={back}>
+              Atšaukti
+            </Button>
+          </div>
+        </Form>
+      </CardBody>
     </Card>
   );
 };

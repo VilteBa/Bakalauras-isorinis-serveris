@@ -2,6 +2,7 @@ import { lazy } from "react";
 import { Navigate } from "react-router-dom";
 import CreatePetPage from "./layouts/CreatePetPage";
 import EditShelterPage from "./layouts/EditShelterPage";
+import PersonalDataPage from "./layouts/PersonalDataPage";
 import ShelterPage from "./layouts/ShelterPage";
 
 /****Layouts*****/
@@ -52,6 +53,11 @@ const Routes = [
       },
       { path: "/prisijungimas", exact: true, element: <LoginPage /> },
       { path: "/registracija", exact: true, element: <RegisterPage /> },
+      {
+        path: "/vartotojo-duomenys",
+        exact: true,
+        element: <PersonalDataPage />,
+      },
     ],
   },
 ];

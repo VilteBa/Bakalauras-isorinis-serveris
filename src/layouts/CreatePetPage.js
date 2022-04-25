@@ -6,10 +6,10 @@ import {
   Col,
   Input,
   Label,
-  CardHeader,
   Button,
   Card,
   CardBody,
+  CardTitle,
 } from "reactstrap";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -99,9 +99,9 @@ const CreatePetPage = () => {
   // todo: nera idedama dar foto, bet ner niekur nk su foto dar
   return (
     <Card>
-      <CardHeader tag="h3" className="text-center">
+      <CardTitle tag="h4" className="border-bottom p-3 mb-0 text-center">
         Gyvūno anketos {id ? "redagavimas" : "kūrimas"}
-      </CardHeader>
+      </CardTitle>
       <CardBody>
         <Form onSubmit={handleSubmit}>
           <FormGroup row>

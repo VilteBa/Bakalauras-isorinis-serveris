@@ -1,11 +1,19 @@
 import { Col, Row } from "reactstrap";
-import { Card, CardHeader, CardFooter } from "reactstrap";
+import {
+  Card,
+  CardHeader,
+  CardFooter,
+  Form,
+  Label,
+  Input,
+  Button,
+  CardBody,
+} from "reactstrap";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-// todo: reiks filtavimo, is backo yra kazkiek padaryta
-
+//todo: get Pets perdaryt gal viena endpoint, kiuriam paduodamas parametras nurodantis ar is loved pets, ar shelter pets ar visi
 const PetsPage = ({ userSpecific = false }) => {
   // galima keist pagal ekrano dydi
   let pageLimit = 8;
@@ -13,7 +21,28 @@ const PetsPage = ({ userSpecific = false }) => {
   const [pageCount, setpageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
 
+  const [sexes, setSexes] = useState([]);
+  const [types, setTypes] = useState([]);
+  const [sizes, setSizes] = useState([]);
+  const [colors, setColors] = useState([]);
+
   useEffect(() => {
+    axios
+      .get(`https://localhost:44323/Pet/sexes`)
+      .then((respone) => setSexes(respone.data));
+
+    axios
+      .get(`https://localhost:44323/Pet/types`)
+      .then((respone) => setTypes(respone.data));
+
+    axios
+      .get(`https://localhost:44323/Pet/sizes`)
+      .then((respone) => setSizes(respone.data));
+
+    axios
+      .get(`https://localhost:44323/Pet/colors`)
+      .then((respone) => setColors(respone.data));
+
     const userData = JSON.parse(localStorage.getItem("user"));
     if (userSpecific) {
       if (userData.role === "User") {
@@ -50,8 +79,9 @@ const PetsPage = ({ userSpecific = false }) => {
           setPets(respone.data);
         });
     }
+    let total = 11;
+
     //todo: suzinot kiek tiksliai gyvunu yra kad rodyt teisinga sk puslapiu
-    const total = 11;
     setpageCount(Math.ceil(total / pageLimit));
   }, [currentPage, pageLimit, userSpecific]);
 
@@ -68,8 +98,113 @@ const PetsPage = ({ userSpecific = false }) => {
     setCurrentPage(data.selected);
   };
 
+  const refresh = (e) => {
+    // setCurrentPage(0);
+
+    let params = {
+      page: currentPage,
+      pageLimit: pageLimit,
+      sexes: e.target.sex.value,
+      types: e.target.type.value,
+      sizes: e.target.size.value,
+      colors: e.target.color.value,
+    };
+
+    axios
+      .get(`https://localhost:44323/Pet`, {
+        params,
+      })
+      .then((respone) => {
+        setPets(respone.data);
+      });
+
+    axios
+      .get(`https://localhost:44323/Pet/Count`, {
+        params,
+      })
+      .then((respone) => {
+        setpageCount(Math.ceil(respone.data / pageLimit));
+      });
+  };
+
   return (
     <div>
+      {/* todo: kol kas filtrus rodau tik vartotojui, backe ner filtru kitiem (t.y. loved pets ar shelter pets) */}
+      {!userSpecific && (
+        <Form onSubmit={refresh}>
+          <Card>
+            <CardBody>
+              <Row>
+                <Col>
+                  <Row>
+                    <Label for="sex" sm={4}>
+                      Lytis
+                    </Label>
+                    <Col sm={7}>
+                      <Input id="sex" type="select">
+                        <option value={""}>-</option>/>
+                        {sexes.map((s, i) => (
+                          <option key={i}>{s}</option>
+                        ))}
+                      </Input>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col>
+                  <Row>
+                    <Label for="type" sm={4}>
+                      Rūšis
+                    </Label>
+                    <Col sm={7}>
+                      <Input id="type" type="select">
+                        <option value={""}>-</option>/>
+                        {types.map((s, i) => (
+                          <option key={i}>{s}</option>
+                        ))}
+                      </Input>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col>
+                  <Row>
+                    <Label for="size" sm={4}>
+                      Dydis
+                    </Label>
+                    <Col sm={7}>
+                      <Input id="size" type="select">
+                        <option value={""}>-</option>/>
+                        {sizes.map((s, i) => (
+                          <option key={i}>{s}</option>
+                        ))}
+                      </Input>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col>
+                  <Row>
+                    <Label for="color" sm={4}>
+                      Spalva
+                    </Label>
+                    <Col sm={7}>
+                      <Input id="color" type="select">
+                        <option value={""}>-</option>/>
+                        {colors.map((s, i) => (
+                          <option key={i}>{s}</option>
+                        ))}
+                      </Input>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col>
+                  <Button style={{ float: "right" }} color="info" type="submit">
+                    Ieškoti
+                  </Button>
+                </Col>
+              </Row>
+            </CardBody>
+          </Card>
+        </Form>
+      )}
       <Row>
         {pets.map((pet, index) => (
           <Col sm="6" lg="6" xl="3" key={index}>

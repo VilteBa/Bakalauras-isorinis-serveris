@@ -33,3 +33,14 @@
 .button-group .btn {
   margin: 3px;
 }
+
+.filter{
+  margin: 4px 0 4px 0;
+}
+
+@media screen and (max-width: 576px) {
+  .btn-xs-block {
+      display: block;
+      width: 100%;
+  }
+}

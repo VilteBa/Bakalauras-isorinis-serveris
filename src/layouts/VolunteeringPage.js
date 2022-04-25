@@ -67,7 +67,7 @@ const VolunteeringPage = () => {
               <Label for="cities" xl={1} sm={2} xs={4}>
                 Miestas
               </Label>
-              <Col xs={4}>
+              <Col sm={4} xs={8}>
                 <Input id="cities" type="select">
                   <option value={""}>-</option>
                   {cities.map((s, i) => (
@@ -75,8 +75,13 @@ const VolunteeringPage = () => {
                   ))}
                 </Input>
               </Col>
-              <Col xl={7} md={6} xs={4}>
-                <Button style={{ float: "right" }} color="info" type="submit">
+              <Col xl={7} sm={6} xs={12} className="filter">
+                <Button
+                  style={{ float: "right" }}
+                  color="info"
+                  type="submit"
+                  className="btn-xs-block"
+                >
                   Ieškoti
                 </Button>
               </Col>

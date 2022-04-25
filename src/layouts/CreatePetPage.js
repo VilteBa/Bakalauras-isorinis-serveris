@@ -32,10 +32,17 @@ const CreatePetPage = () => {
     type: "",
     size: "",
     color: "",
-    shelterId: "",
+    shelterId: getShelterId(),
   });
-  // nzn ar ok kad Id ar id
-  const userData = JSON.parse(localStorage.getItem("user"));
+
+  function getShelterId() {
+    const userData = JSON.parse(localStorage.getItem("user"));
+    axios
+      .get(`https://localhost:44323/Customer/Client/${userData.userId}`)
+      .then((respone) => {
+        return respone.data.shelterId;
+      });
+  }
 
   useEffect(() => {
     axios
@@ -60,14 +67,8 @@ const CreatePetPage = () => {
         setInputs(respone.data);
       });
     }
-
-    axios
-      .get(`https://localhost:44323/Customer/Client/${userData.userId}`)
-      .then((respone) => {
-        setInputs({ ...inputs, shelterId: respone.data.shelterId });
-      });
   }, [id]);
-  //todo: puslapis uzkraunamas dar nespejus uzsetint duomenu. pataisyt ! gal reik kaip edit shelter perdaryt?
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (id) {
@@ -228,12 +229,7 @@ const CreatePetPage = () => {
             <Button color="primary" type="submit">
               Išsaugoti
             </Button>
-            <Button
-              color="danger"
-              style={{ float: "right" }}
-              onClick={back}
-              right
-            >
+            <Button color="danger" style={{ float: "right" }} onClick={back}>
               Atšaukti
             </Button>
           </div>

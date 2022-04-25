@@ -15,7 +15,6 @@ import {
 import axios from "axios";
 
 const Header = () => {
-  //todo: kol kas ??? token thing
   const userData = JSON.parse(localStorage.getItem("user"));
   const [shelterId, setShelterId] = useState(0);
   const [isOpen, setIsOpen] = useState(false);

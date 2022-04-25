@@ -6,7 +6,11 @@ import {
   CardSubtitle,
   CardTitle,
   Button,
+  Form,
+  Input,
+  Label,
 } from "reactstrap";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 
@@ -14,24 +18,16 @@ const VolunteeringPage = () => {
   const [shelters, setShelters] = useState([]);
   const [pageCount, setpageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
-
+  const [cities, setCities] = useState([]);
   // galima keist pagal ekrano dydi
-  let pageLimit = 5;
+  let pageLimit = 2;
 
   useEffect(() => {
-    const getPets = async () => {
-      const res = await fetch(
-        `https://localhost:44323/Shelter?page=${currentPage}&pageLimit=${pageLimit}`
-      );
-      const data = await res.json();
-      setShelters(data);
+    axios.get(`https://localhost:44323/Shelter/Cities`).then((respone) => {
+      setCities(respone.data);
+    });
 
-      // suzinot kiek tiksliai prieglaudu yra
-      const total = 11;
-      setpageCount(Math.ceil(total / pageLimit));
-    };
-
-    getPets();
+    refresh();
   }, [currentPage, pageLimit]);
 
   const handlePageChange = async (data) => {
@@ -40,9 +36,59 @@ const VolunteeringPage = () => {
     //window.scrollTo(0, 0)
   };
 
-  let imageSrc = "";
+  const refresh = (city) => {
+    let params = {
+      page: currentPage,
+      pageLimit: pageLimit,
+      cities: city,
+    };
+    axios
+      .get(`https://localhost:44323/Shelter`, { params })
+      .then((respone) => setShelters(respone.data));
+
+    axios
+      .get(`https://localhost:44323/Shelter/Count`, { params })
+      .then((respone) => setpageCount(Math.ceil(respone.data / pageLimit)));
+  };
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, [shelters]);
+
   return (
     <div>
+      <Form
+        onSubmit={(e) => {
+          refresh(e.target.cities.value);
+        }}
+      >
+        <Card>
+          <CardBody>
+            <Row>
+              <Label for="cities" xl={1} sm={2} xs={4}>
+                Miestas
+              </Label>
+              <Col xs={4}>
+                <Input id="cities" type="select">
+                  <option value={""}>-</option>
+                  {cities.map((s, i) => (
+                    <option key={i}>{s}</option>
+                  ))}
+                </Input>
+              </Col>
+              <Col xl={7} md={6} xs={4}>
+                <Button style={{ float: "right" }} color="info" type="submit">
+                  Ieškoti
+                </Button>
+              </Col>
+            </Row>
+          </CardBody>
+        </Card>
+      </Form>
       <Row>
         {shelters.map((shelter, index) => (
           <Col sm="6" lg="6" xl="3" key={index}>

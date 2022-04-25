@@ -126,7 +126,7 @@ const PetsPage = ({ userSpecific = false }) => {
         setpageCount(Math.ceil(respone.data / pageLimit));
       });
   };
-
+  // todo: PEREINANT I KITA PAGE NUSIMUSA VISI FILTRAI
   return (
     <div>
       {/* todo: kol kas filtrus rodau tik vartotojui, backe ner filtru kitiem (t.y. loved pets ar shelter pets) */}
@@ -142,7 +142,7 @@ const PetsPage = ({ userSpecific = false }) => {
                     </Label>
                     <Col sm={7}>
                       <Input id="sex" type="select">
-                        <option value={""}>-</option>/>
+                        <option value={""}>-</option>
                         {sexes.map((s, i) => (
                           <option key={i}>{s}</option>
                         ))}
@@ -157,7 +157,7 @@ const PetsPage = ({ userSpecific = false }) => {
                     </Label>
                     <Col sm={7}>
                       <Input id="type" type="select">
-                        <option value={""}>-</option>/>
+                        <option value={""}>-</option>
                         {types.map((s, i) => (
                           <option key={i}>{s}</option>
                         ))}
@@ -172,7 +172,7 @@ const PetsPage = ({ userSpecific = false }) => {
                     </Label>
                     <Col sm={7}>
                       <Input id="size" type="select">
-                        <option value={""}>-</option>/>
+                        <option value={""}>-</option>
                         {sizes.map((s, i) => (
                           <option key={i}>{s}</option>
                         ))}
@@ -187,7 +187,7 @@ const PetsPage = ({ userSpecific = false }) => {
                     </Label>
                     <Col sm={7}>
                       <Input id="color" type="select">
-                        <option value={""}>-</option>/>
+                        <option value={""}>-</option>
                         {colors.map((s, i) => (
                           <option key={i}>{s}</option>
                         ))}

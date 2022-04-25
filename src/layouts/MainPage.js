@@ -114,9 +114,11 @@ const MainPage = () => {
             ))}
           </Row>
           <div class="text-center">
-            <Button color="info" type="submit">
-              Daugiau...
-            </Button>
+            <a href="#/suteik-namus">
+              <Button color="info" type="submit">
+                Daugiau...
+              </Button>
+            </a>
           </div>
         </CardBody>
       </Card>

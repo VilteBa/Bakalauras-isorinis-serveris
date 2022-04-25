@@ -22,6 +22,8 @@ const PetsPage = ({ userSpecific = false }) => {
   const [types, setTypes] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [colors, setColors] = useState([]);
+  const [cities, setCities] = useState([]);
+
   const [params, setParams] = useState({
     page: 0,
     pageLimit: 4, // atkeist i 8
@@ -29,6 +31,9 @@ const PetsPage = ({ userSpecific = false }) => {
     types: "",
     sizes: "",
     colors: "",
+    cities: "",
+    minAge: 0,
+    maxAge: 0,
   });
 
   useEffect(() => {
@@ -47,6 +52,10 @@ const PetsPage = ({ userSpecific = false }) => {
     axios
       .get(`https://localhost:44323/Pet/colors`)
       .then((respone) => setColors(respone.data));
+
+    axios
+      .get(`https://localhost:44323/Shelter/Cities`)
+      .then((respone) => setCities(respone.data));
   }, []);
 
   useEffect(() => {
@@ -72,6 +81,7 @@ const PetsPage = ({ userSpecific = false }) => {
           });
       }
     } else {
+      console.log(params);
       axios
         .get(`https://localhost:44323/Pet`, {
           params,
@@ -115,6 +125,9 @@ const PetsPage = ({ userSpecific = false }) => {
               types: e.target.type.value,
               sizes: e.target.size.value,
               colors: e.target.color.value,
+              cities: e.target.city.value,
+              minAge: Number(e.target.minAge.value),
+              maxAge: Number(e.target.maxAge.value),
             });
           }}
         >
@@ -179,6 +192,31 @@ const PetsPage = ({ userSpecific = false }) => {
                         ))}
                       </Input>
                     </Col>
+                  </Row>
+                </Col>
+                <Col>
+                  <Row>
+                    <Label for="city" sm={4}>
+                      Miestas
+                    </Label>
+                    <Col sm={7}>
+                      <Input id="city" type="select">
+                        <option value={""}>-</option>
+                        {cities.map((s, i) => (
+                          <option key={i}>{s}</option>
+                        ))}
+                      </Input>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col>
+                  <Row>
+                    <Label sm={4}>Amžius</Label>
+                    <Col sm={7}>
+                      <Input id="minAge" type="number"></Input>
+                    </Col>
+                    <Input id="maxAge" type="number"></Input>
+                    <Col></Col>
                   </Row>
                 </Col>
                 <Col>

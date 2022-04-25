@@ -29,9 +29,9 @@ const VolunteeringPage = () => {
   };
 
   useEffect(() => {
-    axios.get(`https://localhost:44323/Shelter/Cities`).then((respone) => {
-      setCities(respone.data);
-    });
+    axios
+      .get(`https://localhost:44323/Shelter/Cities`)
+      .then((respone) => setCities(respone.data));
   }, []);
 
   useEffect(() => {

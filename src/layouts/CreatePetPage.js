@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 const CreatePetPage = () => {
   let navigate = useNavigate();
   const { id } = useParams();
+  const [errors, setErrors] = useState({});
   const [sexes, setSexes] = useState([]);
   const [types, setTypes] = useState([]);
   const [sizes, setSizes] = useState([]);
@@ -39,29 +40,27 @@ const CreatePetPage = () => {
     const userData = JSON.parse(localStorage.getItem("user"));
 
     if (id) {
-      axios.get(`Pet/${id}`).then((respone) => {
-        // sitas per daug dalyku pasetina :? kol kas dzin
-        setInputs(respone.data);
-      });
+      axios.get(`Pet/${id}`).then((respone) => setInputs(respone.data));
     }
 
-    axios.get(`Customer/Client/${userData.userId}`).then((respone) => {
-      setInputs({ ...inputs, shelterId: respone.data.shelterId });
-    });
+    axios
+      .get(`Customer/Client/${userData.userId}`)
+      .then((respone) =>
+        setInputs({ ...inputs, shelterId: respone.data.shelterId })
+      );
   }, [id]);
 
   useEffect(() => {
     axios.get(`Pet/sexes`).then((respone) => setSexes(respone.data));
-
     axios.get(`Pet/types`).then((respone) => setTypes(respone.data));
-
     axios.get(`Pet/sizes`).then((respone) => setSizes(respone.data));
-
     axios.get(`Pet/colors`).then((respone) => setColors(respone.data));
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const isValid = validate(e);
+    if (!isValid) return;
     if (id) {
       axios
         .patch(`Pet`, inputs)
@@ -71,6 +70,21 @@ const CreatePetPage = () => {
         .post(`Pet`, inputs)
         .then((response) => navigate(`/suteik-namus/${response.data.petId}`));
     }
+  };
+
+  const validate = (e) => {
+    let temp = {};
+    temp.name = !e.target.name.value;
+    temp.details = !e.target.details.value;
+    temp.years = !e.target.years.value;
+    temp.months = !e.target.months.value;
+    temp.sex = !e.target.sex.value;
+    temp.type = !e.target.type.value;
+    temp.size = !e.target.size.value;
+    temp.color = !e.target.color.value;
+    // todo: reiks validacijos ir pet Images
+    setErrors(temp);
+    return Object.values(temp).every((x) => x === false);
   };
 
   const handleChange = (e) => {
@@ -104,6 +118,8 @@ const CreatePetPage = () => {
                 id="name"
                 onChange={handleChange}
                 defaultValue={inputs.name}
+                invalid={errors["name"] === true}
+                valid={errors["name"] === false}
               />
             </Col>
           </FormGroup>
@@ -117,6 +133,8 @@ const CreatePetPage = () => {
                 id="details"
                 onChange={handleChange}
                 defaultValue={inputs.details}
+                invalid={errors["details"] === true}
+                valid={errors["details"] === false}
               />
             </Col>
           </FormGroup>
@@ -130,6 +148,8 @@ const CreatePetPage = () => {
                 id="years"
                 onChange={handleChange}
                 defaultValue={inputs.years}
+                invalid={errors["years"] === true}
+                valid={errors["years"] === false}
               />
             </Col>
             <Label for="months" sm={2}>
@@ -141,6 +161,8 @@ const CreatePetPage = () => {
                 id="months"
                 onChange={handleChange}
                 defaultValue={inputs.months}
+                invalid={errors["months"] === true}
+                valid={errors["months"] === false}
               />
             </Col>
           </FormGroup>
@@ -154,6 +176,8 @@ const CreatePetPage = () => {
                 type="select"
                 onChange={handleChange}
                 value={inputs.sex}
+                invalid={errors["sex"] === true}
+                valid={errors["sex"] === false}
               >
                 <option />
                 {sexes.map((s, i) => (
@@ -172,6 +196,8 @@ const CreatePetPage = () => {
                 type="select"
                 onChange={handleChange}
                 value={inputs.type}
+                invalid={errors["type"] === true}
+                valid={errors["type"] === false}
               >
                 <option />
                 {types.map((t, i) => (
@@ -190,6 +216,8 @@ const CreatePetPage = () => {
                 type="select"
                 onChange={handleChange}
                 value={inputs.size}
+                invalid={errors["size"] === true}
+                valid={errors["size"] === false}
               >
                 <option />
                 {sizes.map((s, i) => (
@@ -208,6 +236,8 @@ const CreatePetPage = () => {
                 type="select"
                 onChange={handleChange}
                 value={inputs.color}
+                invalid={errors["color"] === true}
+                valid={errors["color"] === false}
               >
                 <option />
                 {colors.map((c, i) => (

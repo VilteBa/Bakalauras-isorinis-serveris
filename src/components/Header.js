@@ -29,9 +29,7 @@ const Header = () => {
     if (userData?.role === "Worker") {
       axios
         .get(`Customer/Client/${userData.userId}`)
-        .then((respone) => {
-          setShelterId(respone.data.shelterId);
-        });
+        .then((respone) => setShelterId(respone.data.shelterId));
     }
   }, [userData]);
 

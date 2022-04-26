@@ -59,15 +59,11 @@ const PetPage = () => {
 
     axios
       .get(`Pet/isLovedPet?petId=${id}&userId=${userData.userId}`)
-      .then((respone) => {
-        setIsLoved(respone.data);
-      });
+      .then((respone) => setIsLoved(respone.data));
 
     axios
       .get(`Pet/Editable?petId=${id}&userId=${userData.userId}`)
-      .then((respone) => {
-        setEditable(respone.data);
-      });
+      .then((respone) => setEditable(respone.data));
   }, [id, pet.shelterId, userData.userId]); // nes kai gaus per ta ireiks gauti pacia prieglauda
 
   return (

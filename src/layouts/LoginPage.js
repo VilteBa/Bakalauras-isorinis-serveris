@@ -10,17 +10,20 @@ import {
   Input,
   Col,
   Label,
+  FormFeedback,
 } from "reactstrap";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   let navigate = useNavigate();
+  const [errors, setErrors] = useState({});
   const [alert, setAlert] = useState(false); //todo: kaip paduot kad true po registracijos?
 
   const handleSubmit = (e) => {
+    if (!validate(e)) return;
     const body = {
-      emailAddress: e.target.email.value,
+      emailAddress: e.target.emailAdress.value,
       password: e.target.password.value,
     };
     axios.post(`Customer/Authenticate`, body).then((response) => {
@@ -30,6 +33,14 @@ const LoginPage = () => {
         window.location.reload();
       }
     });
+  };
+  const validate = (e) => {
+    const emailPattern = /[a-z0-9]+@[a-z]+.[a-z]+/;
+    let temp = {};
+    temp.emailAdress = !e.target.emailAdress.value.match(emailPattern);
+    temp.password = !e.target.password.value;
+    setErrors(temp);
+    return Object.values(temp).every((x) => x === false);
   };
 
   return (
@@ -44,12 +55,23 @@ const LoginPage = () => {
         <Card body>
           <Form onSubmit={handleSubmit}>
             <FormGroup>
-              <Label for="email">Vartotojo paštas</Label>
-              <Input id="email" type="email" />
+              <Label for="emailAdress">Vartotojo paštas</Label>
+              <Input
+                id="emailAdress"
+                invalid={errors["emailAdress"] === true}
+                valid={errors["emailAdress"] === false}
+              />
+              <FormFeedback>Neteisingas el. pašto formatas</FormFeedback>
             </FormGroup>
             <FormGroup>
               <Label for="password">Slaptažodis</Label>
-              <Input id="password" type="password" />
+              <Input
+                id="password"
+                type="password"
+                invalid={errors["password"] === true}
+                valid={errors["password"] === false}
+              />
+              <FormFeedback>Įveskite slaptažodį</FormFeedback>
             </FormGroup>
             <Button type="submit" size="lg" color="primary" block>
               Prisijungti

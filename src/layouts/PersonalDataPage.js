@@ -14,7 +14,7 @@ import axios from "axios";
 const PersonalDataPage = () => {
   const userData = JSON.parse(localStorage.getItem("user"));
   const [shelters, setShelters] = useState([]);
-  const [user, setUser] = useState({});
+  const [errors, setErrors] = useState({});
   const [inputs, setInputs] = useState({
     firstName: "",
     lastName: "",
@@ -28,17 +28,31 @@ const PersonalDataPage = () => {
   }, []);
 
   useEffect(() => {
-    axios.get(`Customer/Client/${userData.userId}`).then((respone) => {
-      setUser(respone.data);
-      setInputs(respone.data);
-    });
+    axios
+      .get(`Customer/Client/${userData.userId}`)
+      .then((respone) => setInputs(respone.data));
   }, [userData.userId]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const isValid = validate(e);
+    if (!isValid) return;
     axios.patch(`Customer/UpdateUser`, inputs);
-
     //todo: reik popup ar alert kad duomenys atnaujinti
+  };
+
+  const validate = (e) => {
+    const phonePattern = /\+370\d{8}$/;
+    const emailPattern = /[a-z0-9]+@[a-z]+.[a-z]+/;
+    let temp = {};
+    console.log(e.target);
+    temp.shelterId = !e.target.shelterId.value;
+    temp.firstName = !e.target.firstName.value;
+    temp.lastName = !e.target.lastName.value;
+    temp.phoneNumber = !e.target.phoneNumber.value.match(phonePattern);
+    temp.emailAdress = !e.target.emailAdress.value.match(emailPattern);
+    setErrors(temp);
+    return Object.values(temp).every((x) => x === false);
   };
 
   const handleChange = (e) => {
@@ -55,12 +69,14 @@ const PersonalDataPage = () => {
       <CardBody>
         <Form onSubmit={handleSubmit}>
           <FormGroup>
-            <Label for="email">El. paštas</Label>
+            <Label for="emailAdress">El. paštas</Label>
             <Input
-              id="email"
-              type="email"
+              id="emailAdress"
+              type="emailAdress"
               defaultValue={inputs.emailAddress}
               onChange={handleChange}
+              invalid={errors["emailAdress"] === true}
+              valid={errors["emailAdress"] === false}
             />
           </FormGroup>
           <FormGroup>
@@ -70,6 +86,8 @@ const PersonalDataPage = () => {
               type="text"
               defaultValue={inputs.firstName}
               onChange={handleChange}
+              invalid={errors["firstName"] === true}
+              valid={errors["firstName"] === false}
             />
           </FormGroup>
           <FormGroup>
@@ -79,6 +97,8 @@ const PersonalDataPage = () => {
               type="text"
               defaultValue={inputs.lastName}
               onChange={handleChange}
+              invalid={errors["lastName"] === true}
+              valid={errors["lastName"] === false}
             />
           </FormGroup>
 
@@ -89,6 +109,8 @@ const PersonalDataPage = () => {
               type="text"
               defaultValue={inputs.phoneNumber}
               onChange={handleChange}
+              invalid={errors["phoneNumber"] === true}
+              valid={errors["phoneNumber"] === false}
             />
           </FormGroup>
           {userData.role === "Worker" ? (
@@ -99,6 +121,8 @@ const PersonalDataPage = () => {
                 type="select"
                 onChange={handleChange}
                 value={inputs.shelterId}
+                invalid={errors["shelterId"] === true}
+                valid={errors["shelterId"] === false}
               >
                 <option />
                 {shelters.map((s, i) => (

@@ -25,15 +25,15 @@ const EditShelterPage = () => {
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
     axios.get(`Customer/Client/${userData.userId}`).then((userRespone) => {
-      axios.get(`Shelter/${userRespone.data.shelterId}`).then((userRespone) => {
-        setShelter(userRespone.data);
-      });
+      axios
+        .get(`Shelter/${userRespone.data.shelterId}`)
+        .then((userRespone) => setShelter(userRespone.data));
     });
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    validate(e);
+    var isValid = validate(e);
     const body = {
       shelterId: shelter.shelterId,
       name: e.target.name.value,
@@ -45,25 +45,27 @@ const EditShelterPage = () => {
     };
     const formData = new FormData();
     // todo: i form data reik perkelt kas yra body
-    // axios
-    //   .patch(`https://localhost:44323/Shelter`, body)
-    //   .then(navigate(`/savanoriauk/${shelter.shelterId}`));
+    if (isValid) {
+      // axios
+      //   .patch(`https://localhost:44323/Shelter`, body)
+      //   .then(navigate(`/savanoriauk/${shelter.shelterId}`));
+    }
   };
 
   const validate = (e) => {
-    console.log(e.target.email);
+    const phonePattern = /\+370\d{8}$/;
+    const emailPattern = /[a-z0-9]+@[a-z]+.[a-z]+/;
+
     let temp = {};
     temp.name = !e.target.name.value;
     temp.city = !e.target.city.value;
     temp.adress = !e.target.adress.value;
-    const phonePattern = /\+370\d{8}$/;
     temp.phoneNumber = !e.target.phoneNumber.value.match(phonePattern);
-    const emailPattern = /[a-z0-9]+@[a-z]+.[a-z]{2,3}/;
     temp.email = !e.target.email.value.match(emailPattern);
     temp.about = !e.target.about.value;
     temp.image = imageSrc === require(`../assets/images/noImageJ.jpg`);
     setErrors(temp);
-    return Object.values(temp).every((x) => x === true);
+    return Object.values(temp).every((x) => x === false);
   };
 
   const back = () => {

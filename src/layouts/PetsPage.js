@@ -38,13 +38,9 @@ const PetsPage = ({ userSpecific = false }) => {
 
   useEffect(() => {
     axios.get(`Pet/sexes`).then((respone) => setSexes(respone.data));
-
     axios.get(`Pet/types`).then((respone) => setTypes(respone.data));
-
     axios.get(`Pet/sizes`).then((respone) => setSizes(respone.data));
-
     axios.get(`Pet/colors`).then((respone) => setColors(respone.data));
-
     axios.get(`Shelter/Cities`).then((respone) => setCities(respone.data));
   }, []);
 
@@ -59,9 +55,7 @@ const PetsPage = ({ userSpecific = false }) => {
         axios.get(`Customer/Client/${userData.userId}`).then((userRespone) => {
           axios
             .get(`Shelter/Pets/${userRespone.data.shelterId}`)
-            .then((respone) => {
-              setPets(respone.data);
-            });
+            .then((respone) => setPets(respone.data));
         });
       }
     } else {
@@ -77,9 +71,9 @@ const PetsPage = ({ userSpecific = false }) => {
         .get(`Pet/Count`, {
           params,
         })
-        .then((respone) => {
-          setpageCount(Math.ceil(respone.data / params.pageLimit));
-        });
+        .then((respone) =>
+          setpageCount(Math.ceil(respone.data / params.pageLimit))
+        );
     }
   }, [params, userSpecific]);
 

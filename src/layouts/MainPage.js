@@ -23,9 +23,7 @@ const MainPage = () => {
       .get(`Pet`, {
         params,
       })
-      .then((respone) => {
-        setPets(respone.data);
-      });
+      .then((respone) => setPets(respone.data));
   });
   return (
     <>

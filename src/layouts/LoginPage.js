@@ -30,6 +30,7 @@ const LoginPage = () => {
           //nzn ar ok saugot tiek info localStorage?? token thing
           localStorage.setItem("user", JSON.stringify(response.data));
           navigate(`/main`);
+          window.location.reload();
           // todo: reik rerender dropdown nes db rodp "Prisijungti" nors prisijungta..?
         }
       });

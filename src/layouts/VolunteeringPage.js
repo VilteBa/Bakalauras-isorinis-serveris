@@ -30,17 +30,17 @@ const VolunteeringPage = () => {
 
   useEffect(() => {
     axios
-      .get(`https://localhost:44323/Shelter/Cities`)
+      .get(`Shelter/Cities`)
       .then((respone) => setCities(respone.data));
   }, []);
 
   useEffect(() => {
     axios
-      .get(`https://localhost:44323/Shelter`, { params })
+      .get(`Shelter`, { params })
       .then((respone) => setShelters(respone.data));
 
     axios
-      .get(`https://localhost:44323/Shelter/Count`, { params })
+      .get(`Shelter/Count`, { params })
       .then((respone) =>
         setpageCount(Math.ceil(respone.data / params.pageLimit))
       );

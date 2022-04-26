@@ -14,11 +14,11 @@ const ShelterPage = () => {
 
   useEffect(() => {
     axios
-      .get(`https://localhost:44323/Shelter/${id}`)
+      .get(`Shelter/${id}`)
       .then((respone) => setShelter(respone.data));
 
     axios
-      .get(`https://localhost:44323/Customer/Client/${userData.userId}`)
+      .get(`Customer/Client/${userData.userId}`)
       .then((respone) => setEditable(respone.data.shelterId === id));
   }, [id, userData.userId]);
 

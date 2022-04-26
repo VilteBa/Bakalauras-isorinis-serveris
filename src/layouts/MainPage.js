@@ -20,7 +20,7 @@ const MainPage = () => {
     };
 
     axios
-      .get(`https://localhost:44323/Pet`, {
+      .get(`Pet`, {
         params,
       })
       .then((respone) => {

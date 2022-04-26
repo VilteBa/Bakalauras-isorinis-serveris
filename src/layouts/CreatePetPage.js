@@ -39,14 +39,14 @@ const CreatePetPage = () => {
     const userData = JSON.parse(localStorage.getItem("user"));
 
     if (id) {
-      axios.get(`https://localhost:44323/Pet/${id}`).then((respone) => {
+      axios.get(`Pet/${id}`).then((respone) => {
         // sitas per daug dalyku pasetina :? kol kas dzin
         setInputs(respone.data);
       });
     }
 
     axios
-      .get(`https://localhost:44323/Customer/Client/${userData.userId}`)
+      .get(`Customer/Client/${userData.userId}`)
       .then((respone) => {
         setInputs({ ...inputs, shelterId: respone.data.shelterId });
       });
@@ -54,19 +54,19 @@ const CreatePetPage = () => {
 
   useEffect(() => {
     axios
-      .get(`https://localhost:44323/Pet/sexes`)
+      .get(`Pet/sexes`)
       .then((respone) => setSexes(respone.data));
 
     axios
-      .get(`https://localhost:44323/Pet/types`)
+      .get(`Pet/types`)
       .then((respone) => setTypes(respone.data));
 
     axios
-      .get(`https://localhost:44323/Pet/sizes`)
+      .get(`Pet/sizes`)
       .then((respone) => setSizes(respone.data));
 
     axios
-      .get(`https://localhost:44323/Pet/colors`)
+      .get(`Pet/colors`)
       .then((respone) => setColors(respone.data));
   }, []);
 
@@ -74,11 +74,11 @@ const CreatePetPage = () => {
     e.preventDefault();
     if (id) {
       axios
-        .patch(`https://localhost:44323/Pet`, inputs)
+        .patch(`Pet`, inputs)
         .then((response) => navigate(`/suteik-namus/${id}`));
     } else {
       axios
-        .post(`https://localhost:44323/Pet`, inputs)
+        .post(`Pet`, inputs)
         .then((response) => navigate(`/suteik-namus/${response.data.petId}`));
     }
   };

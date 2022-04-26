@@ -25,13 +25,13 @@ const PersonalDataPage = () => {
 
   useEffect(() => {
     axios
-      .get(`https://localhost:44323/Shelter`)
+      .get(`Shelter`)
       .then((respone) => setShelters(respone.data));
   }, []);
 
   useEffect(() => {
     axios
-      .get(`https://localhost:44323/Customer/Client/${userData.userId}`)
+      .get(`Customer/Client/${userData.userId}`)
       .then((respone) => {
         setUser(respone.data);
         setInputs(respone.data);
@@ -40,7 +40,7 @@ const PersonalDataPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.patch(`https://localhost:44323/Customer/UpdateUser`, inputs);
+    axios.patch(`Customer/UpdateUser`, inputs);
 
     //todo: reik popup ar alert kad duomenys atnaujinti
   };

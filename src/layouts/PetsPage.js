@@ -38,23 +38,23 @@ const PetsPage = ({ userSpecific = false }) => {
 
   useEffect(() => {
     axios
-      .get(`https://localhost:44323/Pet/sexes`)
+      .get(`Pet/sexes`)
       .then((respone) => setSexes(respone.data));
 
     axios
-      .get(`https://localhost:44323/Pet/types`)
+      .get(`Pet/types`)
       .then((respone) => setTypes(respone.data));
 
     axios
-      .get(`https://localhost:44323/Pet/sizes`)
+      .get(`Pet/sizes`)
       .then((respone) => setSizes(respone.data));
 
     axios
-      .get(`https://localhost:44323/Pet/colors`)
+      .get(`Pet/colors`)
       .then((respone) => setColors(respone.data));
 
     axios
-      .get(`https://localhost:44323/Shelter/Cities`)
+      .get(`Shelter/Cities`)
       .then((respone) => setCities(respone.data));
   }, []);
 
@@ -64,16 +64,16 @@ const PetsPage = ({ userSpecific = false }) => {
       if (userData.role === "User") {
         axios
           .get(
-            `https://localhost:44323/Customer/GetPetsLoved/${userData.userId}/lovedPets`
+            `Customer/GetPetsLoved/${userData.userId}/lovedPets`
           )
           .then((respone) => setPets(respone.data));
       } else {
         axios
-          .get(`https://localhost:44323/Customer/Client/${userData.userId}`)
+          .get(`Customer/Client/${userData.userId}`)
           .then((userRespone) => {
             axios
               .get(
-                `https://localhost:44323/Shelter/Pets/${userRespone.data.shelterId}`
+                `Shelter/Pets/${userRespone.data.shelterId}`
               )
               .then((respone) => {
                 setPets(respone.data);
@@ -82,7 +82,7 @@ const PetsPage = ({ userSpecific = false }) => {
       }
     } else {
       axios
-        .get(`https://localhost:44323/Pet`, {
+        .get(`Pet`, {
           params,
         })
         .then((respone) => {
@@ -90,7 +90,7 @@ const PetsPage = ({ userSpecific = false }) => {
         });
 
       axios
-        .get(`https://localhost:44323/Pet/Count`, {
+        .get(`Pet/Count`, {
           params,
         })
         .then((respone) => {

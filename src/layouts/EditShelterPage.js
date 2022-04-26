@@ -16,10 +16,11 @@ import { useNavigate } from "react-router-dom";
 const EditShelterPage = () => {
   let navigate = useNavigate();
   const [shelter, setShelter] = useState({});
+  const [imageFile, setImageFile] = useState({});
+  const [errors, setErrors] = useState({});
   const [imageSrc, setImageSrc] = useState(
     require(`../assets/images/noImageJ.jpg`)
   );
-  const [imageFile, setImageFile] = useState();
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
@@ -32,7 +33,7 @@ const EditShelterPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    validate(e);
     const body = {
       shelterId: shelter.shelterId,
       name: e.target.name.value,
@@ -42,15 +43,27 @@ const EditShelterPage = () => {
       email: e.target.email.value,
       about: e.target.about.value,
     };
-
     const formData = new FormData();
     // todo: i form data reik perkelt kas yra body
-    console.log(imageFile);
-    console.log(typeof imageFile);
-    //todo: backend sutvarkyt kad eitu per multiple lines atsakymas about
     // axios
     //   .patch(`https://localhost:44323/Shelter`, body)
     //   .then(navigate(`/savanoriauk/${shelter.shelterId}`));
+  };
+
+  const validate = (e) => {
+    console.log(e.target.email);
+    let temp = {};
+    temp.name = !e.target.name.value;
+    temp.city = !e.target.city.value;
+    temp.adress = !e.target.adress.value;
+    const phonePattern = /\+370\d{8}$/;
+    temp.phoneNumber = !e.target.phoneNumber.value.match(phonePattern);
+    const emailPattern = /[a-z0-9]+@[a-z]+.[a-z]{2,3}/;
+    temp.email = !e.target.email.value.match(emailPattern);
+    temp.about = !e.target.about.value;
+    temp.image = imageSrc === require(`../assets/images/noImageJ.jpg`);
+    setErrors(temp);
+    return Object.values(temp).every((x) => x === true);
   };
 
   const back = () => {
@@ -69,8 +82,7 @@ const EditShelterPage = () => {
       setImageSrc(require(`../assets/images/noImageJ.jpg`));
     }
   };
-  // todo: galima pasikurt validate ar pan ir daryt set errors, ir jei yra errors rodyt error;
-  //todo: https://www.youtube.com/watch?v=ORVShW0Yjaw 35 minute
+
   // todo: nera idedama dar foto, bet ner niekur nk su foto dar
   return (
     <Card body>
@@ -88,36 +100,71 @@ const EditShelterPage = () => {
           <FormGroup>
             <Label for="image">Nuotrauka</Label>
             <Input
+              invalid={errors["image"] === true}
+              valid={errors["image"] === false}
               onChange={showPreview}
               id="image"
-              name="file"
+              name="image"
               type="file"
               accept="image/*"
             />
           </FormGroup>
           <FormGroup>
             <Label for="name">Prieglaudos pavadinimas</Label>
-            <Input id="name" defaultValue={shelter.name} />
+            <Input
+              invalid={errors["name"] === true}
+              valid={errors["name"] === false}
+              id="name"
+              defaultValue={shelter.name}
+            />
           </FormGroup>
           <FormGroup>
             <Label for="city">Miestas</Label>
-            <Input id="city" defaultValue={shelter.city} />
+            <Input
+              invalid={errors["city"] === true}
+              valid={errors["city"] === false}
+              id="city"
+              defaultValue={shelter.city}
+            />
           </FormGroup>
           <FormGroup>
             <Label for="adress">Adresas</Label>
-            <Input id="adress" defaultValue={shelter.adress} />
+            <Input
+              invalid={errors["adress"] === true}
+              valid={errors["adress"] === false}
+              id="adress"
+              defaultValue={shelter.adress}
+            />
           </FormGroup>
           <FormGroup>
-            <Label for="phoneNumber">Mobilusis numeris</Label>
-            <Input id="phoneNumber" defaultValue={shelter.phoneNumber} />
+            <Label for="phoneNumber">
+              Mobilusis numeris (formatas +370********)
+            </Label>
+            <Input
+              invalid={errors["phoneNumber"] === true}
+              valid={errors["phoneNumber"] === false}
+              id="phoneNumber"
+              defaultValue={shelter.phoneNumber}
+            />
           </FormGroup>
           <FormGroup>
             <Label for="email">El. paštas</Label>
-            <Input id="email" type="email" defaultValue={shelter.email} />
+            <Input
+              invalid={errors["email"] === true}
+              valid={errors["email"] === false}
+              id="email"
+              defaultValue={shelter.email}
+            />
           </FormGroup>
           <FormGroup>
             <Label for="about">Aprašas</Label>
-            <Input id="about" type="textarea" defaultValue={shelter.about} />
+            <Input
+              invalid={errors["about"] === true}
+              valid={errors["about"] === false}
+              id="about"
+              type="textarea"
+              defaultValue={shelter.about}
+            />
           </FormGroup>
           <div class="button-group">
             <Button color="primary" type="submit">

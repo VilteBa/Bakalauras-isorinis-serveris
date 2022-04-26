@@ -14,7 +14,7 @@ import {
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-//todo: sex, type, size... Rodo angliskai, reikia lt
+//todo: sex, type, size... Rodo angliskai, nes enum, reikia lt
 const CreatePetPage = () => {
   let navigate = useNavigate();
   const { id } = useParams();
@@ -48,7 +48,7 @@ const CreatePetPage = () => {
     axios.get(`Customer/Client/${userData.userId}`).then((respone) => {
       setInputs({ ...inputs, shelterId: respone.data.shelterId });
     });
-  }, [id]); // todo: reiktu kazkaip perdaryt
+  }, [id]);
 
   useEffect(() => {
     axios.get(`Pet/sexes`).then((respone) => setSexes(respone.data));

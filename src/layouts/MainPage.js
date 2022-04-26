@@ -13,18 +13,18 @@ import axios from "axios";
 
 const MainPage = () => {
   const [pets, setPets] = useState([]);
+  const [shelters, setShelters] = useState([]);
 
   useEffect(() => {
     const params = {
       pageLimit: 3,
     };
 
+    axios.get(`Pet`, { params }).then((respone) => setPets(respone.data));
     axios
-      .get(`Pet`, {
-        params,
-      })
-      .then((respone) => setPets(respone.data));
-  });
+      .get(`Shelter`, { params })
+      .then((respone) => setShelters(respone.data));
+  }, []);
   return (
     <>
       <Card>
@@ -33,17 +33,7 @@ const MainPage = () => {
           Little Ones
         </CardTitle>
         <CardBody>
-          <div></div>
-        </CardBody>
-      </Card>
-
-      <Card>
-        <CardTitle tag="h4" className="border-bottom p-3 mb-0">
-          <i className="bi bi-list-ul me-2"> </i>
-          Prieglaudos
-        </CardTitle>
-        <CardBody>
-          <div></div>
+          <div>aaa</div>
         </CardBody>
       </Card>
 
@@ -94,7 +84,6 @@ const MainPage = () => {
                       backgroundColor: "#c9e9ff",
                       borderColor: "#757e85",
                     }}
-                    // color="light"
                   >
                     <CardHeader className="p-2">
                       <img
@@ -128,6 +117,53 @@ const MainPage = () => {
         <CardBody>
           <div>KAZKA PAN SAVANORYSTEI</div>
           KAZKA PAN SAVANORYSTEI
+        </CardBody>
+      </Card>
+
+      <Card>
+        <CardTitle tag="h4" className="border-bottom p-3 mb-0">
+          <i className="bi bi-list-ul me-2"> </i>
+          Prieglaudos
+        </CardTitle>
+        <CardBody>
+          <Row>
+            {shelters.map((shelter, index) => (
+              <Col sm="4" lg="4" xl="3" key={index}>
+                <a
+                  style={{ textDecoration: "none" }}
+                  href={"#/savanoriauk/" + shelter.shelterId}
+                  rel="noopener noreferrer"
+                >
+                  <Card
+                    className="text-center border"
+                    style={{
+                      backgroundColor: "#c9e9ff",
+                      borderColor: "#757e85",
+                    }}
+                  >
+                    <CardHeader className="p-2">
+                      <img
+                        className="card-img"
+                        src="https://images-platform.99static.com//MZHbYJRflRKCRuhq-t2N6XblSRU=/157x206:1894x1943/fit-in/500x500/99designs-contests-attachments/87/87722/attachment_87722070"
+                        alt="shelter"
+                      />
+                    </CardHeader>
+                    <CardFooter>
+                      <h5 className="text-black">{shelter.name}</h5>
+                      <div className="text-black">{shelter.city}</div>
+                    </CardFooter>
+                  </Card>
+                </a>
+              </Col>
+            ))}
+          </Row>
+          <div class="text-center">
+            <a href="#/savanoriauk/">
+              <Button color="info" type="submit">
+                Daugiau...
+              </Button>
+            </a>
+          </div>
         </CardBody>
       </Card>
     </>

@@ -28,7 +28,7 @@ const Header = () => {
   useEffect(() => {
     if (userData?.role === "Worker") {
       axios
-        .get(`https://localhost:44323/Customer/Client/${userData.userId}`)
+        .get(`Customer/Client/${userData.userId}`)
         .then((respone) => {
           setShelterId(respone.data.shelterId);
         });

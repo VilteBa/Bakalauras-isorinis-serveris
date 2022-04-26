@@ -29,20 +29,20 @@ const PetPage = () => {
   function lovePet() {
     axios
       .put(
-        `https://localhost:44323/Pet/LovePet?petId=${id}&userId=${userData.userId}`
+        `Pet/LovePet?petId=${id}&userId=${userData.userId}`
       )
       .then(setIsLoved(true));
   }
   function unlovePet() {
     axios
       .delete(
-        `https://localhost:44323/Pet/UnlovePet?petId=${id}&userId=${userData.userId}`
+        `Pet/UnlovePet?petId=${id}&userId=${userData.userId}`
       )
       .then(setIsLoved(false));
   }
 
   function deletePet() {
-    axios.delete(`https://localhost:44323/Pet/${id}`);
+    axios.delete(`Pet/${id}`);
     navigate(-1);
   }
 
@@ -56,16 +56,16 @@ const PetPage = () => {
 
   useEffect(() => {
     axios
-      .get(`https://localhost:44323/Pet/${id}`)
+      .get(`Pet/${id}`)
       .then((respone) => setPet(respone.data));
 
     axios
-      .get(`https://localhost:44323/Shelter/${pet.shelterId}`)
+      .get(`Shelter/${pet.shelterId}`)
       .then((respone) => setPetShelter(respone.data));
 
     axios
       .get(
-        `https://localhost:44323/Pet/isLovedPet?petId=${id}&userId=${userData.userId}`
+        `Pet/isLovedPet?petId=${id}&userId=${userData.userId}`
       )
       .then((respone) => {
         setIsLoved(respone.data);
@@ -73,7 +73,7 @@ const PetPage = () => {
 
     axios
       .get(
-        `https://localhost:44323/Pet/Editable?petId=${id}&userId=${userData.userId}`
+        `Pet/Editable?petId=${id}&userId=${userData.userId}`
       )
       .then((respone) => {
         setEditable(respone.data);

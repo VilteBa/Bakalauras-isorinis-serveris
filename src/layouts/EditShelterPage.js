@@ -19,10 +19,10 @@ const EditShelterPage = () => {
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
     axios
-      .get(`https://localhost:44323/Customer/Client/${userData.userId}`)
+      .get(`Customer/Client/${userData.userId}`)
       .then((userRespone) => {
         axios
-          .get(`https://localhost:44323/Shelter/${userRespone.data.shelterId}`)
+          .get(`Shelter/${userRespone.data.shelterId}`)
           .then((userRespone) => {
             setShelter(userRespone.data);
           });
@@ -41,7 +41,7 @@ const EditShelterPage = () => {
     };
     //todo: backend sutvarkyt kad eitu per multiple lines atsakymas about
     axios
-      .patch(`https://localhost:44323/Shelter`, body)
+      .patch(`Shelter`, body)
       .then(navigate(`/savanoriauk/${shelter.shelterId}`));
   };
 

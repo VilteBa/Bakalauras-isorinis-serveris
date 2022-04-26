@@ -1,11 +1,14 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
+import axios from "axios";
 import './index.css';
 import "./assets/scss/style.scss"
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { HashRouter } from "react-router-dom";
 import Loader from "./components/loader/Loader"
+
+axios.defaults.baseURL = process.env.REACT_APP_BE_URL;
 
 ReactDOM.render(
 <Suspense fallback={<Loader />}>

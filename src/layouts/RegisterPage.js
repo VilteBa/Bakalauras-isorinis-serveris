@@ -38,7 +38,7 @@ const RegisterPage = () => {
         role: userRole,
         shelterId: e.target.shelterid?.value,
       };
-      axios.post(`https://localhost:44323/Customer/Register`, body).then(
+      axios.post(`Customer/Register`, body).then(
         // todo: jei registracija sekmimga reikia popup arba toast
         navigate(`/prisijungimas`)
       );
@@ -50,7 +50,7 @@ const RegisterPage = () => {
 
   useEffect(() => {
     axios
-      .get(`https://localhost:44323/Shelter`)
+      .get(`Shelter`)
       .then((respone) => setShelters(respone.data));
   }, []);
 

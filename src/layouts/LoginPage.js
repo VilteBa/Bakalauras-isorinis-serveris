@@ -24,7 +24,7 @@ const LoginPage = () => {
       password: e.target.password.value,
     };
     axios
-      .post(`https://localhost:44323/Customer/Authenticate`, body)
+      .post(`Customer/Authenticate`, body)
       .then((response) => {
         if (response.data.token) {
           //nzn ar ok saugot tiek info localStorage?? token thing

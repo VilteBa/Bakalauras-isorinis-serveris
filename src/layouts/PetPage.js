@@ -28,16 +28,12 @@ const PetPage = () => {
 
   function lovePet() {
     axios
-      .put(
-        `Pet/LovePet?petId=${id}&userId=${userData.userId}`
-      )
+      .put(`Pet/LovePet?petId=${id}&userId=${userData.userId}`)
       .then(setIsLoved(true));
   }
   function unlovePet() {
     axios
-      .delete(
-        `Pet/UnlovePet?petId=${id}&userId=${userData.userId}`
-      )
+      .delete(`Pet/UnlovePet?petId=${id}&userId=${userData.userId}`)
       .then(setIsLoved(false));
   }
 
@@ -55,26 +51,20 @@ const PetPage = () => {
   }
 
   useEffect(() => {
-    axios
-      .get(`Pet/${id}`)
-      .then((respone) => setPet(respone.data));
+    axios.get(`Pet/${id}`).then((respone) => setPet(respone.data));
 
     axios
       .get(`Shelter/${pet.shelterId}`)
       .then((respone) => setPetShelter(respone.data));
 
     axios
-      .get(
-        `Pet/isLovedPet?petId=${id}&userId=${userData.userId}`
-      )
+      .get(`Pet/isLovedPet?petId=${id}&userId=${userData.userId}`)
       .then((respone) => {
         setIsLoved(respone.data);
       });
 
     axios
-      .get(
-        `Pet/Editable?petId=${id}&userId=${userData.userId}`
-      )
+      .get(`Pet/Editable?petId=${id}&userId=${userData.userId}`)
       .then((respone) => {
         setEditable(respone.data);
       });
@@ -89,8 +79,6 @@ const PetPage = () => {
             {pet.name}
           </CardTitle>
           <CardSubtitle>
-            {/* todo: pataisyt kad geriau veiktu nes neveikia rodykles!!
-          ner priority db isvis neturiu foto */}
             <UncontrolledCarousel
               items={[
                 {

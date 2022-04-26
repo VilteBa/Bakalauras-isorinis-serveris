@@ -27,7 +27,6 @@ const RegisterPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // todo: gal daugiau duomenu suvest registracijos metu: ner priority
     if (
       (e.target.password.value === e.target.repeatPassword.value) &
       !!e.target.email.value
@@ -49,9 +48,7 @@ const RegisterPage = () => {
   };
 
   useEffect(() => {
-    axios
-      .get(`Shelter`)
-      .then((respone) => setShelters(respone.data));
+    axios.get(`Shelter`).then((respone) => setShelters(respone.data));
   }, []);
 
   return (

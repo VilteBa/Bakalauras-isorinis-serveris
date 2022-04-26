@@ -37,25 +37,15 @@ const PetsPage = ({ userSpecific = false }) => {
   });
 
   useEffect(() => {
-    axios
-      .get(`Pet/sexes`)
-      .then((respone) => setSexes(respone.data));
+    axios.get(`Pet/sexes`).then((respone) => setSexes(respone.data));
 
-    axios
-      .get(`Pet/types`)
-      .then((respone) => setTypes(respone.data));
+    axios.get(`Pet/types`).then((respone) => setTypes(respone.data));
 
-    axios
-      .get(`Pet/sizes`)
-      .then((respone) => setSizes(respone.data));
+    axios.get(`Pet/sizes`).then((respone) => setSizes(respone.data));
 
-    axios
-      .get(`Pet/colors`)
-      .then((respone) => setColors(respone.data));
+    axios.get(`Pet/colors`).then((respone) => setColors(respone.data));
 
-    axios
-      .get(`Shelter/Cities`)
-      .then((respone) => setCities(respone.data));
+    axios.get(`Shelter/Cities`).then((respone) => setCities(respone.data));
   }, []);
 
   useEffect(() => {
@@ -63,22 +53,16 @@ const PetsPage = ({ userSpecific = false }) => {
     if (userSpecific) {
       if (userData.role === "User") {
         axios
-          .get(
-            `Customer/GetPetsLoved/${userData.userId}/lovedPets`
-          )
+          .get(`Customer/GetPetsLoved/${userData.userId}/lovedPets`)
           .then((respone) => setPets(respone.data));
       } else {
-        axios
-          .get(`Customer/Client/${userData.userId}`)
-          .then((userRespone) => {
-            axios
-              .get(
-                `Shelter/Pets/${userRespone.data.shelterId}`
-              )
-              .then((respone) => {
-                setPets(respone.data);
-              });
-          });
+        axios.get(`Customer/Client/${userData.userId}`).then((userRespone) => {
+          axios
+            .get(`Shelter/Pets/${userRespone.data.shelterId}`)
+            .then((respone) => {
+              setPets(respone.data);
+            });
+        });
       }
     } else {
       axios

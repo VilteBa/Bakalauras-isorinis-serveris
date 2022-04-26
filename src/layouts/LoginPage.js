@@ -23,17 +23,13 @@ const LoginPage = () => {
       emailAddress: e.target.email.value,
       password: e.target.password.value,
     };
-    axios
-      .post(`Customer/Authenticate`, body)
-      .then((response) => {
-        if (response.data.token) {
-          //nzn ar ok saugot tiek info localStorage?? token thing
-          localStorage.setItem("user", JSON.stringify(response.data));
-          navigate(`/main`);
-          window.location.reload();
-          // todo: reik rerender dropdown nes db rodp "Prisijungti" nors prisijungta..?
-        }
-      });
+    axios.post(`Customer/Authenticate`, body).then((response) => {
+      if (response.data.token) {
+        localStorage.setItem("user", JSON.stringify(response.data));
+        navigate(`/main`);
+        window.location.reload();
+      }
+    });
   };
 
   return (

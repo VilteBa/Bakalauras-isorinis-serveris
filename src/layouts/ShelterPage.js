@@ -13,9 +13,7 @@ const ShelterPage = () => {
   const [editable, setEditable] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(`Shelter/${id}`)
-      .then((respone) => setShelter(respone.data));
+    axios.get(`Shelter/${id}`).then((respone) => setShelter(respone.data));
 
     axios
       .get(`Customer/Client/${userData.userId}`)
@@ -48,7 +46,7 @@ const ShelterPage = () => {
           Aprašas
         </CardTitle>
         <CardBody>
-          <div>{shelter.about}</div>
+          <div style={{ whiteSpace: "pre" }}>{shelter.about}</div>
         </CardBody>
       </Card>
       <Card>

@@ -24,18 +24,14 @@ const PersonalDataPage = () => {
   });
 
   useEffect(() => {
-    axios
-      .get(`Shelter`)
-      .then((respone) => setShelters(respone.data));
+    axios.get(`Shelter`).then((respone) => setShelters(respone.data));
   }, []);
 
   useEffect(() => {
-    axios
-      .get(`Customer/Client/${userData.userId}`)
-      .then((respone) => {
-        setUser(respone.data);
-        setInputs(respone.data);
-      });
+    axios.get(`Customer/Client/${userData.userId}`).then((respone) => {
+      setUser(respone.data);
+      setInputs(respone.data);
+    });
   }, [userData.userId]);
 
   const handleSubmit = (e) => {

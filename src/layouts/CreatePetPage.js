@@ -45,29 +45,19 @@ const CreatePetPage = () => {
       });
     }
 
-    axios
-      .get(`Customer/Client/${userData.userId}`)
-      .then((respone) => {
-        setInputs({ ...inputs, shelterId: respone.data.shelterId });
-      });
+    axios.get(`Customer/Client/${userData.userId}`).then((respone) => {
+      setInputs({ ...inputs, shelterId: respone.data.shelterId });
+    });
   }, [id]); // todo: reiktu kazkaip perdaryt
 
   useEffect(() => {
-    axios
-      .get(`Pet/sexes`)
-      .then((respone) => setSexes(respone.data));
+    axios.get(`Pet/sexes`).then((respone) => setSexes(respone.data));
 
-    axios
-      .get(`Pet/types`)
-      .then((respone) => setTypes(respone.data));
+    axios.get(`Pet/types`).then((respone) => setTypes(respone.data));
 
-    axios
-      .get(`Pet/sizes`)
-      .then((respone) => setSizes(respone.data));
+    axios.get(`Pet/sizes`).then((respone) => setSizes(respone.data));
 
-    axios
-      .get(`Pet/colors`)
-      .then((respone) => setColors(respone.data));
+    axios.get(`Pet/colors`).then((respone) => setColors(respone.data));
   }, []);
 
   const handleSubmit = (e) => {

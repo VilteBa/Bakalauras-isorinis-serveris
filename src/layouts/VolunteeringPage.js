@@ -29,9 +29,7 @@ const VolunteeringPage = () => {
   };
 
   useEffect(() => {
-    axios
-      .get(`Shelter/Cities`)
-      .then((respone) => setCities(respone.data));
+    axios.get(`Shelter/Cities`).then((respone) => setCities(respone.data));
   }, []);
 
   useEffect(() => {

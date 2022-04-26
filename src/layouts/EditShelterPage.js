@@ -80,9 +80,7 @@ const EditShelterPage = () => {
       <CardBody>
         <Form onSubmit={handleSubmit}>
           <CardImg
-            // style={{ height: 30 }}
-            // style={{width: 150}}
-            style={{ width: "auto", height: 300 }} // todo: ant mobile 500 per daug
+            style={{ width: "auto", height: 300 }}
             alt="Shelter image"
             className="card-img"
             src={imageSrc}

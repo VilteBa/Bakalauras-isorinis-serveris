@@ -9,27 +9,30 @@ import {
   Card,
   CardTitle,
   CardBody,
+  CardImg,
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 
 const EditShelterPage = () => {
   let navigate = useNavigate();
   const [shelter, setShelter] = useState({});
+  const [imageSrc, setImageSrc] = useState(
+    require(`../assets/images/noImageJ.jpg`)
+  );
+  const [imageFile, setImageFile] = useState();
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
-    axios
-      .get(`Customer/Client/${userData.userId}`)
-      .then((userRespone) => {
-        axios
-          .get(`Shelter/${userRespone.data.shelterId}`)
-          .then((userRespone) => {
-            setShelter(userRespone.data);
-          });
+    axios.get(`Customer/Client/${userData.userId}`).then((userRespone) => {
+      axios.get(`Shelter/${userRespone.data.shelterId}`).then((userRespone) => {
+        setShelter(userRespone.data);
       });
+    });
   }, []);
 
   const handleSubmit = (e) => {
+    e.preventDefault();
+
     const body = {
       shelterId: shelter.shelterId,
       name: e.target.name.value,
@@ -39,16 +42,35 @@ const EditShelterPage = () => {
       email: e.target.email.value,
       about: e.target.about.value,
     };
+
+    const formData = new FormData();
+    // todo: i form data reik perkelt kas yra body
+    console.log(imageFile);
+    console.log(typeof imageFile);
     //todo: backend sutvarkyt kad eitu per multiple lines atsakymas about
-    axios
-      .patch(`Shelter`, body)
-      .then(navigate(`/savanoriauk/${shelter.shelterId}`));
+    // axios
+    //   .patch(`https://localhost:44323/Shelter`, body)
+    //   .then(navigate(`/savanoriauk/${shelter.shelterId}`));
   };
 
   const back = () => {
     navigate(`/savanoriauk/${shelter.shelterId}`);
   };
-
+  const showPreview = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      let imageFile = e.target.files[0];
+      const readed = new FileReader();
+      readed.onload = (x) => {
+        setImageSrc(x.target.result);
+        setImageFile(imageFile);
+      };
+      readed.readAsDataURL(imageFile);
+    } else {
+      setImageSrc(require(`../assets/images/noImageJ.jpg`));
+    }
+  };
+  // todo: galima pasikurt validate ar pan ir daryt set errors, ir jei yra errors rodyt error;
+  //todo: https://www.youtube.com/watch?v=ORVShW0Yjaw 35 minute
   // todo: nera idedama dar foto, bet ner niekur nk su foto dar
   return (
     <Card body>
@@ -57,6 +79,24 @@ const EditShelterPage = () => {
       </CardTitle>
       <CardBody>
         <Form onSubmit={handleSubmit}>
+          <CardImg
+            // style={{ height: 30 }}
+            // style={{width: 150}}
+            style={{ width: "auto", height: 300 }} // todo: ant mobile 500 per daug
+            alt="Shelter image"
+            className="card-img"
+            src={imageSrc}
+          />
+          <FormGroup>
+            <Label for="image">Nuotrauka</Label>
+            <Input
+              onChange={showPreview}
+              id="image"
+              name="file"
+              type="file"
+              accept="image/*"
+            />
+          </FormGroup>
           <FormGroup>
             <Label for="name">Prieglaudos pavadinimas</Label>
             <Input id="name" defaultValue={shelter.name} />

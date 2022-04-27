@@ -26,18 +26,34 @@ const MainPage = () => {
       .then((respone) => setShelters(respone.data));
   }, []);
   return (
-    <>
-      <Card>
+    <Row
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Card style={{ maxWidth: "1000px" }}>
         <CardTitle tag="h4" className="border-bottom p-3 mb-0">
           <i className="bi bi-list-ul me-2"> </i>
           Little Ones
         </CardTitle>
         <CardBody>
-          <div>aaa</div>
+          <h6>
+            Little Ones yra gyvūnų gerovės labdaros organizacija, turinti
+            ateities viziją, kurioje kiekvienas augintinis būtų saugus,
+            gerbiamas ir mylimas. Mes padedame žmonėms atrasti naują šeimos
+            narį, o beglobiams gyvūnams rasti naujus , šiltus namus.
+          </h6>
+          <h6>
+            Kol beglobiai laukia naujų namų, jiems ir savanorių dėmesys ir
+            priežiūra. Skatiname visus norinčius prisidėti prie mūsų vizijos
+            savanoriaujant ir rūpinantis pireglaudomis ir jų beglobiais
+            gyvūnais.
+          </h6>
         </CardBody>
       </Card>
 
-      <Card>
+      <Card style={{ maxWidth: "1000px" }}>
         <CardTitle tag="h4" className="border-bottom p-3 mb-0">
           <i className="bi bi-person-hearts"> </i>
           Ieškai naujo šeimos nario?
@@ -64,7 +80,7 @@ const MainPage = () => {
         </CardBody>
       </Card>
 
-      <Card>
+      <Card style={{ maxWidth: "1000px" }}>
         <CardTitle tag="h4" className="border-bottom p-3 mb-0">
           <i className="bi bi-list-ul me-2"> </i>
           Gyvūnai
@@ -72,7 +88,7 @@ const MainPage = () => {
         <CardBody>
           <Row>
             {pets.map((pet, index) => (
-              <Col sm="4" lg="4" xl="3" key={index}>
+              <Col sm="4" lg="4" key={index}>
                 <a
                   style={{ textDecoration: "none" }}
                   href={"#/suteik-namus/" + pet.petId}
@@ -109,18 +125,27 @@ const MainPage = () => {
           </div>
         </CardBody>
       </Card>
-      <Card>
+      <Card style={{ maxWidth: "1000px" }}>
         <CardTitle tag="h4" className="border-bottom p-3 mb-0">
           <i className="bi bi-person-hearts"> </i>
           Nori savanoriauti?
         </CardTitle>
         <CardBody>
-          <div>KAZKA PAN SAVANORYSTEI</div>
-          KAZKA PAN SAVANORYSTEI
+          <h5>Paieška</h5>
+          <div className="border-bottom p-2">
+            Kviečiame Tave tapti prieglaudų savanoriu ir padėti prižiūrint bei
+            gelbėjant likimo nuskriaustus šunis bei kates. Tiesiog atrask norimą
+            prieglaudą savanorystei sistemoje ir rezervuok norimą laiką.
+          </div>
+          <h5 className="mt-3">Savanoryste</h5>
+          <div className="p-2">
+            Prieglauda tave priims sutartu laiku ir supažindins ir esant
+            poreikiui praves savanorystės mokymus .{" "}
+          </div>
         </CardBody>
       </Card>
 
-      <Card>
+      <Card style={{ maxWidth: "1000px" }}>
         <CardTitle tag="h4" className="border-bottom p-3 mb-0">
           <i className="bi bi-list-ul me-2"> </i>
           Prieglaudos
@@ -128,7 +153,7 @@ const MainPage = () => {
         <CardBody>
           <Row>
             {shelters.map((shelter, index) => (
-              <Col sm="4" lg="4" xl="3" key={index}>
+              <Col sm="4" lg="4" key={index}>
                 <a
                   style={{ textDecoration: "none" }}
                   href={"#/savanoriauk/" + shelter.shelterId}
@@ -166,7 +191,7 @@ const MainPage = () => {
           </div>
         </CardBody>
       </Card>
-    </>
+    </Row>
   );
 };
 

@@ -10,6 +10,7 @@ import {
   Card,
   CardBody,
   CardTitle,
+  FormFeedback,
 } from "reactstrap";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -76,8 +77,8 @@ const CreatePetPage = () => {
     let temp = {};
     temp.name = !e.target.name.value;
     temp.details = !e.target.details.value;
-    temp.years = !e.target.years.value;
-    temp.months = !e.target.months.value;
+    temp.years = e.target.years.value > 0;
+    temp.months = !e.target.months.value > 0;
     temp.sex = !e.target.sex.value;
     temp.type = !e.target.type.value;
     temp.size = !e.target.size.value;
@@ -121,6 +122,7 @@ const CreatePetPage = () => {
                 invalid={errors["name"] === true}
                 valid={errors["name"] === false}
               />
+              <FormFeedback>Įveskite vardą</FormFeedback>
             </Col>
           </FormGroup>
           <FormGroup row>
@@ -136,6 +138,7 @@ const CreatePetPage = () => {
                 invalid={errors["details"] === true}
                 valid={errors["details"] === false}
               />
+              <FormFeedback>Įveskite gyvūno aprašą</FormFeedback>
             </Col>
           </FormGroup>
           <FormGroup row>
@@ -151,6 +154,7 @@ const CreatePetPage = () => {
                 invalid={errors["years"] === true}
                 valid={errors["years"] === false}
               />
+              <FormFeedback>Įveskite metus</FormFeedback>
             </Col>
             <Label for="months" sm={2}>
               Mėn.
@@ -164,6 +168,7 @@ const CreatePetPage = () => {
                 invalid={errors["months"] === true}
                 valid={errors["months"] === false}
               />
+              <FormFeedback>Įveskite mėnesį</FormFeedback>
             </Col>
           </FormGroup>
           <FormGroup row>
@@ -184,6 +189,7 @@ const CreatePetPage = () => {
                   <option key={i}>{s}</option>
                 ))}
               </Input>
+              <FormFeedback>Pasirinkite lytį</FormFeedback>
             </Col>
           </FormGroup>
           <FormGroup row>
@@ -204,6 +210,7 @@ const CreatePetPage = () => {
                   <option key={i}>{t}</option>
                 ))}
               </Input>
+              <FormFeedback>Pasirinkite gyvūno tipą</FormFeedback>
             </Col>
           </FormGroup>
           <FormGroup row>
@@ -224,6 +231,7 @@ const CreatePetPage = () => {
                   <option key={i}>{s}</option>
                 ))}
               </Input>
+              <FormFeedback>Pasirinkite dydį</FormFeedback>
             </Col>
           </FormGroup>
           <FormGroup row>
@@ -244,6 +252,7 @@ const CreatePetPage = () => {
                   <option key={i}>{c}</option>
                 ))}
               </Input>
+              <FormFeedback>Pasirinkite spalvą</FormFeedback>
             </Col>
           </FormGroup>
           <div class="button-group">

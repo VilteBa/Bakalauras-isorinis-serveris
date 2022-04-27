@@ -36,7 +36,7 @@ const RegisterPage = () => {
       shelterId: e.target.shelterId?.value,
     };
     axios.post(`Customer/Register`, body).then(navigate(`/prisijungimas`));
-    // todo: jei registracija sekmimga reikia popup arba toast
+    // todo: jei registracija sekmimga reikia popup arba toast arb alert?
   };
 
   const validate = (e) => {
@@ -134,7 +134,7 @@ const RegisterPage = () => {
                     </option>
                   ))}
                 </Input>
-                <FormFeedback>Privalote pasirinkti prieglaudą</FormFeedback>
+                <FormFeedback>Pasirinkite prieglaudą</FormFeedback>
               </FormGroup>
             ) : (
               <></>

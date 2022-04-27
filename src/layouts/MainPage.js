@@ -34,49 +34,28 @@ const MainPage = () => {
     >
       <Card style={{ maxWidth: "1000px" }}>
         <CardTitle tag="h4" className="border-bottom p-3 mb-0">
-          <i className="bi bi-list-ul me-2"> </i>
-          Little Ones
-        </CardTitle>
-        <CardBody>
-          <h6>
-            Little Ones yra gyvūnų gerovės labdaros organizacija, turinti
-            ateities viziją, kurioje kiekvienas augintinis būtų saugus,
-            gerbiamas ir mylimas. Mes padedame žmonėms atrasti naują šeimos
-            narį, o beglobiams gyvūnams rasti naujus , šiltus namus.
-          </h6>
-          <h6>
-            Kol beglobiai laukia naujų namų, jiems ir savanorių dėmesys ir
-            priežiūra. Skatiname visus norinčius prisidėti prie mūsų vizijos
-            savanoriaujant ir rūpinantis pireglaudomis ir jų beglobiais
-            gyvūnais.
-          </h6>
-        </CardBody>
-      </Card>
-
-      <Card style={{ maxWidth: "1000px" }}>
-        <CardTitle tag="h4" className="border-bottom p-3 mb-0">
           <i className="bi bi-person-hearts"> </i>
           Ieškai naujo šeimos nario?
         </CardTitle>
         <CardBody>
           <h5>Paieška</h5>
-          <div className="border-bottom p-2">
+          <p className="border-bottom p-2">
             Prieglaudoje ar gelbėtojų grupėje lengva rasti jums tinkamą šunį ar
             katę. Tiesiog įveskite įveskite jus dominančius kriterijus ir mes
             jums padėsime.
-          </div>
+          </p>
           <h5 className="mt-3">Susistikimas</h5>
-          <div className="border-bottom p-2 ">
+          <p className="border-bottom p-2 ">
             Suradę augintinį, spustelėkite ant jo anketos, kad gautumėte jo
             prieglaudos kontaktinę informaciją. Susisiekite su jais ir
             sužinokite daugiau apie tai, kaip susitikti ir priimti augintinį.
-          </div>
+          </p>
           <h5 className="mt-3">Priėmimas</h5>
-          <div className="p-2">
+          <p className="p-2">
             Prieglauda padės priglausti gyvūną jums per savo priėmimo procesą.
             Paruoškite savo namus šuns ar katės atvykimui, kad padėtumėte jiems
             prisitaikyti prie naujos šeimos.
-          </div>
+          </p>
         </CardBody>
       </Card>
 
@@ -132,16 +111,16 @@ const MainPage = () => {
         </CardTitle>
         <CardBody>
           <h5>Paieška</h5>
-          <div className="border-bottom p-2">
+          <p className="border-bottom p-2">
             Kviečiame Tave tapti prieglaudų savanoriu ir padėti prižiūrint bei
             gelbėjant likimo nuskriaustus šunis bei kates. Tiesiog atrask norimą
             prieglaudą savanorystei sistemoje ir rezervuok norimą laiką.
-          </div>
+          </p>
           <h5 className="mt-3">Savanoryste</h5>
-          <div className="p-2">
+          <p className="p-2">
             Prieglauda tave priims sutartu laiku ir supažindins ir esant
             poreikiui praves savanorystės mokymus .{" "}
-          </div>
+          </p>
         </CardBody>
       </Card>
 
@@ -189,6 +168,26 @@ const MainPage = () => {
               </Button>
             </a>
           </div>
+        </CardBody>
+      </Card>
+      <Card style={{ maxWidth: "1000px" }}>
+        <CardTitle tag="h4" className="border-bottom p-3 mb-0">
+          <i className="bi bi-list-ul me-2"> </i>
+          Little Ones
+        </CardTitle>
+        <CardBody>
+          <p>
+            Little Ones yra gyvūnų gerovės labdaros organizacija, turinti
+            ateities viziją, kurioje kiekvienas augintinis būtų saugus,
+            gerbiamas ir mylimas. Mes padedame žmonėms atrasti naują šeimos
+            narį, o beglobiams gyvūnams rasti naujus , šiltus namus.
+          </p>
+          <p>
+            Kol beglobiai laukia naujų namų, jiems ir savanorių dėmesys ir
+            priežiūra. Skatiname visus norinčius prisidėti prie mūsų vizijos
+            savanoriaujant ir rūpinantis pireglaudomis ir jų beglobiais
+            gyvūnais.
+          </p>
         </CardBody>
       </Card>
     </Row>

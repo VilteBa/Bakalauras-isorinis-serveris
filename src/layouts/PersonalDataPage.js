@@ -8,6 +8,7 @@ import {
   FormGroup,
   Label,
   Input,
+  FormFeedback,
 } from "reactstrap";
 import axios from "axios";
 
@@ -18,7 +19,7 @@ const PersonalDataPage = () => {
   const [inputs, setInputs] = useState({
     firstName: "",
     lastName: "",
-    emailAdress: "",
+    emailAddress: "",
     phoneNumber: "",
     shelterId: "",
   });
@@ -37,6 +38,7 @@ const PersonalDataPage = () => {
     e.preventDefault();
     const isValid = validate(e);
     if (!isValid) return;
+    console.log(inputs);
     axios.patch(`Customer/UpdateUser`, inputs);
     //todo: reik popup ar alert kad duomenys atnaujinti
   };
@@ -50,7 +52,7 @@ const PersonalDataPage = () => {
     temp.firstName = !e.target.firstName.value;
     temp.lastName = !e.target.lastName.value;
     temp.phoneNumber = !e.target.phoneNumber.value.match(phonePattern);
-    temp.emailAdress = !e.target.emailAdress.value.match(emailPattern);
+    temp.emailAddress = !e.target.emailAddress.value.match(emailPattern);
     setErrors(temp);
     return Object.values(temp).every((x) => x === false);
   };
@@ -69,15 +71,16 @@ const PersonalDataPage = () => {
       <CardBody>
         <Form onSubmit={handleSubmit}>
           <FormGroup>
-            <Label for="emailAdress">El. paštas</Label>
+            <Label for="emailAddress">El. paštas</Label>
             <Input
-              id="emailAdress"
-              type="emailAdress"
+              id="emailAddress"
+              type="emailAddress"
               defaultValue={inputs.emailAddress}
               onChange={handleChange}
-              invalid={errors["emailAdress"] === true}
-              valid={errors["emailAdress"] === false}
+              invalid={errors["emailAddress"] === true}
+              valid={errors["emailAddress"] === false}
             />
+            <FormFeedback>Neteisingas el. pašto formatas</FormFeedback>
           </FormGroup>
           <FormGroup>
             <Label for="firstName">Vardas</Label>
@@ -89,6 +92,7 @@ const PersonalDataPage = () => {
               invalid={errors["firstName"] === true}
               valid={errors["firstName"] === false}
             />
+            <FormFeedback>Įveskite vardą</FormFeedback>
           </FormGroup>
           <FormGroup>
             <Label for="lastName">Pavardė</Label>
@@ -100,6 +104,7 @@ const PersonalDataPage = () => {
               invalid={errors["lastName"] === true}
               valid={errors["lastName"] === false}
             />
+            <FormFeedback>Įveskite pavardę</FormFeedback>
           </FormGroup>
 
           <FormGroup>
@@ -112,6 +117,9 @@ const PersonalDataPage = () => {
               invalid={errors["phoneNumber"] === true}
               valid={errors["phoneNumber"] === false}
             />
+            <FormFeedback>
+              Įveskite telefono numerį (formatas +370********)
+            </FormFeedback>
           </FormGroup>
           {userData.role === "Worker" ? (
             <FormGroup>
@@ -131,6 +139,7 @@ const PersonalDataPage = () => {
                   </option>
                 ))}
               </Input>
+              <FormFeedback>Pasirinkite prieglaudą</FormFeedback>
             </FormGroup>
           ) : (
             <></>

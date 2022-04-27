@@ -15,7 +15,6 @@ import { useEffect, useState } from "react";
 
 //todo: get Pets perdaryt gal viena endpoint, kiuriam paduodamas parametras nurodantis ar is loved pets, ar shelter pets ar visi
 const PetsPage = ({ userSpecific = false }) => {
-  // galima keist pagal ekrano dydi
   const [pets, setPets] = useState([]);
   const [pageCount, setpageCount] = useState(0);
   const [sexes, setSexes] = useState([]);

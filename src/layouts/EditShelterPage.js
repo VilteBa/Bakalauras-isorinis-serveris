@@ -10,6 +10,7 @@ import {
   CardTitle,
   CardBody,
   CardImg,
+  FormFeedback,
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -110,6 +111,7 @@ const EditShelterPage = () => {
               type="file"
               accept="image/*"
             />
+            <FormFeedback>Prisekite nuotrauką</FormFeedback>
           </FormGroup>
           <FormGroup>
             <Label for="name">Prieglaudos pavadinimas</Label>
@@ -119,6 +121,7 @@ const EditShelterPage = () => {
               id="name"
               defaultValue={shelter.name}
             />
+            <FormFeedback>Įveskite prieglaudos pavadinimą</FormFeedback>
           </FormGroup>
           <FormGroup>
             <Label for="city">Miestas</Label>
@@ -128,6 +131,7 @@ const EditShelterPage = () => {
               id="city"
               defaultValue={shelter.city}
             />
+            <FormFeedback>Įveskite miestą</FormFeedback>
           </FormGroup>
           <FormGroup>
             <Label for="adress">Adresas</Label>
@@ -137,17 +141,19 @@ const EditShelterPage = () => {
               id="adress"
               defaultValue={shelter.adress}
             />
+            <FormFeedback>Įveskite adresą</FormFeedback>
           </FormGroup>
           <FormGroup>
-            <Label for="phoneNumber">
-              Mobilusis numeris (formatas +370********)
-            </Label>
+            <Label for="phoneNumber">Mobilusis numeris</Label>
             <Input
               invalid={errors["phoneNumber"] === true}
               valid={errors["phoneNumber"] === false}
               id="phoneNumber"
               defaultValue={shelter.phoneNumber}
             />
+            <FormFeedback>
+              Įveskite telefono numerį (formatas +370********)
+            </FormFeedback>
           </FormGroup>
           <FormGroup>
             <Label for="email">El. paštas</Label>
@@ -157,6 +163,7 @@ const EditShelterPage = () => {
               id="email"
               defaultValue={shelter.email}
             />
+            <FormFeedback>Neteisingas el. pašto formatas</FormFeedback>
           </FormGroup>
           <FormGroup>
             <Label for="about">Aprašas</Label>
@@ -167,6 +174,7 @@ const EditShelterPage = () => {
               type="textarea"
               defaultValue={shelter.about}
             />
+            <FormFeedback>Įveskite aprašą</FormFeedback>
           </FormGroup>
           <div class="button-group">
             <Button color="primary" type="submit">

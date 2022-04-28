@@ -90,9 +90,13 @@ const Header = () => {
             ) : (
               <>
                 <DropdownItem href={urlToShelter}>Mano prieglauda</DropdownItem>
+                <DropdownItem href="#/rezervacijos">
+                  Mano prieglaudos rezervacijos
+                </DropdownItem>
                 <DropdownItem href="#/prieglaudos-gyvunai">
                   Mano prieglaudos gyvūnai
                 </DropdownItem>
+
                 <DropdownItem href="#/anketos-kurimas">
                   Pridėti gyvūną
                 </DropdownItem>

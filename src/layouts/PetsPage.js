@@ -22,6 +22,7 @@ const PetsPage = ({ userSpecific = false }) => {
   const [types, setTypes] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [colors, setColors] = useState([]);
+  const [role, setRole] = useState();
   const [cities, setCities] = useState([]);
 
   const [params, setParams] = useState({
@@ -46,6 +47,7 @@ const PetsPage = ({ userSpecific = false }) => {
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
+    setRole(userData.role);
     if (userSpecific) {
       if (userData.role === "User") {
         axios
@@ -234,6 +236,14 @@ const PetsPage = ({ userSpecific = false }) => {
             </CardBody>
           </Card>
         </Form>
+      )}
+      {/* todo:sugalvot kur geriau pride gyvuna */}
+      {role === "Worker" && (
+        <Row>
+          <Button color="primary" className="btn-xs-block">
+            Pridėti gyvūną
+          </Button>
+        </Row>
       )}
       <Row>
         {pets.map((pet, index) => (

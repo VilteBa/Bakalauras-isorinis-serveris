@@ -58,7 +58,7 @@ const ShelterPage = () => {
       startTime: selectedDate,
       endTime: end,
     };
-    axios.post(`Reservation`, body).then((respone) => console.log(respone));
+    axios.post(`Reservation`, body).then((respone) => changeToggle());
   };
 
   function changeToggle() {

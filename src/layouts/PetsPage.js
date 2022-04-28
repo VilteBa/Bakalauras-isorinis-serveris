@@ -49,30 +49,16 @@ const PetsPage = ({ userSpecific = false }) => {
     const userData = JSON.parse(localStorage.getItem("user"));
     setRole(userData.role);
     if (userSpecific) {
-      if (userData.role === "User") {
-        axios
-          .get(`Customer/GetPetsLoved/${userData.userId}/lovedPets`)
-          .then((respone) => setPets(respone.data));
-      } else {
-        axios.get(`Customer/Client/${userData.userId}`).then((userRespone) => {
-          axios
-            .get(`Shelter/Pets/${userRespone.data.shelterId}`)
-            .then((respone) => setPets(respone.data));
-        });
-      }
-    } else {
-      axios
-        .get(`Pet`, {
-          params,
-        })
-        .then((respone) => {
-          setPets(respone.data);
-        });
+      let url =
+        userData.role === "User"
+          ? `Customer/GetPetsLoved/${userData.userId}/lovedPets`
+          : `Shelter/Pets/${userData.shelterId}`;
 
+      axios.get(url).then((respone) => setPets(respone.data));
+    } else {
+      axios.get(`Pet`, { params }).then((respone) => setPets(respone.data));
       axios
-        .get(`Pet/Count`, {
-          params,
-        })
+        .get(`Pet/Count`, { params })
         .then((respone) =>
           setpageCount(Math.ceil(respone.data / params.pageLimit))
         );

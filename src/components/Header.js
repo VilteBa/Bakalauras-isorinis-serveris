@@ -79,9 +79,14 @@ const Header = () => {
               Mano duomenys
             </DropdownItem>
             {userData.role === "User" ? (
-              <DropdownItem href="#/pamegti-gyvunai">
-                Pamėgti gyvūnai
-              </DropdownItem>
+              <>
+                <DropdownItem href="#/rezervacijos">
+                  Mano rezervacijos
+                </DropdownItem>
+                <DropdownItem href="#/pamegti-gyvunai">
+                  Pamėgti gyvūnai
+                </DropdownItem>
+              </>
             ) : (
               <>
                 <DropdownItem href={urlToShelter}>Mano prieglauda</DropdownItem>

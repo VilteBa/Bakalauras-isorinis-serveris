@@ -16,6 +16,12 @@
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
+.container {
+  padding: 40px;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+}
 
 .circle-box {
   width: 40px;

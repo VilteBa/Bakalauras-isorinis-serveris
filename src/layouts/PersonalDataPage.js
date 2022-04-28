@@ -10,6 +10,7 @@ import {
   Input,
   FormFeedback,
   Alert,
+  Row,
 } from "reactstrap";
 import axios from "axios";
 
@@ -65,7 +66,12 @@ const PersonalDataPage = () => {
   };
 
   return (
-    <>
+    <Row
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <Alert
         color="success"
         isOpen={alert}
@@ -75,7 +81,7 @@ const PersonalDataPage = () => {
       >
         <b>Informacija atnaujinta sėkmingai!</b>
       </Alert>
-      <Card>
+      <Card style={{ maxWidth: "1000px" }}>
         <CardTitle tag="h4" className="border-bottom p-3 mb-0">
           <i class="bi bi-person-lines-fill me-2"></i>
           Mano Profilis
@@ -163,7 +169,7 @@ const PersonalDataPage = () => {
           </Form>
         </CardBody>
       </Card>
-    </>
+    </Row>
   );
 };
 

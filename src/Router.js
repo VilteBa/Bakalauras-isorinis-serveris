@@ -4,6 +4,7 @@ import CreatePetPage from "./layouts/CreatePetPage";
 import EditShelterPage from "./layouts/EditShelterPage";
 import PersonalDataPage from "./layouts/PersonalDataPage";
 import ShelterPage from "./layouts/ShelterPage";
+import ReservationsPage from "./layouts/ReservationsPage";
 
 /****Layouts*****/
 const FullLayout = lazy(() => import("./layouts/FullLayout"));
@@ -41,6 +42,7 @@ const Routes = [
       { path: "/savanoriauk", exact: true, element: <VolunteeringPage /> },
       { path: "/savanoriauk/:id", exact: true, element: <ShelterPage /> },
       { path: "/anketos-kurimas", exact: true, element: <CreatePetPage /> },
+      { path: "/rezervacijos", exact: true, element: <ReservationsPage /> },
       {
         path: "/anketos-redagavimas/:id",
         exact: true,

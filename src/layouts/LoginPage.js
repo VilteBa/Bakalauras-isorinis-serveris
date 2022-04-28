@@ -18,7 +18,8 @@ import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
   let navigate = useNavigate();
   const [errors, setErrors] = useState({});
-  const [alert, setAlert] = useState(false); //todo: kaip paduot kad true po registracijos?
+  const [alert, setAlert] = useState(false);
+  //todo: kaip paduot kad true po registracijos? nebent likti registration ir rodyt success alert :/
 
   const handleSubmit = (e) => {
     if (!validate(e)) return;

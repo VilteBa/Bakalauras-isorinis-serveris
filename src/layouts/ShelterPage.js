@@ -1,8 +1,28 @@
 import { useParams } from "react-router-dom";
-import { Card, CardTitle, CardBody, CardImg, Button } from "reactstrap";
+import {
+  Card,
+  CardTitle,
+  CardBody,
+  CardImg,
+  Button,
+  CardFooter,
+  CardSubtitle,
+  CardText,
+  Input,
+  Col,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Modal,
+} from "reactstrap";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import setHours from "date-fns/setHours";
+import setMinutes from "date-fns/setMinutes";
+import DatePicker, { registerLocale } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import lt from "date-fns/locale/lt";
 
 // todo: truksta funkcionalumo nemazai ir is back, reik kazka sumastyt susijusio su savanoryste bet db dzin jei spesiu pridesiu :D
 const ShelterPage = () => {
@@ -10,7 +30,10 @@ const ShelterPage = () => {
   const { id } = useParams();
   const userData = JSON.parse(localStorage.getItem("user"));
   const [shelter, setShelter] = useState({});
+  const [toggle, setToggle] = useState(false);
   const [editable, setEditable] = useState(false);
+  const [selectedDate, setSelectedDate] = useState();
+  registerLocale("lt", lt);
 
   useEffect(() => {
     axios.get(`Shelter/${id}`).then((respone) => setShelter(respone.data));
@@ -23,6 +46,29 @@ const ShelterPage = () => {
   function editShelter() {
     navigate(`/prieglaudos-redagavimas`);
   }
+  const handleSelectedDate = (date) => {
+    setSelectedDate(date);
+  };
+
+  const makeReservation = () => {
+    const end = new Date(selectedDate.getTime() + 60 * 60 * 1000);
+    const body = {
+      shelterId: id,
+      userId: userData.userId,
+      startTime: selectedDate,
+      endTime: end,
+    };
+    axios.post(`Reservation`, body).then((respone) => console.log(respone));
+  };
+
+  function changeToggle() {
+    setToggle(!toggle);
+  }
+
+  const getExcludedTimes = (date) => {
+    //todo: paziuret kurie laikai jau uzimti
+  };
+
   return (
     <div>
       <Card className="text-center">
@@ -46,7 +92,7 @@ const ShelterPage = () => {
           Aprašas
         </CardTitle>
         <CardBody>
-          <div style={{ whiteSpace: "pre" }}>{shelter.about}</div>
+          <CardText style={{ whiteSpace: "pre" }}>{shelter.about}</CardText>
         </CardBody>
       </Card>
       <Card>
@@ -67,6 +113,62 @@ const ShelterPage = () => {
           Redaguoti
         </Button>
       )}
+      {userData.role === "User" && (
+        <>
+          <Button color="primary" onClick={changeToggle}>
+            Savanoriauti
+          </Button>
+        </>
+      )}
+
+      <Modal centered isOpen={toggle} toggle={changeToggle}>
+        <ModalHeader toggle={changeToggle}>Rezervacija</ModalHeader>
+        <ModalBody>
+          <div>Data:</div>
+          <DatePicker
+            locale="lt"
+            selected={selectedDate}
+            onChange={handleSelectedDate}
+            onSelect={getExcludedTimes}
+            dateFormat="yyy-MM-dd"
+            showPopperArrow={false}
+            // inline
+            minDate={new Date()}
+          ></DatePicker>
+          <div className="mt-3">Laikas:</div>
+          <DatePicker
+            locale="lt"
+            showPopperArrow={false}
+            selected={selectedDate}
+            // excludeTimes={excludedTimes}
+            onChange={handleSelectedDate}
+            onSelect={getExcludedTimes}
+            showTimeSelect
+            showTimeSelectOnly
+            timeIntervals={60}
+            timeFormat="HH:mm"
+            dateFormat="HH:mm"
+            minTime={setHours(setMinutes(new Date(), 0), 8)}
+            maxTime={setHours(setMinutes(new Date(), 0), 18)}
+          />
+        </ModalBody>
+        <ModalFooter style={{ justifyContent: "space-between" }}>
+          <Button
+            className="btn-xs-block"
+            color="primary"
+            onClick={makeReservation}
+          >
+            Rezervuoti laiką
+          </Button>
+          <Button
+            className="btn-xs-block"
+            color="danger"
+            onClick={changeToggle}
+          >
+            Atšaukti
+          </Button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 };

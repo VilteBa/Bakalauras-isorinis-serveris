@@ -89,6 +89,7 @@ const PetsPage = ({ userSpecific = false }) => {
   const handlePageChange = async (data) => {
     setParams({ ...params, page: data.selected });
   };
+
   return (
     <div>
       {/* todo: kol kas filtrus rodau tik vartotojui, backe ner filtru kitiem (t.y. loved pets ar shelter pets) */}

@@ -16,15 +16,13 @@ const MainPage = () => {
   const [shelters, setShelters] = useState([]);
 
   useEffect(() => {
-    const params = {
-      pageLimit: 3,
-    };
-
+    const params = { pageLimit: 3 };
     axios.get(`Pet`, { params }).then((respone) => setPets(respone.data));
     axios
       .get(`Shelter`, { params })
       .then((respone) => setShelters(respone.data));
   }, []);
+
   return (
     <Row
       style={{

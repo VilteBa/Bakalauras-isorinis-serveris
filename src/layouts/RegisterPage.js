@@ -19,6 +19,10 @@ const RegisterPage = () => {
   const [userRole, setRole] = useState("User");
   const [shelters, setShelters] = useState([]);
 
+  useEffect(() => {
+    axios.get(`Shelter`).then((respone) => setShelters(respone.data));
+  }, []);
+
   const handleChange = (e) => {
     if (e.target.checked) {
       setRole("Worker");
@@ -53,10 +57,6 @@ const RegisterPage = () => {
     setErrors(temp);
     return Object.values(temp).every((x) => x === false);
   };
-
-  useEffect(() => {
-    axios.get(`Shelter`).then((respone) => setShelters(respone.data));
-  }, []);
 
   return (
     <Row

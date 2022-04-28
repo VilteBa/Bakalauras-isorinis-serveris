@@ -37,7 +37,6 @@ const ShelterPage = () => {
 
   useEffect(() => {
     axios.get(`Shelter/${id}`).then((respone) => setShelter(respone.data));
-
     axios
       .get(`Customer/Client/${userData.userId}`)
       .then((respone) => setEditable(respone.data.shelterId === id));
@@ -78,8 +77,6 @@ const ShelterPage = () => {
             {shelter.name}
           </CardTitle>
           <CardImg
-            // style={{ height: 30 }}
-            // style={{width: 150}}
             style={{ width: "auto", height: 500 }} // todo: ant mobile 500 per daug
             alt="Card image cap"
             src="https://images-platform.99static.com//MZHbYJRflRKCRuhq-t2N6XblSRU=/157x206:1894x1943/fit-in/500x500/99designs-contests-attachments/87/87722/attachment_87722070"
@@ -109,16 +106,14 @@ const ShelterPage = () => {
         </CardBody>
       </Card>
       {editable && (
-        <Button color="primary" onClick={editShelter}>
+        <Button color="primary" className="btn-xs-block" onClick={editShelter}>
           Redaguoti
         </Button>
       )}
       {userData.role === "User" && (
-        <>
-          <Button color="primary" onClick={changeToggle}>
-            Savanoriauti
-          </Button>
-        </>
+        <Button color="primary" className="btn-xs-block" onClick={changeToggle}>
+          Savanoriauti
+        </Button>
       )}
 
       <Modal centered isOpen={toggle} toggle={changeToggle}>

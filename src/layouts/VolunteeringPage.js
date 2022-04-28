@@ -24,10 +24,6 @@ const VolunteeringPage = () => {
     cities: "",
   });
 
-  const handlePageChange = async (data) => {
-    setParams({ ...params, page: data.selected });
-  };
-
   useEffect(() => {
     axios.get(`Shelter/Cities`).then((respone) => setCities(respone.data));
   }, []);
@@ -51,6 +47,10 @@ const VolunteeringPage = () => {
       behavior: "smooth",
     });
   }, [shelters]);
+
+  const handlePageChange = async (data) => {
+    setParams({ ...params, page: data.selected });
+  };
 
   return (
     <div>

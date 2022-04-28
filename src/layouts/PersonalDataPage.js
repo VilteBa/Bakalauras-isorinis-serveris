@@ -15,8 +15,8 @@ import {
 import axios from "axios";
 
 const PersonalDataPage = () => {
-  const [alert, setAlert] = useState(false);
   const userData = JSON.parse(localStorage.getItem("user"));
+  const [alert, setAlert] = useState(false);
   const [shelters, setShelters] = useState([]);
   const [errors, setErrors] = useState({});
   const [inputs, setInputs] = useState({

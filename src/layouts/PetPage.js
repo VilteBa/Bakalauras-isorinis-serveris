@@ -17,20 +17,36 @@ import { useNavigate } from "react-router-dom";
 
 const PetPage = () => {
   let navigate = useNavigate();
-
+  const userData = JSON.parse(localStorage.getItem("user"));
   const { id } = useParams();
   const [pet, setPet] = useState({});
   const [petShelter, setPetShelter] = useState({});
   const [editable, setEditable] = useState(false);
   const [isLoved, setIsLoved] = useState(false);
   const [toggle, setToggle] = useState(false);
-  const userData = JSON.parse(localStorage.getItem("user"));
+
+  useEffect(() => {
+    axios.get(`Pet/${id}`).then((respone) => setPet(respone.data));
+
+    axios
+      .get(`Shelter/${pet.shelterId}`)
+      .then((respone) => setPetShelter(respone.data));
+
+    axios
+      .get(`Pet/isLovedPet?petId=${id}&userId=${userData.userId}`)
+      .then((respone) => setIsLoved(respone.data));
+
+    axios
+      .get(`Pet/Editable?petId=${id}&userId=${userData.userId}`)
+      .then((respone) => setEditable(respone.data));
+  }, [id, pet.shelterId, userData.userId]); // nes kai gaus per ta ireiks gauti pacia prieglauda
 
   function lovePet() {
     axios
       .put(`Pet/LovePet?petId=${id}&userId=${userData.userId}`)
       .then(setIsLoved(true));
   }
+
   function unlovePet() {
     axios
       .delete(`Pet/UnlovePet?petId=${id}&userId=${userData.userId}`)
@@ -49,22 +65,6 @@ const PetPage = () => {
   function changeToggle() {
     setToggle(!toggle);
   }
-
-  useEffect(() => {
-    axios.get(`Pet/${id}`).then((respone) => setPet(respone.data));
-
-    axios
-      .get(`Shelter/${pet.shelterId}`)
-      .then((respone) => setPetShelter(respone.data));
-
-    axios
-      .get(`Pet/isLovedPet?petId=${id}&userId=${userData.userId}`)
-      .then((respone) => setIsLoved(respone.data));
-
-    axios
-      .get(`Pet/Editable?petId=${id}&userId=${userData.userId}`)
-      .then((respone) => setEditable(respone.data));
-  }, [id, pet.shelterId, userData.userId]); // nes kai gaus per ta ireiks gauti pacia prieglauda
 
   return (
     <div>

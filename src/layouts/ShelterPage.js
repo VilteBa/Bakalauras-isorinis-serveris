@@ -5,11 +5,7 @@ import {
   CardBody,
   CardImg,
   Button,
-  CardFooter,
-  CardSubtitle,
   CardText,
-  Input,
-  Col,
   ModalHeader,
   ModalBody,
   ModalFooter,
@@ -24,7 +20,6 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import lt from "date-fns/locale/lt";
 
-// todo: truksta funkcionalumo nemazai ir is back, reik kazka sumastyt susijusio su savanoryste bet db dzin jei spesiu pridesiu :D
 const ShelterPage = () => {
   let navigate = useNavigate();
   const { id } = useParams();
@@ -77,9 +72,14 @@ const ShelterPage = () => {
             {shelter.name}
           </CardTitle>
           <CardImg
-            style={{ width: "auto", height: 500 }} // todo: ant mobile 500 per daug
+            style={{
+              maxHeight: "500px",
+              maxWidth: "100%",
+              width: "auto",
+              borderRadius: "5%",
+            }}
             alt="Card image cap"
-            src="https://images-platform.99static.com//MZHbYJRflRKCRuhq-t2N6XblSRU=/157x206:1894x1943/fit-in/500x500/99designs-contests-attachments/87/87722/attachment_87722070"
+            src="https://previews.123rf.com/images/zolotinka/zolotinka1501/zolotinka150100003/35361122-vector-symbol-logo-f%C3%BCr-ein-tierheim-hund-und-eine-katze-in-einer-box.jpg"
           />
         </CardBody>
       </Card>

@@ -14,8 +14,18 @@ import ReactPaginate from "react-paginate";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-//todo: get Pets perdaryt gal viena endpoint, kiuriam paduodamas parametras nurodantis ar is loved pets, ar shelter pets ar visi
 const PetsPage = ({ userSpecific = false }) => {
+  const initialParams = {
+    page: 0,
+    pageLimit: 8,
+    sexes: "",
+    types: "",
+    sizes: "",
+    colors: "",
+    cities: "",
+    minAge: 0,
+    maxAge: 0,
+  };
   const [pets, setPets] = useState([]);
   const [pageCount, setpageCount] = useState(0);
   const [sexes, setSexes] = useState([]);
@@ -25,17 +35,7 @@ const PetsPage = ({ userSpecific = false }) => {
   const [role, setRole] = useState();
   const [cities, setCities] = useState([]);
 
-  const [params, setParams] = useState({
-    page: 0,
-    pageLimit: 4, // atkeist i 8
-    sexes: "",
-    types: "",
-    sizes: "",
-    colors: "",
-    cities: "",
-    minAge: 0,
-    maxAge: 0,
-  });
+  const [params, setParams] = useState(initialParams);
 
   useEffect(() => {
     axios.get(`Pet/sexes`).then((respone) => setSexes(respone.data));
@@ -48,22 +48,27 @@ const PetsPage = ({ userSpecific = false }) => {
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
     setRole(userData.role);
+    let petsUrl = "";
     if (userSpecific) {
-      let url =
+      petsUrl =
         userData.role === "User"
           ? `Customer/GetPetsLoved/${userData.userId}/lovedPets`
           : `Shelter/Pets/${userData.shelterId}`;
-
-      axios.get(url).then((respone) => setPets(respone.data));
     } else {
-      axios.get(`Pet`, { params }).then((respone) => setPets(respone.data));
-      axios
-        .get(`Pet/Count`, { params })
-        .then((respone) =>
-          setpageCount(Math.ceil(respone.data / params.pageLimit))
-        );
+      petsUrl = `Pet`;
     }
+    axios.get(petsUrl, { params }).then((respone) => setPets(respone.data));
+    axios
+      .get(petsUrl + `/Count`, { params })
+      .then((respone) =>
+        setpageCount(Math.ceil(respone.data / params.pageLimit))
+      );
   }, [params, userSpecific]);
+
+  useEffect(() => {
+    setParams(initialParams);
+    document.getElementById("filters").reset();
+  }, [userSpecific]);
 
   useEffect(() => {
     window.scrollTo({
@@ -80,149 +85,147 @@ const PetsPage = ({ userSpecific = false }) => {
 
   return (
     <div>
-      {/* todo: kol kas filtrus rodau tik vartotojui, backe ner filtru kitiem (t.y. loved pets ar shelter pets) */}
-      {!userSpecific && (
-        <Form
-          onSubmit={(e) => {
-            setParams({
-              ...params,
-              page: 0,
-              sexes: e.target.sex.value,
-              types: e.target.type.value,
-              sizes: e.target.size.value,
-              colors: e.target.color.value,
-              cities: e.target.city.value,
-              minAge: Number(e.target.minAge.value),
-              maxAge: Number(e.target.maxAge.value),
-            });
-          }}
-        >
-          <Card>
-            <CardBody>
-              <Row>
-                <Col xs={12}>
-                  <Row>
-                    <Col xl={3} lg={4} sm={6} className="filter">
-                      <Row>
-                        <Label for="sex" sm={4}>
-                          Lytis
-                        </Label>
-                        <Col sm={7}>
-                          <Input id="sex" type="select">
-                            <option value={""}>-</option>
-                            {sexes.map((s, i) => (
-                              <option key={i}>{s}</option>
-                            ))}
-                          </Input>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col xl={3} lg={4} sm={6} className="filter">
-                      <Row>
-                        <Label for="type" sm={4}>
-                          Rūšis
-                        </Label>
-                        <Col sm={7}>
-                          <Input id="type" type="select">
-                            <option value={""}>-</option>
-                            {types.map((s, i) => (
-                              <option key={i}>{s}</option>
-                            ))}
-                          </Input>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col xl={3} lg={4} sm={6} className="filter">
-                      <Row>
-                        <Label for="size" sm={4}>
-                          Dydis
-                        </Label>
-                        <Col sm={7}>
-                          <Input id="size" type="select">
-                            <option value={""}>-</option>
-                            {sizes.map((s, i) => (
-                              <option key={i}>{s}</option>
-                            ))}
-                          </Input>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col xl={3} lg={4} sm={6} className="filter">
-                      <Row>
-                        <Label for="color" sm={4}>
-                          Spalva
-                        </Label>
-                        <Col sm={7}>
-                          <Input id="color" type="select">
-                            <option value={""}>-</option>
-                            {colors.map((s, i) => (
-                              <option key={i}>{s}</option>
-                            ))}
-                          </Input>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col xl={3} lg={4} sm={6} className="filter">
-                      <Row>
-                        <Label for="city" sm={4}>
-                          Miestas
-                        </Label>
-                        <Col sm={7}>
-                          <Input id="city" type="select">
-                            <option value={""}>-</option>
-                            {cities.map((s, i) => (
-                              <option key={i}>{s}</option>
-                            ))}
-                          </Input>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col lg={4} sm={6} className="filter">
-                      <Row>
-                        <Label xl={3} sm={4}>
-                          Amžius
-                        </Label>
-                        <Col>
-                          <Row>
-                            <Col sm={5}>
-                              <Input
-                                id="minAge"
-                                type="number"
-                                placeholder="nuo"
-                              ></Input>
-                            </Col>
-                            <Col
-                              style={{
-                                textAlign: "center",
-                              }}
-                              sm={1}
-                              xs={12}
-                            >
-                              -
-                            </Col>
-                            <Col sm={5}>
-                              <Input
-                                id="maxAge"
-                                type="number"
-                                placeholder="iki"
-                              ></Input>
-                            </Col>
-                          </Row>
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row>
-                </Col>
-                <Col xs={12} className="filter">
-                  <Button className="btn-xs-block" color="info" type="submit">
-                    Ieškoti
-                  </Button>
-                </Col>
-              </Row>
-            </CardBody>
-          </Card>
-        </Form>
-      )}
+      <Form
+        id="filters"
+        onSubmit={(e) => {
+          setParams({
+            ...params,
+            page: 0,
+            sexes: e.target.sex.value,
+            types: e.target.type.value,
+            sizes: e.target.size.value,
+            colors: e.target.color.value,
+            cities: e.target.city.value,
+            minAge: Number(e.target.minAge.value),
+            maxAge: Number(e.target.maxAge.value),
+          });
+        }}
+      >
+        <Card>
+          <CardBody>
+            <Row>
+              <Col xs={12}>
+                <Row>
+                  <Col xl={3} lg={4} sm={6} className="filter">
+                    <Row>
+                      <Label for="sex" sm={4}>
+                        Lytis
+                      </Label>
+                      <Col sm={7}>
+                        <Input id="sex" type="select">
+                          <option value={""}>-</option>
+                          {sexes.map((s, i) => (
+                            <option key={i}>{s}</option>
+                          ))}
+                        </Input>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col xl={3} lg={4} sm={6} className="filter">
+                    <Row>
+                      <Label for="type" sm={4}>
+                        Rūšis
+                      </Label>
+                      <Col sm={7}>
+                        <Input id="type" type="select">
+                          <option value={""}>-</option>
+                          {types.map((s, i) => (
+                            <option key={i}>{s}</option>
+                          ))}
+                        </Input>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col xl={3} lg={4} sm={6} className="filter">
+                    <Row>
+                      <Label for="size" sm={4}>
+                        Dydis
+                      </Label>
+                      <Col sm={7}>
+                        <Input id="size" type="select">
+                          <option value={""}>-</option>
+                          {sizes.map((s, i) => (
+                            <option key={i}>{s}</option>
+                          ))}
+                        </Input>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col xl={3} lg={4} sm={6} className="filter">
+                    <Row>
+                      <Label for="color" sm={4}>
+                        Spalva
+                      </Label>
+                      <Col sm={7}>
+                        <Input id="color" type="select">
+                          <option value={""}>-</option>
+                          {colors.map((s, i) => (
+                            <option key={i}>{s}</option>
+                          ))}
+                        </Input>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col xl={3} lg={4} sm={6} className="filter">
+                    <Row>
+                      <Label for="city" sm={4}>
+                        Miestas
+                      </Label>
+                      <Col sm={7}>
+                        <Input id="city" type="select">
+                          <option value={""}>-</option>
+                          {cities.map((s, i) => (
+                            <option key={i}>{s}</option>
+                          ))}
+                        </Input>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col lg={4} sm={6} className="filter">
+                    <Row>
+                      <Label xl={3} sm={4}>
+                        Amžius
+                      </Label>
+                      <Col>
+                        <Row>
+                          <Col sm={5}>
+                            <Input
+                              id="minAge"
+                              type="number"
+                              placeholder="nuo"
+                            ></Input>
+                          </Col>
+                          <Col
+                            style={{
+                              textAlign: "center",
+                            }}
+                            sm={1}
+                            xs={12}
+                          >
+                            -
+                          </Col>
+                          <Col sm={5}>
+                            <Input
+                              id="maxAge"
+                              type="number"
+                              placeholder="iki"
+                            ></Input>
+                          </Col>
+                        </Row>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </Col>
+              <Col xs={12} className="filter">
+                <Button className="btn-xs-block" color="info" type="submit">
+                  Ieškoti
+                </Button>
+              </Col>
+            </Row>
+          </CardBody>
+        </Card>
+      </Form>
       {/* todo:sugalvot kur geriau pride gyvuna */}
       {role === "Worker" && (
         <Row>

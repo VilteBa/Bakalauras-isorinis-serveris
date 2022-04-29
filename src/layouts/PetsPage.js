@@ -79,7 +79,7 @@ const PetsPage = ({ userSpecific = false }) => {
   }, [pets]);
 
   // gal cia nereik async
-  const handlePageChange = async (data) => {
+  const handlePageChange = (data) => {
     setParams({ ...params, page: data.selected });
   };
 
@@ -95,7 +95,7 @@ const PetsPage = ({ userSpecific = false }) => {
             types: e.target.type.value,
             sizes: e.target.size.value,
             colors: e.target.color.value,
-            cities: e.target.city.value,
+            cities: e.target.city?.value ?? "",
             minAge: Number(e.target.minAge.value),
             maxAge: Number(e.target.maxAge.value),
           });
@@ -166,21 +166,23 @@ const PetsPage = ({ userSpecific = false }) => {
                       </Col>
                     </Row>
                   </Col>
-                  <Col xl={3} lg={4} sm={6} className="filter">
-                    <Row>
-                      <Label for="city" sm={4}>
-                        Miestas
-                      </Label>
-                      <Col sm={7}>
-                        <Input id="city" type="select">
-                          <option value={""}>-</option>
-                          {cities.map((s, i) => (
-                            <option key={i}>{s}</option>
-                          ))}
-                        </Input>
-                      </Col>
-                    </Row>
-                  </Col>
+                  {(role === "User" || !userSpecific) && (
+                    <Col xl={3} lg={4} sm={6} className="filter">
+                      <Row>
+                        <Label for="city" sm={4}>
+                          Miestas
+                        </Label>
+                        <Col sm={7}>
+                          <Input id="city" type="select">
+                            <option value={""}>-</option>
+                            {cities.map((s, i) => (
+                              <option key={i}>{s}</option>
+                            ))}
+                          </Input>
+                        </Col>
+                      </Row>
+                    </Col>
+                  )}
                   <Col lg={4} sm={6} className="filter">
                     <Row>
                       <Label xl={3} sm={4}>

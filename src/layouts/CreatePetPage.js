@@ -77,8 +77,11 @@ const CreatePetPage = () => {
     let temp = {};
     temp.name = !e.target.name.value;
     temp.details = !e.target.details.value;
-    temp.years = e.target.years.value > 0;
-    temp.months = !e.target.months.value > 0;
+    temp.years = !e.target.years.value || e.target.years.value < 0;
+    temp.months =
+      !e.target.months.value ||
+      e.target.months.value < 0 ||
+      e.target.months.value > 12;
     temp.sex = !e.target.sex.value;
     temp.type = !e.target.type.value;
     temp.size = !e.target.size.value;
@@ -168,7 +171,7 @@ const CreatePetPage = () => {
                 invalid={errors["months"] === true}
                 valid={errors["months"] === false}
               />
-              <FormFeedback>Įveskite mėnesį</FormFeedback>
+              <FormFeedback>Įveskite mėnesį (0-11 mėn.)</FormFeedback>
             </Col>
           </FormGroup>
           <FormGroup row>

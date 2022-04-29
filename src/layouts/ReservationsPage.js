@@ -99,7 +99,7 @@ const ReservationsPage = () => {
               <Row>
                 <Col>
                   {role === "User" && (
-                    <Row>
+                    <Row className="filter">
                       <Label for="shelters" sm={3} xs={4}>
                         Prieglauda
                       </Label>
@@ -120,7 +120,7 @@ const ReservationsPage = () => {
                     </Row>
                   )}
 
-                  <Row>
+                  <Row className="filter">
                     <Label for="from" sm={3} xs={4}>
                       Nuo
                     </Label>
@@ -128,7 +128,7 @@ const ReservationsPage = () => {
                       <Input id="from" type="date"></Input>
                     </Col>
                   </Row>
-                  <Row>
+                  <Row className="filter">
                     <Label for="to" sm={3} xs={4}>
                       Iki
                     </Label>

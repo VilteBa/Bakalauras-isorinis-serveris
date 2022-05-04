@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 const EditShelterPage = () => {
   let navigate = useNavigate();
   const [shelter, setShelter] = useState({});
-  const [imageFile, setImageFile] = useState({});
+  const [imageFile, setImageFile] = useState();
   const [errors, setErrors] = useState({});
   const [imageSrc, setImageSrc] = useState(
     require(`../assets/images/noImageJ.jpg`)
@@ -25,10 +25,10 @@ const EditShelterPage = () => {
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
-    axios.get(`Customer/Client/${userData.userId}`).then((userRespone) => {
-      axios
-        .get(`Shelter/${userRespone.data.shelterId}`)
-        .then((userRespone) => setShelter(userRespone.data));
+
+    axios.get(`Shelter/${userData.shelterId}`).then((response) => {
+      setShelter(response.data);
+      setImageSrc("data:image/png;base64," + response.data.shelterPhoto.data);
     });
   }, []);
 
@@ -45,11 +45,20 @@ const EditShelterPage = () => {
       about: e.target.about.value,
     };
     const formData = new FormData();
-    // todo: i form data reik perkelt kas yra body
+    formData.append("formFile", imageFile);
+    formData.append("fileName", "laikinai");
+
     if (isValid) {
-      // axios
-      //   .patch(`https://localhost:44323/Shelter`, body)
-      //   .then(navigate(`/savanoriauk/${shelter.shelterId}`));
+      axios.patch(`/Shelter`, body).then();
+      if (imageFile) {
+        axios.post(`/Shelter/${shelter.shelterId}/photo`, formData).then(() => {
+          new Promise((r) => setTimeout(r, 200));
+          navigate(`/savanoriauk/${shelter.shelterId}`);
+        });
+      } else {
+        new Promise((r) => setTimeout(r, 200));
+        navigate(`/savanoriauk/${shelter.shelterId}`);
+      }
     }
   };
 

@@ -28,10 +28,19 @@ const ShelterPage = () => {
   const [toggle, setToggle] = useState(false);
   const [editable, setEditable] = useState(false);
   const [selectedDate, setSelectedDate] = useState();
+  const [image, setImage] = useState(require(`../assets/images/noImageJ.jpg`));
+
   registerLocale("lt", lt);
 
   useEffect(() => {
-    axios.get(`Shelter/${id}`).then((respone) => setShelter(respone.data));
+    axios.get(`Shelter/${id}`).then((response) => {
+      setShelter(response.data);
+      console.log(response.data.shelterPhoto);
+      if (response.data.shelterPhoto) {
+        setImage("data:image/png;base64," + response.data.shelterPhoto.data);
+      }
+    });
+
     axios
       .get(`Customer/Client/${userData.userId}`)
       .then((respone) => setEditable(respone.data.shelterId === id));
@@ -73,13 +82,13 @@ const ShelterPage = () => {
           </CardTitle>
           <CardImg
             style={{
-              maxHeight: "500px",
+              maxHeight: "400px",
               maxWidth: "100%",
               width: "auto",
               borderRadius: "5%",
             }}
             alt="Card image cap"
-            src="https://previews.123rf.com/images/zolotinka/zolotinka1501/zolotinka150100003/35361122-vector-symbol-logo-f%C3%BCr-ein-tierheim-hund-und-eine-katze-in-einer-box.jpg"
+            src={image}
           />
         </CardBody>
       </Card>

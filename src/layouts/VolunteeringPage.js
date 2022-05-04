@@ -20,18 +20,19 @@ const VolunteeringPage = () => {
   const [cities, setCities] = useState([]);
   const [params, setParams] = useState({
     page: 0,
-    pageLimit: 2,
+    pageLimit: 4,
     cities: "",
   });
+  const noImage = require(`../assets/images/noImageJ.jpg`);
 
   useEffect(() => {
     axios.get(`Shelter/Cities`).then((respone) => setCities(respone.data));
   }, []);
 
   useEffect(() => {
-    axios
-      .get(`Shelter`, { params })
-      .then((respone) => setShelters(respone.data));
+    axios.get(`Shelter`, { params }).then((respone) => {
+      setShelters(respone.data);
+    });
 
     axios
       .get(`Shelter/Count`, { params })
@@ -93,7 +94,17 @@ const VolunteeringPage = () => {
             <Card>
               <CardImg
                 alt="Card image cap"
-                src="https://images-platform.99static.com//MZHbYJRflRKCRuhq-t2N6XblSRU=/157x206:1894x1943/fit-in/500x500/99designs-contests-attachments/87/87722/attachment_87722070"
+                style={{
+                  maxHeight: "300px",
+                  maxWidth: "100%",
+                  width: "auto",
+                  borderRadius: "5%",
+                }}
+                src={
+                  shelter.shelterPhoto?.data
+                    ? "data:image/png;base64," + shelter.shelterPhoto.data
+                    : noImage
+                }
               />
               <CardBody className="p-4">
                 <CardTitle tag="h5">{shelter.name}</CardTitle>

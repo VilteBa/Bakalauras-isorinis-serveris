@@ -7,5 +7,11 @@
     "Small" :"Mažas",
     "Cat" :"Katė",
     "Dog" :"Šuo",
-    "Black" :"Juoda"
-  }
+    "Black" :"Juoda",
+    "White" : "Balta",
+    "Brown" : "Ruda",
+    "Grey" : "Pilka",
+    "Tabby" : "Raina",
+    "Sand" : "Smėlinė"
+}
+  

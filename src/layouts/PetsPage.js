@@ -13,8 +13,10 @@ import {
 import ReactPaginate from "react-paginate";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const PetsPage = ({ userSpecific = false }) => {
+  const { t } = useTranslation();
   const initialParams = {
     page: 0,
     pageLimit: 8,
@@ -34,7 +36,6 @@ const PetsPage = ({ userSpecific = false }) => {
   const [colors, setColors] = useState([]);
   const [role, setRole] = useState();
   const [cities, setCities] = useState([]);
-
   const [params, setParams] = useState(initialParams);
 
   useEffect(() => {
@@ -113,9 +114,11 @@ const PetsPage = ({ userSpecific = false }) => {
                       </Label>
                       <Col sm={7}>
                         <Input id="sex" type="select">
-                          <option value={""}>-</option>
+                          <option value={""}>Visi</option>
                           {sexes.map((s, i) => (
-                            <option key={i}>{s}</option>
+                            <option key={i} value={s}>
+                              {t(s)}
+                            </option>
                           ))}
                         </Input>
                       </Col>
@@ -128,9 +131,11 @@ const PetsPage = ({ userSpecific = false }) => {
                       </Label>
                       <Col sm={7}>
                         <Input id="type" type="select">
-                          <option value={""}>-</option>
+                          <option value={""}>Visi</option>
                           {types.map((s, i) => (
-                            <option key={i}>{s}</option>
+                            <option key={i} value={s}>
+                              {t(s)}
+                            </option>
                           ))}
                         </Input>
                       </Col>
@@ -143,9 +148,11 @@ const PetsPage = ({ userSpecific = false }) => {
                       </Label>
                       <Col sm={7}>
                         <Input id="size" type="select">
-                          <option value={""}>-</option>
+                          <option value={""}>Visi</option>
                           {sizes.map((s, i) => (
-                            <option key={i}>{s}</option>
+                            <option key={i} value={s}>
+                              {t(s)}
+                            </option>
                           ))}
                         </Input>
                       </Col>
@@ -158,9 +165,11 @@ const PetsPage = ({ userSpecific = false }) => {
                       </Label>
                       <Col sm={7}>
                         <Input id="color" type="select">
-                          <option value={""}>-</option>
+                          <option value={""}>Visi</option>
                           {colors.map((s, i) => (
-                            <option key={i}>{s}</option>
+                            <option key={i} value={s}>
+                              {t(s)}
+                            </option>
                           ))}
                         </Input>
                       </Col>
@@ -174,7 +183,7 @@ const PetsPage = ({ userSpecific = false }) => {
                         </Label>
                         <Col sm={7}>
                           <Input id="city" type="select">
-                            <option value={""}>-</option>
+                            <option value={""}>Visi</option>
                             {cities.map((s, i) => (
                               <option key={i}>{s}</option>
                             ))}

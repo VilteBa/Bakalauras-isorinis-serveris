@@ -15,17 +15,18 @@ import {
 } from "reactstrap";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 //todo: sex, type, size... Rodo angliskai, nes enum, reikia lt
 const CreatePetPage = () => {
   let navigate = useNavigate();
+  const { t } = useTranslation();
   const { id } = useParams();
   const [imageFiles, setImageFiles] = useState([]);
   const [errors, setErrors] = useState({});
   const [imageSrcs, setImageSrcs] = useState([
     require(`../assets/images/noImageJ.jpg`),
   ]);
-
   const [sexes, setSexes] = useState([]);
   const [types, setTypes] = useState([]);
   const [sizes, setSizes] = useState([]);
@@ -243,7 +244,9 @@ const CreatePetPage = () => {
               >
                 <option />
                 {sexes.map((s, i) => (
-                  <option key={i}>{s}</option>
+                  <option key={i} value={s}>
+                    {t(s)}
+                  </option>
                 ))}
               </Input>
               <FormFeedback>Pasirinkite lytį</FormFeedback>
@@ -263,8 +266,10 @@ const CreatePetPage = () => {
                 valid={errors["type"] === false}
               >
                 <option />
-                {types.map((t, i) => (
-                  <option key={i}>{t}</option>
+                {types.map((type, i) => (
+                  <option key={i} value={type}>
+                    {t(type)}
+                  </option>
                 ))}
               </Input>
               <FormFeedback>Pasirinkite gyvūno tipą</FormFeedback>
@@ -285,7 +290,9 @@ const CreatePetPage = () => {
               >
                 <option />
                 {sizes.map((s, i) => (
-                  <option key={i}>{s}</option>
+                  <option key={i} value={s}>
+                    {t(s)}
+                  </option>
                 ))}
               </Input>
               <FormFeedback>Pasirinkite dydį</FormFeedback>
@@ -306,7 +313,9 @@ const CreatePetPage = () => {
               >
                 <option />
                 {colors.map((c, i) => (
-                  <option key={i}>{c}</option>
+                  <option key={i} value={c}>
+                    {t(c)}
+                  </option>
                 ))}
               </Input>
               <FormFeedback>Pasirinkite spalvą</FormFeedback>

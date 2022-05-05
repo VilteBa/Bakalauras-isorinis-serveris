@@ -7,7 +7,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { HashRouter } from "react-router-dom";
 import Loader from "./components/loader/Loader";
-
+import "./locales/i18n";
 axios.defaults.baseURL = process.env.REACT_APP_BE_URL;
 
 ReactDOM.render(

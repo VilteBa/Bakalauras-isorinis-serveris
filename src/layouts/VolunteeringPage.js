@@ -68,7 +68,7 @@ const VolunteeringPage = () => {
               </Label>
               <Col sm={4} xs={8}>
                 <Input id="cities" type="select">
-                  <option value={""}>-</option>
+                  <option value={""}>Visi</option>
                   {cities.map((s, i) => (
                     <option key={i}>{s}</option>
                   ))}

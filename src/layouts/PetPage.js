@@ -14,9 +14,11 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const PetPage = () => {
   let navigate = useNavigate();
+  const { t } = useTranslation();
   const userData = JSON.parse(localStorage.getItem("user"));
   const { id } = useParams();
   const [pet, setPet] = useState({});
@@ -111,9 +113,9 @@ const PetPage = () => {
             Amžius - {pet.years} metai {pet.months} mėnesiai
           </div>
           <div>Aprašymas - {pet.details}</div>
-          <div>Dydis - {pet.size}</div>
-          <div>Spalva - {pet.color}</div>
-          <div>Lytis - {pet.sex}</div>
+          <div>Dydis - {t(pet.size)}</div>
+          <div>Spalva - {t(pet.color)}</div>
+          <div>Lytis - {t(pet.sex)}</div>
         </CardBody>
       </Card>
       <Card>

@@ -178,14 +178,8 @@ const CreatePetPage = () => {
                 </Button>
                 <CardImg
                   key={index}
-                  style={{
-                    width: "auto",
-                    height: 100,
-                    margin: 3,
-                    float: "right",
-                  }}
+                  className="editable-img card-img"
                   alt="Shelter image"
-                  className="card-img"
                   src={image.src}
                 />
               </div>
@@ -205,14 +199,8 @@ const CreatePetPage = () => {
                 </Button>
                 <CardImg
                   key={index}
-                  style={{
-                    width: "auto",
-                    height: 100,
-                    margin: 3,
-                    float: "right",
-                  }}
+                  className="editable-img card-img"
                   alt="Shelter image"
-                  className="card-img"
                   src={image.src}
                 />
               </div>

@@ -37,6 +37,7 @@ const PetsPage = ({ userSpecific = false }) => {
   const [role, setRole] = useState();
   const [cities, setCities] = useState([]);
   const [params, setParams] = useState(initialParams);
+  const noImage = require(`../assets/images/noImageJ.jpg`);
 
   useEffect(() => {
     axios.get(`Pet/sexes`).then((respone) => setSexes(respone.data));
@@ -58,7 +59,10 @@ const PetsPage = ({ userSpecific = false }) => {
     } else {
       petsUrl = `Pet`;
     }
-    axios.get(petsUrl, { params }).then((respone) => setPets(respone.data));
+    axios.get(petsUrl, { params }).then((respone) => {
+      console.log(respone.data);
+      setPets(respone.data);
+    });
     axios
       .get(petsUrl + `/Count`, { params })
       .then((respone) =>
@@ -253,11 +257,16 @@ const PetsPage = ({ userSpecific = false }) => {
               href={"#/suteik-namus/" + pet.petId}
               rel="noopener noreferrer"
             >
+              {console.log(pet)}
               <Card className="text-center mt-5">
                 <CardTitle className="p-0">
                   <img
                     className="card-img"
-                    src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*"
+                    src={
+                      pet.photos.length > 0
+                        ? "data:image/png;base64," + pet.photos[0].data
+                        : noImage
+                    }
                     alt="dog"
                   />
                 </CardTitle>

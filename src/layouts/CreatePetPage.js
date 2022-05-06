@@ -48,7 +48,14 @@ const CreatePetPage = () => {
     const userData = JSON.parse(localStorage.getItem("user"));
 
     if (id) {
-      axios.get(`Pet/${id}`).then((respone) => setInputs(respone.data));
+      axios.get(`Pet/${id}`).then((respone) => {
+        setInputs(respone.data);
+
+        let srcs = respone.data.photos.map(
+          (p) => "data:image/png;base64," + p.data
+        );
+        setImageSrcs(srcs);
+      });
     }
 
     axios
@@ -67,20 +74,16 @@ const CreatePetPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const isValid = validate(e);
-    if (!isValid) return;
+    console.log(imageFiles);
+
+    if (!validate(e)) return;
     const formData = new FormData();
-
-    // formData.append("formFile", imageFiles[0]);
-    // formData.append("fileName", "laikinai");
-    // formData.append("files", imageFiles);
-
-    // imageFiles.forEach((file) => formData.append("formFile", file));
-
-    // let a = imageFiles.map((file) => ({ formFile: file, fileName: "aa" }));
+    for (var x = 0; x < imageFiles.length; x++) {
+      formData.append("files", imageFiles.item(x));
+    }
 
     if (id) {
-      axios.patch(`Pet`, inputs).then((response) => {
+      axios.patch(`Pet`, inputs).then(() => {
         axios.post(`/Pet/${id}/photos`, formData).then(() => {
           navigate(`/suteik-namus/${id}`);
         });
@@ -126,19 +129,22 @@ const CreatePetPage = () => {
 
   const showPreview = (e) => {
     if (e.target.files && e.target.files[0]) {
-      let imageFile = e.target.files[0];
-      const readed = new FileReader();
-      readed.onload = (x) => {
-        setImageSrcs([x.target.result]);
-        setImageFiles([imageFile]);
-      };
-      readed.readAsDataURL(imageFile);
+      let imageFiles = e.target.files;
+      setImageFiles(imageFiles);
+      setImageSrcs(Array.from(imageFiles).map((i) => URL.createObjectURL(i)));
+      // let srcs = [];
+      // for (var x = 0; x < imageFiles.length; x++) {
+      //   const readed = new FileReader();
+      //   readed.onload = (x) => {
+      //     srcs.push(x.target.result);
+      //   };
+      //   readed.readAsDataURL(imageFiles[x]);
+      // }
+      // setImageSrcs(srcs);
     } else {
-      setImageSrcs[0](require(`../assets/images/noImageJ.jpg`));
+      setImageSrcs([require(`../assets/images/noImageJ.jpg`)]);
     }
   };
-
-  // todo: nera idedama dar foto, bet ner niekur nk su foto dar
   return (
     <Card>
       <CardTitle tag="h4" className="border-bottom p-3 mb-0 text-center">
@@ -146,12 +152,15 @@ const CreatePetPage = () => {
       </CardTitle>
       <CardBody>
         <Form onSubmit={handleSubmit}>
-          <CardImg
-            style={{ width: "auto", height: 300 }}
-            alt="Shelter image"
-            className="card-img"
-            src={imageSrcs[0]}
-          />
+          {imageSrcs.map((src, index) => (
+            <CardImg
+              key={index}
+              style={{ width: "auto", height: 100, margin: 3 }}
+              alt="Shelter image"
+              className="card-img"
+              src={src}
+            />
+          ))}
           <FormGroup>
             <Label for="image">Nuotrauka</Label>
             <Input
@@ -166,7 +175,6 @@ const CreatePetPage = () => {
             />
             <FormFeedback>Prisekite nuotrauką</FormFeedback>
           </FormGroup>
-
           <FormGroup row>
             <Label for="name" sm={2}>
               Gyvūno vardas

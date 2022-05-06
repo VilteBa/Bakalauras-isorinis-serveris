@@ -26,9 +26,13 @@ const PetPage = () => {
   const [editable, setEditable] = useState(false);
   const [isLoved, setIsLoved] = useState(false);
   const [toggle, setToggle] = useState(false);
+  const noImage = require(`../assets/images/noImageJ.jpg`);
 
   useEffect(() => {
-    axios.get(`Pet/${id}`).then((respone) => setPet(respone.data));
+    axios.get(`Pet/${id}`).then((respone) => {
+      setPet(respone.data);
+      console.log(respone.data);
+    });
 
     axios
       .get(`Shelter/${pet.shelterId}`)
@@ -78,26 +82,25 @@ const PetPage = () => {
           </CardTitle>
           <CardSubtitle>
             <UncontrolledCarousel
-              items={[
-                {
-                  altText: "",
-                  caption: "",
-                  key: 1,
-                  src: "https://post.healthline.com/wp-content/uploads/2020/09/1867-Pets_Vaccination-1296x728-header-1200x628.jpg",
-                },
-                {
-                  altText: "",
-                  caption: "",
-                  key: 2,
-                  src: "https://post.healthline.com/wp-content/uploads/2020/09/1867-Pets_Vaccination-1296x728-header-1200x628.jpg",
-                },
-                {
-                  altText: "",
-                  caption: "",
-                  key: 3,
-                  src: "https://post.healthline.com/wp-content/uploads/2020/09/1867-Pets_Vaccination-1296x728-header-1200x628.jpg",
-                },
-              ]}
+              // className="carousel"
+              // style={{ width: "auto", maxHeight: 300 }}
+              items={
+                pet.photos?.length > 0
+                  ? pet.photos.map((p) => ({
+                      altText: p.name,
+                      caption: "",
+                      key: 1,
+                      src: "data:image/png;base64," + p.data,
+                    }))
+                  : [
+                      {
+                        altText: "no Image",
+                        caption: "",
+                        key: 1,
+                        src: noImage,
+                      },
+                    ]
+              }
             />
           </CardSubtitle>
         </CardBody>

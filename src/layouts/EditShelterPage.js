@@ -45,8 +45,7 @@ const EditShelterPage = () => {
       about: e.target.about.value,
     };
     const formData = new FormData();
-    formData.append("formFile", imageFile);
-    formData.append("fileName", "laikinai");
+    formData.append("file", imageFile);
 
     if (isValid) {
       axios.patch(`/Shelter`, body).then();

@@ -20,7 +20,7 @@ const VolunteeringPage = () => {
   const [cities, setCities] = useState([]);
   const [params, setParams] = useState({
     page: 0,
-    pageLimit: 4,
+    pageLimit: 8,
     cities: "",
   });
   const noImage = require(`../assets/images/noImageJ.jpg`);
@@ -95,7 +95,7 @@ const VolunteeringPage = () => {
               <CardImg
                 alt="Card image cap"
                 style={{
-                  maxHeight: "300px",
+                  //todo: sudet fotkes vienodas
                   maxWidth: "100%",
                   width: "auto",
                   borderRadius: "5%",

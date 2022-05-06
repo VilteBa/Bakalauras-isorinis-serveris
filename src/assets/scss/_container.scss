@@ -50,3 +50,13 @@
       width: 100%;
   }
 }
+//todo: sutvarkyt karusele
+.carousel-item>img {
+  width: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  margin: auto;
+}
+.carousel-item {
+  max-height: 500px;
+}

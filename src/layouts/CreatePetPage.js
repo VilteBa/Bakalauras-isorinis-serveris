@@ -24,9 +24,9 @@ const CreatePetPage = () => {
   const { id } = useParams();
   const [imageFiles, setImageFiles] = useState([]);
   const [errors, setErrors] = useState({});
-  const [imageSrcs, setImageSrcs] = useState([
-    require(`../assets/images/noImageJ.jpg`),
-  ]);
+  const [newImages, setNewImages] = useState([]);
+  const [oldImages, setOldImages] = useState([]);
+  const [deleteImages, setdeleteImages] = useState([]);
   const [sexes, setSexes] = useState([]);
   const [types, setTypes] = useState([]);
   const [sizes, setSizes] = useState([]);
@@ -50,11 +50,11 @@ const CreatePetPage = () => {
     if (id) {
       axios.get(`Pet/${id}`).then((respone) => {
         setInputs(respone.data);
-
-        let srcs = respone.data.photos.map(
-          (p) => "data:image/png;base64," + p.data
-        );
-        setImageSrcs(srcs);
+        let srcs = respone.data.photos.map((p) => ({
+          id: p.fileId,
+          src: "data:image/png;base64," + p.data,
+        }));
+        setOldImages(srcs);
       });
     }
 
@@ -74,24 +74,29 @@ const CreatePetPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(imageFiles);
 
     if (!validate(e)) return;
     const formData = new FormData();
     for (var x = 0; x < imageFiles.length; x++) {
-      formData.append("files", imageFiles.item(x));
+      formData.append("files", imageFiles[x]); // buvo items
     }
 
     if (id) {
       axios.patch(`Pet`, inputs).then(() => {
+        deleteImages.forEach((i) => {
+          axios.delete(`/Pet/photos/${i}`);
+        });
+
         axios.post(`/Pet/${id}/photos`, formData).then(() => {
           navigate(`/suteik-namus/${id}`);
         });
       });
     } else {
-      axios
-        .post(`Pet`, inputs)
-        .then((response) => navigate(`/suteik-namus/${response.data.petId}`));
+      axios.post(`Pet`, inputs).then((response) => {
+        axios.post(`/Pet/${id}/photos`, formData).then(() => {
+          navigate(`/suteik-namus/${response.data.petId}`);
+        });
+      });
     }
   };
 
@@ -108,7 +113,6 @@ const CreatePetPage = () => {
     temp.type = !e.target.type.value;
     temp.size = !e.target.size.value;
     temp.color = !e.target.color.value;
-    temp.image = imageSrcs[0] === require(`../assets/images/noImageJ.jpg`);
 
     setErrors(temp);
     return Object.values(temp).every((x) => x === false);
@@ -129,22 +133,28 @@ const CreatePetPage = () => {
 
   const showPreview = (e) => {
     if (e.target.files && e.target.files[0]) {
-      let imageFiles = e.target.files;
-      setImageFiles(imageFiles);
-      setImageSrcs(Array.from(imageFiles).map((i) => URL.createObjectURL(i)));
-      // let srcs = [];
-      // for (var x = 0; x < imageFiles.length; x++) {
-      //   const readed = new FileReader();
-      //   readed.onload = (x) => {
-      //     srcs.push(x.target.result);
-      //   };
-      //   readed.readAsDataURL(imageFiles[x]);
-      // }
-      // setImageSrcs(srcs);
-    } else {
-      setImageSrcs([require(`../assets/images/noImageJ.jpg`)]);
+      setImageFiles([...imageFiles, ...e.target.files]);
+      let imgs = Array.from(e.target.files).map((i) => ({
+        name: i.name,
+        src: URL.createObjectURL(i),
+      }));
+      setNewImages([...newImages, ...imgs]);
     }
   };
+
+  const removeNew = (name) => {
+    let filteredNewImages = imageFiles.filter((i) => i.name !== name);
+    setImageFiles(filteredNewImages);
+    let filteredNewImagesSrc = newImages.filter((i) => i.name !== name);
+    setNewImages(filteredNewImagesSrc);
+  };
+
+  const removeOld = (id) => {
+    let filteredOldImages = oldImages.filter((i) => i.id !== id);
+    setOldImages(filteredOldImages);
+    setdeleteImages([...deleteImages, id]);
+  };
+
   return (
     <Card>
       <CardTitle tag="h4" className="border-bottom p-3 mb-0 text-center">
@@ -152,15 +162,62 @@ const CreatePetPage = () => {
       </CardTitle>
       <CardBody>
         <Form onSubmit={handleSubmit}>
-          {imageSrcs.map((src, index) => (
-            <CardImg
-              key={index}
-              style={{ width: "auto", height: 100, margin: 3 }}
-              alt="Shelter image"
-              className="card-img"
-              src={src}
-            />
-          ))}
+          <div style={{ display: "flex", flexWrap: "wrap" }}>
+            {newImages.map((image, index) => (
+              <div
+                style={{
+                  position: "relative",
+                }}
+              >
+                <Button
+                  onClick={() => removeNew(image.name)}
+                  className="close"
+                  type="button"
+                >
+                  <span>&times;</span>
+                </Button>
+                <CardImg
+                  key={index}
+                  style={{
+                    width: "auto",
+                    height: 100,
+                    margin: 3,
+                    float: "right",
+                  }}
+                  alt="Shelter image"
+                  className="card-img"
+                  src={image.src}
+                />
+              </div>
+            ))}
+            {oldImages.map((image, index) => (
+              <div
+                style={{
+                  position: "relative",
+                }}
+              >
+                <Button
+                  onClick={() => removeOld(image.id)}
+                  className="close"
+                  type="button"
+                >
+                  <span>&times;</span>
+                </Button>
+                <CardImg
+                  key={index}
+                  style={{
+                    width: "auto",
+                    height: 100,
+                    margin: 3,
+                    float: "right",
+                  }}
+                  alt="Shelter image"
+                  className="card-img"
+                  src={image.src}
+                />
+              </div>
+            ))}
+          </div>
           <FormGroup>
             <Label for="image">Nuotrauka</Label>
             <Input

@@ -11,6 +11,7 @@ import {
   CardBody,
   CardImg,
   FormFeedback,
+  Row,
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -94,107 +95,113 @@ const EditShelterPage = () => {
     }
   };
 
-  // todo: nera idedama dar foto, bet ner niekur nk su foto dar
   return (
-    <Card body>
-      <CardTitle tag="h4" className="border-bottom p-3 mb-0 text-center">
-        Prieglaudos informacijos redagavimas
-      </CardTitle>
-      <CardBody>
-        <Form onSubmit={handleSubmit}>
-          <CardImg
-            style={{ width: "auto", height: 300 }}
-            alt="Shelter image"
-            className="card-img"
-            src={imageSrc}
-          />
-          <FormGroup>
-            <Label for="image">Nuotrauka</Label>
-            <Input
-              invalid={errors["image"] === true}
-              valid={errors["image"] === false}
-              onChange={showPreview}
-              id="image"
-              name="image"
-              type="file"
-              accept="image/*"
+    <Row
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Card body style={{ maxWidth: "1000px" }}>
+        <CardTitle tag="h4" className="border-bottom p-3 mb-0 text-center">
+          Prieglaudos informacijos redagavimas
+        </CardTitle>
+        <CardBody>
+          <Form onSubmit={handleSubmit}>
+            <CardImg
+              style={{ width: "auto", height: 300 }}
+              alt="Shelter image"
+              className="card-img"
+              src={imageSrc}
             />
-            <FormFeedback>Prisekite nuotrauką</FormFeedback>
-          </FormGroup>
-          <FormGroup>
-            <Label for="name">Prieglaudos pavadinimas</Label>
-            <Input
-              invalid={errors["name"] === true}
-              valid={errors["name"] === false}
-              id="name"
-              defaultValue={shelter.name}
-            />
-            <FormFeedback>Įveskite prieglaudos pavadinimą</FormFeedback>
-          </FormGroup>
-          <FormGroup>
-            <Label for="city">Miestas</Label>
-            <Input
-              invalid={errors["city"] === true}
-              valid={errors["city"] === false}
-              id="city"
-              defaultValue={shelter.city}
-            />
-            <FormFeedback>Įveskite miestą</FormFeedback>
-          </FormGroup>
-          <FormGroup>
-            <Label for="adress">Adresas</Label>
-            <Input
-              invalid={errors["adress"] === true}
-              valid={errors["adress"] === false}
-              id="adress"
-              defaultValue={shelter.adress}
-            />
-            <FormFeedback>Įveskite adresą</FormFeedback>
-          </FormGroup>
-          <FormGroup>
-            <Label for="phoneNumber">Mobilusis numeris</Label>
-            <Input
-              invalid={errors["phoneNumber"] === true}
-              valid={errors["phoneNumber"] === false}
-              id="phoneNumber"
-              defaultValue={shelter.phoneNumber}
-            />
-            <FormFeedback>
-              Įveskite telefono numerį (formatas +370********)
-            </FormFeedback>
-          </FormGroup>
-          <FormGroup>
-            <Label for="email">El. paštas</Label>
-            <Input
-              invalid={errors["email"] === true}
-              valid={errors["email"] === false}
-              id="email"
-              defaultValue={shelter.email}
-            />
-            <FormFeedback>Neteisingas el. pašto formatas</FormFeedback>
-          </FormGroup>
-          <FormGroup>
-            <Label for="about">Aprašas</Label>
-            <Input
-              invalid={errors["about"] === true}
-              valid={errors["about"] === false}
-              id="about"
-              type="textarea"
-              defaultValue={shelter.about}
-            />
-            <FormFeedback>Įveskite aprašą</FormFeedback>
-          </FormGroup>
-          <div class="button-group">
-            <Button color="primary" type="submit">
-              Išsaugoti
-            </Button>
-            <Button color="danger" style={{ float: "right" }} onClick={back}>
-              Atšaukti
-            </Button>
-          </div>
-        </Form>
-      </CardBody>
-    </Card>
+            <FormGroup>
+              <Label for="image">Nuotrauka</Label>
+              <Input
+                invalid={errors["image"] === true}
+                valid={errors["image"] === false}
+                onChange={showPreview}
+                id="image"
+                name="image"
+                type="file"
+                accept="image/*"
+              />
+              <FormFeedback>Prisekite nuotrauką</FormFeedback>
+            </FormGroup>
+            <FormGroup>
+              <Label for="name">Prieglaudos pavadinimas</Label>
+              <Input
+                invalid={errors["name"] === true}
+                valid={errors["name"] === false}
+                id="name"
+                defaultValue={shelter.name}
+              />
+              <FormFeedback>Įveskite prieglaudos pavadinimą</FormFeedback>
+            </FormGroup>
+            <FormGroup>
+              <Label for="city">Miestas</Label>
+              <Input
+                invalid={errors["city"] === true}
+                valid={errors["city"] === false}
+                id="city"
+                defaultValue={shelter.city}
+              />
+              <FormFeedback>Įveskite miestą</FormFeedback>
+            </FormGroup>
+            <FormGroup>
+              <Label for="adress">Adresas</Label>
+              <Input
+                invalid={errors["adress"] === true}
+                valid={errors["adress"] === false}
+                id="adress"
+                defaultValue={shelter.adress}
+              />
+              <FormFeedback>Įveskite adresą</FormFeedback>
+            </FormGroup>
+            <FormGroup>
+              <Label for="phoneNumber">Mobilusis numeris</Label>
+              <Input
+                invalid={errors["phoneNumber"] === true}
+                valid={errors["phoneNumber"] === false}
+                id="phoneNumber"
+                defaultValue={shelter.phoneNumber}
+              />
+              <FormFeedback>
+                Įveskite telefono numerį (formatas +370********)
+              </FormFeedback>
+            </FormGroup>
+            <FormGroup>
+              <Label for="email">El. paštas</Label>
+              <Input
+                invalid={errors["email"] === true}
+                valid={errors["email"] === false}
+                id="email"
+                defaultValue={shelter.email}
+              />
+              <FormFeedback>Neteisingas el. pašto formatas</FormFeedback>
+            </FormGroup>
+            <FormGroup>
+              <Label for="about">Aprašas</Label>
+              <Input
+                invalid={errors["about"] === true}
+                valid={errors["about"] === false}
+                id="about"
+                type="textarea"
+                defaultValue={shelter.about}
+              />
+              <FormFeedback>Įveskite aprašą</FormFeedback>
+            </FormGroup>
+            <div class="button-group">
+              <Button color="primary" type="submit">
+                Išsaugoti
+              </Button>
+              <Button color="danger" style={{ float: "right" }} onClick={back}>
+                Atšaukti
+              </Button>
+            </div>
+          </Form>
+        </CardBody>
+      </Card>
+    </Row>
   );
 };
 

@@ -40,16 +40,16 @@ const PetsPage = ({ userSpecific = false }) => {
   const noImage = require(`../assets/images/noImageJ.jpg`);
 
   useEffect(() => {
-    axios.get(`Pet/sexes`).then((respone) => setSexes(respone.data));
-    axios.get(`Pet/types`).then((respone) => setTypes(respone.data));
-    axios.get(`Pet/sizes`).then((respone) => setSizes(respone.data));
-    axios.get(`Pet/colors`).then((respone) => setColors(respone.data));
-    axios.get(`Shelter/Cities`).then((respone) => setCities(respone.data));
+    axios.get(`Pet/sexes`).then((response) => setSexes(response.data));
+    axios.get(`Pet/types`).then((response) => setTypes(response.data));
+    axios.get(`Pet/sizes`).then((response) => setSizes(response.data));
+    axios.get(`Pet/colors`).then((response) => setColors(response.data));
+    axios.get(`Shelter/Cities`).then((response) => setCities(response.data));
   }, []);
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
-    setRole(userData.role);
+    setRole(userData?.role ?? "None");
     let petsUrl = "";
     if (userSpecific) {
       petsUrl =
@@ -59,14 +59,11 @@ const PetsPage = ({ userSpecific = false }) => {
     } else {
       petsUrl = `Pet`;
     }
-    axios.get(petsUrl, { params }).then((respone) => {
-      console.log(respone.data);
-      setPets(respone.data);
-    });
+    axios.get(petsUrl, { params }).then((response) => setPets(response.data));
     axios
       .get(petsUrl + `/Count`, { params })
-      .then((respone) =>
-        setpageCount(Math.ceil(respone.data / params.pageLimit))
+      .then((response) =>
+        setpageCount(Math.ceil(response.data / params.pageLimit))
       );
   }, [params, userSpecific]);
 
@@ -241,13 +238,14 @@ const PetsPage = ({ userSpecific = false }) => {
           </CardBody>
         </Card>
       </Form>
-      {/* todo:sugalvot kur geriau pride gyvuna */}
       {role === "Worker" && (
-        <Row>
-          <Button color="primary" className="btn-xs-block">
-            Pridėti gyvūną
-          </Button>
-        </Row>
+        <div style={{ textAlign: "center" }}>
+          <a href="#/anketos-kurimas">
+            <Button color="warning" className="btn-xs-block px-5 py-2">
+              Pridėti gyvūną
+            </Button>
+          </a>
+        </div>
       )}
       <Row>
         {pets.map((pet, index) => (
@@ -257,7 +255,6 @@ const PetsPage = ({ userSpecific = false }) => {
               href={"#/suteik-namus/" + pet.petId}
               rel="noopener noreferrer"
             >
-              {console.log(pet)}
               <Card className="text-center mt-5">
                 <CardTitle className="p-0">
                   <img

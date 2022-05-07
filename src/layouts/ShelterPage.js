@@ -35,21 +35,24 @@ const ShelterPage = () => {
   useEffect(() => {
     axios.get(`Shelter/${id}`).then((response) => {
       setShelter(response.data);
-      console.log(response.data.shelterPhoto);
       if (response.data.shelterPhoto) {
         setImage("data:image/png;base64," + response.data.shelterPhoto.data);
       }
     });
-
-    axios
-      .get(`Customer/Client/${userData.userId}`)
-      .then((respone) => setEditable(respone.data.shelterId === id));
-  }, [id, userData.userId]);
+    if (userData) {
+      axios
+        .get(`Customer/Client/${userData.userId}`)
+        .then((response) => setEditable(response.data.shelterId === id));
+    }
+  }, [id, userData]);
 
   function editShelter() {
     navigate(`/prieglaudos-redagavimas`);
   }
   const handleSelectedDate = (date) => {
+    if (date.getHours() === 0) {
+      date = new Date(date.getTime() + 8 * 60 * 60 * 1000);
+    }
     setSelectedDate(date);
   };
 
@@ -57,20 +60,16 @@ const ShelterPage = () => {
     const end = new Date(selectedDate.getTime() + 60 * 60 * 1000);
     const body = {
       shelterId: id,
-      userId: userData.userId,
+      userId: userData?.userId,
       startTime: selectedDate,
       endTime: end,
     };
-    axios.post(`Reservation`, body).then((respone) => changeToggle());
+    axios.post(`Reservation`, body).then((response) => changeToggle());
   };
 
   function changeToggle() {
     setToggle(!toggle);
   }
-
-  const getExcludedTimes = (date) => {
-    //todo: paziuret kurie laikai jau uzimti
-  };
 
   return (
     <div>
@@ -119,7 +118,7 @@ const ShelterPage = () => {
           Redaguoti
         </Button>
       )}
-      {userData.role === "User" && (
+      {userData?.role === "User" && (
         <Button color="primary" className="btn-xs-block" onClick={changeToggle}>
           Savanoriauti
         </Button>
@@ -133,10 +132,8 @@ const ShelterPage = () => {
             locale="lt"
             selected={selectedDate}
             onChange={handleSelectedDate}
-            onSelect={getExcludedTimes}
             dateFormat="yyy-MM-dd"
             showPopperArrow={false}
-            // inline
             minDate={new Date()}
           ></DatePicker>
           <div className="mt-3">Laikas:</div>
@@ -144,9 +141,7 @@ const ShelterPage = () => {
             locale="lt"
             showPopperArrow={false}
             selected={selectedDate}
-            // excludeTimes={excludedTimes}
             onChange={handleSelectedDate}
-            onSelect={getExcludedTimes}
             showTimeSelect
             showTimeSelectOnly
             timeIntervals={60}

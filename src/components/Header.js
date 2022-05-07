@@ -29,7 +29,7 @@ const Header = () => {
     if (userData?.role === "Worker") {
       axios
         .get(`Customer/Client/${userData.userId}`)
-        .then((respone) => setShelterId(respone.data.shelterId));
+        .then((response) => setShelterId(response.data.shelterId));
     }
   }, [userData]);
 
@@ -95,10 +95,6 @@ const Header = () => {
                 </DropdownItem>
                 <DropdownItem href="#/prieglaudos-gyvunai">
                   Mano prieglaudos gyvūnai
-                </DropdownItem>
-
-                <DropdownItem href="#/anketos-kurimas">
-                  Pridėti gyvūną
                 </DropdownItem>
               </>
             )}

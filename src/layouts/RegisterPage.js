@@ -9,6 +9,7 @@ import {
   Col,
   Label,
   FormFeedback,
+  Alert,
 } from "reactstrap";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -17,10 +18,11 @@ const RegisterPage = () => {
   let navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [userRole, setRole] = useState("User");
+  const [alert, setAlert] = useState(false);
   const [shelters, setShelters] = useState([]);
 
   useEffect(() => {
-    axios.get(`Shelter`).then((respone) => setShelters(respone.data));
+    axios.get(`Shelter`).then((response) => setShelters(response.data));
   }, []);
 
   const handleChange = (e) => {
@@ -34,13 +36,12 @@ const RegisterPage = () => {
   const handleSubmit = (e) => {
     if (!validate(e)) return;
     const body = {
-      emailAddress: e.target.email.value,
+      emailAddress: e.target.emailAdress.value,
       password: e.target.password.value,
       role: userRole,
       shelterId: e.target.shelterId?.value,
     };
-    axios.post(`Customer/Register`, body).then(navigate(`/prisijungimas`));
-    // todo: jei registracija sekmimga reikia popup arba toast arb alert?
+    axios.post(`Customer/Register`, body).then(setAlert(true));
   };
 
   const validate = (e) => {
@@ -67,6 +68,16 @@ const RegisterPage = () => {
       }}
     >
       <Col md={6} lg={4}>
+        <Alert
+          style={{ maxWidth: "1000px" }}
+          color="success"
+          isOpen={alert}
+          toggle={() => {
+            setAlert(false);
+          }}
+        >
+          <b>Registracija sėkminga!</b>
+        </Alert>
         <Card body>
           <Form onSubmit={handleSubmit}>
             <FormGroup>

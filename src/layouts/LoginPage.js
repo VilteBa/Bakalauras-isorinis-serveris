@@ -20,6 +20,7 @@ const LoginPage = () => {
   const [errors, setErrors] = useState({});
   const [alert, setAlert] = useState(false);
   //todo: kaip paduot kad true po registracijos? nebent likti registration ir rodyt success alert :/
+  // kol kas prie register palikta
 
   const handleSubmit = (e) => {
     if (!validate(e)) return;

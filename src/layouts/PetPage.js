@@ -29,23 +29,22 @@ const PetPage = () => {
   const noImage = require(`../assets/images/noImageJ.jpg`);
 
   useEffect(() => {
-    axios.get(`Pet/${id}`).then((respone) => {
-      setPet(respone.data);
-      console.log(respone.data);
-    });
+    axios.get(`Pet/${id}`).then((response) => setPet(response.data));
 
     axios
       .get(`Shelter/${pet.shelterId}`)
-      .then((respone) => setPetShelter(respone.data));
+      .then((response) => setPetShelter(response.data));
 
-    axios
-      .get(`Pet/isLovedPet?petId=${id}&userId=${userData.userId}`)
-      .then((respone) => setIsLoved(respone.data));
+    if (userData) {
+      axios
+        .get(`Pet/isLovedPet?petId=${id}&userId=${userData.userId}`)
+        .then((response) => setIsLoved(response.data));
 
-    axios
-      .get(`Pet/Editable?petId=${id}&userId=${userData.userId}`)
-      .then((respone) => setEditable(respone.data));
-  }, [id, pet.shelterId, userData.userId]); // nes kai gaus per ta ireiks gauti pacia prieglauda
+      axios
+        .get(`Pet/Editable?petId=${id}&userId=${userData.userId}`)
+        .then((response) => setEditable(response.data));
+    }
+  }, [id, pet.shelterId, userData]); // nes kai gaus per ta ireiks gauti pacia prieglauda
 
   function lovePet() {
     axios
@@ -134,7 +133,7 @@ const PetPage = () => {
           <div>El. paštas - {petShelter.email}</div>
         </CardBody>
       </Card>
-      {userData.role === "User" ? (
+      {userData?.role === "User" ? (
         isLoved ? (
           <Button color="danger" onClick={unlovePet}>
             Išimti iš pamėgtų sąrašo

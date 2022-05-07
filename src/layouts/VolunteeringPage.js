@@ -26,18 +26,18 @@ const VolunteeringPage = () => {
   const noImage = require(`../assets/images/noImageJ.jpg`);
 
   useEffect(() => {
-    axios.get(`Shelter/Cities`).then((respone) => setCities(respone.data));
+    axios.get(`Shelter/Cities`).then((response) => setCities(response.data));
   }, []);
 
   useEffect(() => {
-    axios.get(`Shelter`, { params }).then((respone) => {
-      setShelters(respone.data);
-    });
+    axios
+      .get(`Shelter`, { params })
+      .then((response) => setShelters(response.data));
 
     axios
       .get(`Shelter/Count`, { params })
-      .then((respone) =>
-        setpageCount(Math.ceil(respone.data / params.pageLimit))
+      .then((response) =>
+        setpageCount(Math.ceil(response.data / params.pageLimit))
       );
   }, [params]);
 

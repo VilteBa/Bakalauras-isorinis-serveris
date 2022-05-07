@@ -28,20 +28,19 @@ const PersonalDataPage = () => {
   });
 
   useEffect(() => {
-    axios.get(`Shelter`).then((respone) => setShelters(respone.data));
+    axios.get(`Shelter`).then((response) => setShelters(response.data));
   }, []);
 
   useEffect(() => {
     axios
       .get(`Customer/Client/${userData.userId}`)
-      .then((respone) => setInputs(respone.data));
+      .then((response) => setInputs(response.data));
   }, [userData.userId]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const isValid = validate(e);
     if (!isValid) return;
-    console.log(inputs);
     axios.patch(`Customer/UpdateUser`, inputs).then(setAlert(true));
     setErrors({});
   };
@@ -50,7 +49,6 @@ const PersonalDataPage = () => {
     const phonePattern = /\+370\d{8}$/;
     const emailPattern = /[a-z0-9]+@[a-z]+.[a-z]+/;
     let temp = {};
-    console.log(e.target);
     temp.shelterId = !e.target.shelterId.value;
     temp.firstName = !e.target.firstName.value;
     temp.lastName = !e.target.lastName.value;
@@ -73,6 +71,7 @@ const PersonalDataPage = () => {
       }}
     >
       <Alert
+        style={{ maxWidth: "1000px" }}
         color="success"
         isOpen={alert}
         toggle={() => {

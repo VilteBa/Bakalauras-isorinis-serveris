@@ -33,7 +33,7 @@ const ReservationsPage = () => {
 
   useEffect(() => {
     setRole(userData.role);
-    axios.get(`Shelter`).then((respone) => setShelters(respone.data));
+    axios.get(`Shelter`).then((response) => setShelters(response.data));
 
     if (userData.role === "User") {
       setParams({ ...params, userId: userData.userId });
@@ -55,20 +55,19 @@ const ReservationsPage = () => {
   }, [reservations]);
 
   const deleteReservation = (id) => {
-    axios.delete(`Reservation/${id}`).then((respone) => {
-      getReservations();
-    });
+    axios.delete(`Reservation/${id}`).then(getReservations());
   };
 
   const getReservations = () => {
     axios
       .get(`Reservation`, { params })
-      .then((respone) => setReservations(respone.data));
+      .then((response) => setReservations(response.data));
 
-    axios.get(`Reservation/Count`, { params }).then((respone) => {
-      setpageCount(Math.ceil(respone.data / params.pageLimit));
-      console.log(respone.data);
-    });
+    axios
+      .get(`Reservation/Count`, { params })
+      .then((response) =>
+        setpageCount(Math.ceil(response.data / params.pageLimit))
+      );
   };
 
   const handlePageChange = async (data) => {

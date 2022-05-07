@@ -17,10 +17,10 @@ const MainPage = () => {
 
   useEffect(() => {
     const params = { pageLimit: 3 };
-    axios.get(`Pet`, { params }).then((respone) => setPets(respone.data));
+    axios.get(`Pet`, { params }).then((response) => setPets(response.data));
     axios
       .get(`Shelter`, { params })
-      .then((respone) => setShelters(respone.data));
+      .then((response) => setShelters(response.data));
   }, []);
 
   return (

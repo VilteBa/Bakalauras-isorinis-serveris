@@ -11,7 +11,7 @@
 }
 .card {
   box-shadow: $card-box-shadow;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 .card-img{
   border-bottom-right-radius: 0;
@@ -56,10 +56,8 @@
   width: auto !important;
   max-width: 100% !important;
   max-height: 100% !important;
+  height: 300px;
   margin: auto;
-}
-.carousel-item {
-  max-height: 500px;
 }
 
 .editable-img{

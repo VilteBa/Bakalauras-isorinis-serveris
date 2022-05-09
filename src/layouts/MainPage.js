@@ -102,6 +102,7 @@ const MainPage = () => {
                     <CardHeader className="p-2">
                       <img
                         className="card-img"
+                        style={{ objectFit: "cover", height: "200px" }}
                         src={
                           pet.photos.length > 0
                             ? "data:image/png;base64," + pet.photos[0].data
@@ -171,6 +172,7 @@ const MainPage = () => {
                     <CardHeader className="p-2">
                       <img
                         className="card-img"
+                        style={{ objectFit: "cover", height: "200px" }}
                         src={
                           shelter.shelterPhoto?.data
                             ? "data:image/png;base64," +

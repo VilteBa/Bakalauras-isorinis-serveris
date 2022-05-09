@@ -11,7 +11,6 @@ import {
   ModalFooter,
   Modal,
   Row,
-  Col,
 } from "reactstrap";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -74,112 +73,121 @@ const ShelterPage = () => {
   }
 
   return (
-    <div>
-      <Row>
-        <Col sm="5" xs="12">
-          <Card className="text-center">
+    <Row
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <div style={{ maxWidth: "1000px" }}>
+        <Card className="text-center">
+          <CardBody>
             <CardTitle tag="h1" className="border-bottom p-3 mb-0">
               <i class="bi bi-heart"> </i>
               {shelter.name}
             </CardTitle>
-            <CardBody>
-              <CardImg
-                style={{
-                  maxHeight: "400px",
-                  maxWidth: "100%",
-                  width: "auto",
-                  borderRadius: "5%",
-                }}
-                alt="Card image cap"
-                src={image}
-              />
-            </CardBody>
-          </Card>
-        </Col>
-        <Col sm="7" xs="12" className="d-flex">
-          <Card className="flex-fill">
-            <CardTitle tag="h4" className="border-bottom p-3 mb-0">
-              <i className="bi bi-envelope-open-heart me-2"> </i>
-              Kontaktai
-            </CardTitle>
-            <CardBody>
-              <div>Prieglauda - {shelter.name}</div>
-              <div>Miestas - {shelter.city}</div>
-              <div>Adresas - {shelter.adress}</div>
-              <div>Mobilusis numeris - {shelter.phoneNumber}</div>
-              <div>El. paštas - {shelter.email}</div>
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
-      <Card>
-        <CardTitle tag="h4" className="border-bottom p-3 mb-0">
-          <i className="bi bi-list-ul me-2"> </i>
-          Aprašas
-        </CardTitle>
-        <CardBody>
-          <CardText style={{ whiteSpace: "pre-wrap" }}>
-            {shelter.about}
-          </CardText>
-        </CardBody>
-      </Card>
+            <CardImg
+              style={{
+                maxHeight: "200px",
+                maxWidth: "100%",
+                width: "auto",
+                borderRadius: "5%",
+              }}
+              alt="Card image cap"
+              src={image}
+            />
+          </CardBody>
+        </Card>
+        <Card>
+          <CardTitle tag="h4" className="border-bottom p-3 mb-0">
+            <i className="bi bi-list-ul me-2"> </i>
+            Aprašas
+          </CardTitle>
+          <CardBody>
+            <CardText style={{ whiteSpace: "pre-wrap" }}>
+              {shelter.about}
+            </CardText>
+          </CardBody>
+        </Card>
+        <Card style={{ maxWidth: "1000px" }}>
+          <CardTitle tag="h4" className="border-bottom p-3 mb-0">
+            <i className="bi bi-envelope-open-heart me-2"> </i>
+            Kontaktai
+          </CardTitle>
+          <CardBody>
+            <div>Prieglauda - {shelter.name}</div>
+            <div>Miestas - {shelter.city}</div>
+            <div>Adresas - {shelter.adress}</div>
+            <div>Mobilusis numeris - {shelter.phoneNumber}</div>
+            <div>El. paštas - {shelter.email}</div>
+          </CardBody>
+        </Card>
 
-      {editable && (
-        <Button color="primary" className="btn-xs-block" onClick={editShelter}>
-          Redaguoti
-        </Button>
-      )}
-      {userData?.role === "User" && (
-        <Button color="primary" className="btn-xs-block" onClick={changeToggle}>
-          Savanoriauti
-        </Button>
-      )}
-
-      <Modal centered isOpen={toggle} toggle={changeToggle}>
-        <ModalHeader toggle={changeToggle}>Rezervacija</ModalHeader>
-        <ModalBody>
-          <div>Data:</div>
-          <DatePicker
-            locale="lt"
-            selected={selectedDate}
-            onChange={handleSelectedDate}
-            dateFormat="yyy-MM-dd"
-            showPopperArrow={false}
-            minDate={new Date()}
-          ></DatePicker>
-          <div className="mt-3">Laikas:</div>
-          <DatePicker
-            locale="lt"
-            showPopperArrow={false}
-            selected={selectedDate}
-            onChange={handleSelectedDate}
-            showTimeSelect
-            showTimeSelectOnly
-            timeIntervals={60}
-            timeFormat="HH:mm"
-            dateFormat="HH:mm"
-            minTime={setHours(setMinutes(new Date(), 0), 8)}
-            maxTime={setHours(setMinutes(new Date(), 0), 18)}
-          />
-        </ModalBody>
-        <ModalFooter style={{ justifyContent: "space-between" }}>
+        {editable && (
           <Button
-            className="btn-xs-block"
             color="primary"
-            onClick={makeReservation}
-          >
-            Rezervuoti laiką
-          </Button>
-          <Button
             className="btn-xs-block"
-            color="danger"
+            onClick={editShelter}
+          >
+            Redaguoti
+          </Button>
+        )}
+        {userData?.role === "User" && (
+          <Button
+            color="primary"
+            className="btn-xs-block"
             onClick={changeToggle}
           >
-            Atšaukti
+            Savanoriauti
           </Button>
-        </ModalFooter>
-      </Modal>
-    </div>
+        )}
+
+        <Modal centered isOpen={toggle} toggle={changeToggle}>
+          <ModalHeader toggle={changeToggle}>Rezervacija</ModalHeader>
+          <ModalBody>
+            <div>Data:</div>
+            <DatePicker
+              locale="lt"
+              selected={selectedDate}
+              onChange={handleSelectedDate}
+              dateFormat="yyy-MM-dd"
+              showPopperArrow={false}
+              minDate={new Date()}
+            ></DatePicker>
+            <div className="mt-3">Laikas:</div>
+            <DatePicker
+              locale="lt"
+              showPopperArrow={false}
+              selected={selectedDate}
+              onChange={handleSelectedDate}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={60}
+              timeFormat="HH:mm"
+              dateFormat="HH:mm"
+              minTime={setHours(setMinutes(new Date(), 0), 8)}
+              maxTime={setHours(setMinutes(new Date(), 0), 18)}
+            />
+          </ModalBody>
+          <ModalFooter style={{ justifyContent: "space-between" }}>
+            <Button
+              className="btn-xs-block"
+              color="primary"
+              onClick={makeReservation}
+            >
+              Rezervuoti laiką
+            </Button>
+            <Button
+              className="btn-xs-block"
+              color="danger"
+              onClick={changeToggle}
+            >
+              Atšaukti
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </div>
+    </Row>
   );
 };
 

@@ -82,7 +82,6 @@ const PetPage = () => {
           <CardSubtitle>
             <UncontrolledCarousel
               // className="carousel"
-              // style={{ width: "auto", maxHeight: 300 }}
               items={
                 pet.photos?.length > 0
                   ? pet.photos.map((p) => ({
@@ -114,10 +113,10 @@ const PetPage = () => {
           <div>
             Amžius - {pet.years} metai {pet.months} mėnesiai
           </div>
-          <div>Aprašymas - {pet.details}</div>
           <div>Dydis - {t(pet.size)}</div>
           <div>Spalva - {t(pet.color)}</div>
           <div>Lytis - {t(pet.sex)}</div>
+          <div>Aprašymas - {pet.details}</div>
         </CardBody>
       </Card>
       <Card>

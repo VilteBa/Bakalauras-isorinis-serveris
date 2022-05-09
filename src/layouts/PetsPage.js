@@ -259,6 +259,7 @@ const PetsPage = ({ userSpecific = false }) => {
                 <CardTitle className="p-0">
                   <img
                     className="card-img"
+                    style={{ objectFit: "cover", height: "250px" }}
                     src={
                       pet.photos.length > 0
                         ? "data:image/png;base64," + pet.photos[0].data

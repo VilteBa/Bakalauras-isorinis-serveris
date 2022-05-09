@@ -193,7 +193,7 @@ const ReservationsPage = () => {
                           {reservation.user.lastName}
                         </div>
                         <div>
-                          {"Kontaktai - "}
+                          {"Kontaktai: "}
                           {reservation.user.phoneNumber}
                           {", "}
                           {reservation.user.emailAddress}

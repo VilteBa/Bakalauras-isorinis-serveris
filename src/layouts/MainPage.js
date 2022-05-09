@@ -14,6 +14,7 @@ import axios from "axios";
 const MainPage = () => {
   const [pets, setPets] = useState([]);
   const [shelters, setShelters] = useState([]);
+  const noImage = require(`../assets/images/noImageJ.jpg`);
 
   useEffect(() => {
     const params = { pageLimit: 3 };
@@ -30,6 +31,26 @@ const MainPage = () => {
         alignItems: "center",
       }}
     >
+      <Card style={{ maxWidth: "1000px" }}>
+        <CardTitle tag="h4" className="border-bottom p-3 mb-0">
+          <i className="bi bi-list-ul me-2"> </i>
+          Little Ones
+        </CardTitle>
+        <CardBody>
+          <p>
+            Little Ones yra gyvūnų gerovės labdaros organizacija, turinti
+            ateities viziją, kurioje kiekvienas augintinis būtų saugus,
+            gerbiamas ir mylimas. Mes padedame žmonėms atrasti naują šeimos
+            narį, o beglobiams gyvūnams rasti naujus , šiltus namus.
+          </p>
+          <p>
+            Kol beglobiai laukia naujų namų, jiems ir savanorių dėmesys ir
+            priežiūra. Skatiname visus norinčius prisidėti prie mūsų vizijos
+            savanoriaujant ir rūpinantis pireglaudomis ir jų beglobiais
+            gyvūnais.
+          </p>
+        </CardBody>
+      </Card>
       <Card style={{ maxWidth: "1000px" }}>
         <CardTitle tag="h4" className="border-bottom p-3 mb-0">
           <i className="bi bi-person-hearts"> </i>
@@ -81,7 +102,11 @@ const MainPage = () => {
                     <CardHeader className="p-2">
                       <img
                         className="card-img"
-                        src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*"
+                        src={
+                          pet.photos.length > 0
+                            ? "data:image/png;base64," + pet.photos[0].data
+                            : noImage
+                        }
                         alt="dog"
                       />
                     </CardHeader>
@@ -146,7 +171,12 @@ const MainPage = () => {
                     <CardHeader className="p-2">
                       <img
                         className="card-img"
-                        src="https://images-platform.99static.com//MZHbYJRflRKCRuhq-t2N6XblSRU=/157x206:1894x1943/fit-in/500x500/99designs-contests-attachments/87/87722/attachment_87722070"
+                        src={
+                          shelter.shelterPhoto?.data
+                            ? "data:image/png;base64," +
+                              shelter.shelterPhoto.data
+                            : noImage
+                        }
                         alt="shelter"
                       />
                     </CardHeader>
@@ -166,26 +196,6 @@ const MainPage = () => {
               </Button>
             </a>
           </div>
-        </CardBody>
-      </Card>
-      <Card style={{ maxWidth: "1000px" }}>
-        <CardTitle tag="h4" className="border-bottom p-3 mb-0">
-          <i className="bi bi-list-ul me-2"> </i>
-          Little Ones
-        </CardTitle>
-        <CardBody>
-          <p>
-            Little Ones yra gyvūnų gerovės labdaros organizacija, turinti
-            ateities viziją, kurioje kiekvienas augintinis būtų saugus,
-            gerbiamas ir mylimas. Mes padedame žmonėms atrasti naują šeimos
-            narį, o beglobiams gyvūnams rasti naujus , šiltus namus.
-          </p>
-          <p>
-            Kol beglobiai laukia naujų namų, jiems ir savanorių dėmesys ir
-            priežiūra. Skatiname visus norinčius prisidėti prie mūsų vizijos
-            savanoriaujant ir rūpinantis pireglaudomis ir jų beglobiais
-            gyvūnais.
-          </p>
         </CardBody>
       </Card>
     </Row>

@@ -10,6 +10,8 @@ import {
   ModalBody,
   ModalFooter,
   Modal,
+  Row,
+  Col,
 } from "reactstrap";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -73,46 +75,55 @@ const ShelterPage = () => {
 
   return (
     <div>
-      <Card className="text-center">
-        <CardBody>
-          <CardTitle tag="h1" className="border-bottom p-3 mb-0">
-            <i class="bi bi-heart"> </i>
-            {shelter.name}
-          </CardTitle>
-          <CardImg
-            style={{
-              maxHeight: "400px",
-              maxWidth: "100%",
-              width: "auto",
-              borderRadius: "5%",
-            }}
-            alt="Card image cap"
-            src={image}
-          />
-        </CardBody>
-      </Card>
+      <Row>
+        <Col sm="5" xs="12">
+          <Card className="text-center">
+            <CardTitle tag="h1" className="border-bottom p-3 mb-0">
+              <i class="bi bi-heart"> </i>
+              {shelter.name}
+            </CardTitle>
+            <CardBody>
+              <CardImg
+                style={{
+                  maxHeight: "400px",
+                  maxWidth: "100%",
+                  width: "auto",
+                  borderRadius: "5%",
+                }}
+                alt="Card image cap"
+                src={image}
+              />
+            </CardBody>
+          </Card>
+        </Col>
+        <Col sm="7" xs="12" className="d-flex">
+          <Card className="flex-fill">
+            <CardTitle tag="h4" className="border-bottom p-3 mb-0">
+              <i className="bi bi-envelope-open-heart me-2"> </i>
+              Kontaktai
+            </CardTitle>
+            <CardBody>
+              <div>Prieglauda - {shelter.name}</div>
+              <div>Miestas - {shelter.city}</div>
+              <div>Adresas - {shelter.adress}</div>
+              <div>Mobilusis numeris - {shelter.phoneNumber}</div>
+              <div>El. paštas - {shelter.email}</div>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
       <Card>
         <CardTitle tag="h4" className="border-bottom p-3 mb-0">
           <i className="bi bi-list-ul me-2"> </i>
           Aprašas
         </CardTitle>
         <CardBody>
-          <CardText style={{ whiteSpace: "pre" }}>{shelter.about}</CardText>
+          <CardText style={{ whiteSpace: "pre-wrap" }}>
+            {shelter.about}
+          </CardText>
         </CardBody>
       </Card>
-      <Card>
-        <CardTitle tag="h4" className="border-bottom p-3 mb-0">
-          <i className="bi bi-envelope-open-heart me-2"> </i>
-          Kontaktai
-        </CardTitle>
-        <CardBody>
-          <div>Prieglauda - {shelter.name}</div>
-          <div>Miestas - {shelter.city}</div>
-          <div>Adresas - {shelter.adress}</div>
-          <div>Mobilusis numeris - {shelter.phoneNumber}</div>
-          <div>El. paštas - {shelter.email}</div>
-        </CardBody>
-      </Card>
+
       {editable && (
         <Button color="primary" className="btn-xs-block" onClick={editShelter}>
           Redaguoti

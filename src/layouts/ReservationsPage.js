@@ -11,6 +11,10 @@ import {
   Form,
   Label,
   Input,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 import moment from "moment";
 import "moment/locale/lt";
@@ -21,7 +25,9 @@ const ReservationsPage = () => {
   const [reservations, setReservations] = useState([]);
   const [shelters, setShelters] = useState([]);
   const [role, setRole] = useState();
+  const [toggle, setToggle] = useState(false);
   const [pageCount, setpageCount] = useState(0);
+  const [reservationId, setReservationId] = useState("");
   const [params, setParams] = useState({
     page: 0,
     pageLimit: 8,
@@ -43,7 +49,15 @@ const ReservationsPage = () => {
   }, []);
 
   useEffect(() => {
-    getReservations();
+    axios
+      .get(`Reservation`, { params })
+      .then((response) => setReservations(response.data));
+
+    axios
+      .get(`Reservation/Count`, { params })
+      .then((response) =>
+        setpageCount(Math.ceil(response.data / params.pageLimit))
+      );
   }, [params]);
 
   useEffect(() => {
@@ -55,22 +69,24 @@ const ReservationsPage = () => {
   }, [reservations]);
 
   const deleteReservation = (id) => {
-    axios.delete(`Reservation/${id}`).then(getReservations());
+    axios.delete(`Reservation/${id}`).then(() => {
+      axios
+        .get(`Reservation`, { params })
+        .then((response) => setReservations(response.data));
+
+      axios
+        .get(`Reservation/Count`, { params })
+        .then((response) =>
+          setpageCount(Math.ceil(response.data / params.pageLimit))
+        );
+    });
   };
 
-  const getReservations = () => {
-    axios
-      .get(`Reservation`, { params })
-      .then((response) => setReservations(response.data));
+  function changeToggle() {
+    setToggle(!toggle);
+  }
 
-    axios
-      .get(`Reservation/Count`, { params })
-      .then((response) =>
-        setpageCount(Math.ceil(response.data / params.pageLimit))
-      );
-  };
-
-  const handlePageChange = async (data) => {
+  const handlePageChange = (data) => {
     setParams({ ...params, page: data.selected });
   };
 
@@ -191,7 +207,11 @@ const ReservationsPage = () => {
                     color="danger"
                     style={{ float: "right" }}
                     className="mt-3 btn-xs-block"
-                    onClick={() => deleteReservation(reservation.reservationId)}
+                    type="button"
+                    onClick={() => {
+                      setToggle(true);
+                      setReservationId(reservation.reservationId);
+                    }}
                   >
                     Atšaukti rezervaciją
                   </Button>
@@ -219,6 +239,28 @@ const ReservationsPage = () => {
         brealClassName={"page-item"}
         breakLinkClassName={"page-link"}
       ></ReactPaginate>
+      <Modal
+        centered
+        fullscreen="sm"
+        size=""
+        isOpen={toggle}
+        toggle={changeToggle}
+      >
+        <ModalHeader toggle={changeToggle}>Ištrinti?</ModalHeader>
+        <ModalBody>Ar tikrai norite ištrinti gyvūno anketą?</ModalBody>
+        <ModalFooter>
+          <Button
+            color="danger"
+            type="button"
+            onClick={() => {
+              changeToggle();
+              deleteReservation(reservationId);
+            }}
+          >
+            Atšaukti rezervaciją
+          </Button>
+        </ModalFooter>
+      </Modal>
     </>
   );
 };

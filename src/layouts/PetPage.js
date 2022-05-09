@@ -44,7 +44,7 @@ const PetPage = () => {
         .get(`Pet/Editable?petId=${id}&userId=${userData.userId}`)
         .then((response) => setEditable(response.data));
     }
-  }, [id, pet.shelterId, userData]); // nes kai gaus per ta ireiks gauti pacia prieglauda
+  }, [id, pet.shelterId]); // nes kai gaus per ta ireiks gauti pacia prieglauda
 
   function lovePet() {
     axios

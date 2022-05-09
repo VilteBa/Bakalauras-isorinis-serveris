@@ -44,7 +44,7 @@ const ShelterPage = () => {
         .get(`Customer/Client/${userData.userId}`)
         .then((response) => setEditable(response.data.shelterId === id));
     }
-  }, [id, userData]);
+  }, [id]);
 
   function editShelter() {
     navigate(`/prieglaudos-redagavimas`);

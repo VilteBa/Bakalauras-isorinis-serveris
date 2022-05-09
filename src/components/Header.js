@@ -31,7 +31,7 @@ const Header = () => {
         .get(`Customer/Client/${userData.userId}`)
         .then((response) => setShelterId(response.data.shelterId));
     }
-  }, [userData]);
+  }, []);
 
   return (
     <Navbar color="primary" dark expand="md">

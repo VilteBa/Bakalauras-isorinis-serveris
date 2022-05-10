@@ -86,16 +86,26 @@ const CreatePetPage = () => {
         deleteImages.forEach((i) => {
           axios.delete(`/Pet/photos/${i}`);
         });
-
-        axios
-          .post(`/Pet/${id}/photos`, formData)
-          .then(navigate(`/suteik-namus/${id}`));
+        localStorage.setItem("petAlert", true);
+        axios.post(`/Pet/${id}/photos`, formData).then(() => {
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+          });
+          navigate(`/suteik-namus/${id}`);
+        });
       });
     } else {
       axios.post(`Pet`, inputs).then((response) => {
-        axios
-          .post(`/Pet/${id}/photos`, formData)
-          .then(navigate(`/suteik-namus/${response.data.petId}`));
+        axios.post(`/Pet/${id}/photos`, formData).then(() => {
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+          });
+          navigate(`/suteik-namus/${response.data.petId}`);
+        });
       });
     }
   };

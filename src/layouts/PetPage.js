@@ -8,6 +8,7 @@ import {
   CardSubtitle,
   Modal,
   ModalFooter,
+  Alert,
   ModalBody,
   ModalHeader,
 } from "reactstrap";
@@ -18,6 +19,7 @@ import { useTranslation } from "react-i18next";
 
 const PetPage = () => {
   let navigate = useNavigate();
+  const [alert, setAlert] = useState(false);
   const { t } = useTranslation();
   const userData = JSON.parse(localStorage.getItem("user"));
   const { id } = useParams();
@@ -29,6 +31,7 @@ const PetPage = () => {
   const noImage = require(`../assets/images/noImageJ.jpg`);
 
   useEffect(() => {
+    setAlert(JSON.parse(localStorage.getItem("petAlert")));
     axios.get(`Pet/${id}`).then((response) => setPet(response.data));
 
     axios
@@ -64,6 +67,11 @@ const PetPage = () => {
   }
 
   function editPet() {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
     navigate(`/anketos-redagavimas/${id}`);
   }
 
@@ -73,6 +81,17 @@ const PetPage = () => {
 
   return (
     <div>
+      <Alert
+        color="success"
+        isOpen={alert}
+        toggle={() => {
+          setAlert(false);
+          localStorage.setItem("petAlert", false);
+        }}
+      >
+        {console.log(alert)}
+        <b>Informacija atnaujinta sėkmingai!</b>
+      </Alert>
       <Card>
         <CardBody>
           <CardTitle tag="h1" className="border-bottom p-3 mb-0">
@@ -87,14 +106,12 @@ const PetPage = () => {
                   ? pet.photos.map((p) => ({
                       altText: p.name,
                       caption: "",
-                      key: 1,
                       src: "data:image/png;base64," + p.data,
                     }))
                   : [
                       {
                         altText: "no Image",
                         caption: "",
-                        key: 1,
                         src: noImage,
                       },
                     ]

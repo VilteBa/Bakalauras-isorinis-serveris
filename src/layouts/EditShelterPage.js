@@ -49,13 +49,25 @@ const EditShelterPage = () => {
     formData.append("file", imageFile);
 
     if (isValid) {
+      localStorage.setItem("shelterAlert", true);
+
       axios.patch(`/Shelter`, body).then();
       if (imageFile) {
         axios.post(`/Shelter/${shelter.shelterId}/photo`, formData).then(() => {
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+          });
           new Promise((r) => setTimeout(r, 200));
           navigate(`/savanoriauk/${shelter.shelterId}`);
         });
       } else {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth",
+        });
         new Promise((r) => setTimeout(r, 200));
         navigate(`/savanoriauk/${shelter.shelterId}`);
       }

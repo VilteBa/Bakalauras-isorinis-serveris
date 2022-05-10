@@ -7,6 +7,7 @@ import {
   Button,
   CardText,
   ModalHeader,
+  Alert,
   ModalBody,
   ModalFooter,
   Modal,
@@ -24,6 +25,10 @@ import lt from "date-fns/locale/lt";
 const ShelterPage = () => {
   let navigate = useNavigate();
   const { id } = useParams();
+  const [alert, setAlert] = useState(
+    JSON.parse(localStorage.getItem("shelterAlert"))
+  );
+
   const userData = JSON.parse(localStorage.getItem("user"));
   const [shelter, setShelter] = useState({});
   const [toggle, setToggle] = useState(false);
@@ -79,6 +84,17 @@ const ShelterPage = () => {
         alignItems: "center",
       }}
     >
+      <Alert
+        style={{ maxWidth: "1000px" }}
+        color="success"
+        isOpen={alert}
+        toggle={() => {
+          localStorage.setItem("shelterAlert", false);
+          setAlert(false);
+        }}
+      >
+        <b>Informacija atnaujinta sėkmingai!</b>
+      </Alert>
       <div style={{ maxWidth: "1000px" }}>
         <Card className="text-center">
           <CardBody>

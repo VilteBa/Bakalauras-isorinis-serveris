@@ -247,7 +247,7 @@ const ReservationsPage = () => {
         toggle={changeToggle}
       >
         <ModalHeader toggle={changeToggle}>Ištrinti?</ModalHeader>
-        <ModalBody>Ar tikrai norite ištrinti gyvūno anketą?</ModalBody>
+        <ModalBody>Ar tikrai norite atšaukti rezervaciją?</ModalBody>
         <ModalFooter>
           <Button
             color="danger"

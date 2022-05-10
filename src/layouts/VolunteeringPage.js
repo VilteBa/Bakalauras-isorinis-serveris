@@ -95,7 +95,6 @@ const VolunteeringPage = () => {
               <CardImg
                 alt="Card image cap"
                 style={{
-                  //todo: sudet fotkes vienodas
                   maxWidth: "100%",
                   width: "auto",
                   borderRadius: "5%",

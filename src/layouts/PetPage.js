@@ -145,7 +145,6 @@ const PetPage = () => {
       ) : (
         editable && (
           <div class="button-group">
-            {/* redaguoti truksta funkcionalumo */}
             <Button color="primary" onClick={editPet}>
               Redaguoti
             </Button>

@@ -87,3 +87,15 @@
     z-index: 9999;
     width: 100%;
   }
+
+  .none{
+    color: $warning
+  }
+
+  .canceled{
+    color: $danger
+  }
+
+  .approved{
+    color: $success
+  }

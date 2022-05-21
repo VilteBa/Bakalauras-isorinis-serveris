@@ -13,7 +13,10 @@
     "White" : "Balta",
     "Brown" : "Ruda",
     "Grey" : "Pilka",
-    "Tabby" : "Raina",
-    "Sand" : "Smėlinė"
+    "Tabby" : "Raina",    
+    "Sand" : "Smėlinė",
+    "None" : "Laukiama patvirtinimo",
+    "Approved" : "Patvirtinta",
+    "Canceled" : "Atšaukta"
 }
   

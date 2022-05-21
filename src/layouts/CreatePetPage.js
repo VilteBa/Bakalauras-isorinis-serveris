@@ -98,7 +98,7 @@ const CreatePetPage = () => {
       });
     } else {
       axios.post(`Pet`, inputs).then((response) => {
-        axios.post(`/Pet/${id}/photos`, formData).then(() => {
+        axios.post(`/Pet/${response.data.petId}/photos`, formData).then(() => {
           window.scrollTo({
             top: 0,
             left: 0,

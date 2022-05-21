@@ -34,6 +34,8 @@ const ShelterPage = () => {
   const [toggle, setToggle] = useState(false);
   const [editable, setEditable] = useState(false);
   const [selectedDate, setSelectedDate] = useState();
+  const [selectedStartDate, setSelectedStartDate] = useState();
+  const [selectedEndDate, setSelectedEndDate] = useState();
   const [image, setImage] = useState(require(`../assets/images/noImageJ.jpg`));
 
   registerLocale("lt", lt);
@@ -56,19 +58,27 @@ const ShelterPage = () => {
     navigate(`/prieglaudos-redagavimas`);
   }
   const handleSelectedDate = (date) => {
-    if (date.getHours() === 0) {
-      date = new Date(date.getTime() + 8 * 60 * 60 * 1000);
-    }
     setSelectedDate(date);
   };
 
+  const handleSelectedEndDate = (date) => {
+    setSelectedEndDate(date);
+  };
+
+  const handleSelectedStartDate = (date) => {
+    setSelectedStartDate(date);
+  };
+
   const makeReservation = () => {
-    const end = new Date(selectedDate.getTime() + 60 * 60 * 1000);
     const body = {
       shelterId: id,
       userId: userData?.userId,
-      startTime: selectedDate,
-      endTime: end,
+      startTime: new Date(
+        selectedDate.getTime() + selectedStartDate.getHours() * 60 * 60 * 1000
+      ),
+      endTime: new Date(
+        selectedDate.getTime() + selectedEndDate.getHours() * 60 * 60 * 1000
+      ),
     };
     axios.post(`Reservation`, body).then((response) => changeToggle());
   };
@@ -174,15 +184,43 @@ const ShelterPage = () => {
             <DatePicker
               locale="lt"
               showPopperArrow={false}
-              selected={selectedDate}
-              onChange={handleSelectedDate}
+              selected={selectedStartDate}
+              onChange={handleSelectedStartDate}
               showTimeSelect
               showTimeSelectOnly
               timeIntervals={60}
               timeFormat="HH:mm"
               dateFormat="HH:mm"
               minTime={setHours(setMinutes(new Date(), 0), 8)}
-              maxTime={setHours(setMinutes(new Date(), 0), 18)}
+              maxTime={
+                selectedEndDate
+                  ? setHours(
+                      setMinutes(new Date(), 0),
+                      selectedEndDate.getHours() - 1
+                    )
+                  : setHours(setMinutes(new Date(), 0), 18)
+              }
+            />
+            <div className="mt-3">Laikas:</div>
+            <DatePicker
+              locale="lt"
+              showPopperArrow={false}
+              selected={selectedEndDate}
+              onChange={handleSelectedEndDate}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={60}
+              timeFormat="HH:mm"
+              dateFormat="HH:mm"
+              minTime={
+                selectedStartDate
+                  ? setHours(
+                      setMinutes(new Date(), 0),
+                      selectedStartDate.getHours() + 1
+                    )
+                  : setHours(setMinutes(new Date(), 0), 9)
+              }
+              maxTime={setHours(setMinutes(new Date(), 0), 19)}
             />
           </ModalBody>
           <ModalFooter style={{ justifyContent: "space-between" }}>

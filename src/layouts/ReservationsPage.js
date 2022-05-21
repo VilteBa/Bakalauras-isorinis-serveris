@@ -17,10 +17,12 @@ import {
   ModalFooter,
 } from "reactstrap";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 import "moment/locale/lt";
 import ReactPaginate from "react-paginate";
 
 const ReservationsPage = () => {
+  const { t } = useTranslation();
   const userData = JSON.parse(localStorage.getItem("user"));
   const [reservations, setReservations] = useState([]);
   const [shelters, setShelters] = useState([]);
@@ -28,6 +30,7 @@ const ReservationsPage = () => {
   const [toggle, setToggle] = useState(false);
   const [pageCount, setpageCount] = useState(0);
   const [reservationId, setReservationId] = useState("");
+  const [states, setStates] = useState([]);
   const [params, setParams] = useState({
     page: 0,
     pageLimit: 8,
@@ -35,11 +38,15 @@ const ReservationsPage = () => {
     userId: "00000000-0000-0000-0000-000000000000",
     startTime: "",
     endTime: "",
+    reservationState: null,
   });
 
   useEffect(() => {
     setRole(userData.role);
     axios.get(`Shelter`).then((response) => setShelters(response.data));
+    axios
+      .get(`Reservation/States`)
+      .then((response) => setStates(response.data));
 
     if (userData.role === "User") {
       setParams({ ...params, userId: userData.userId });
@@ -68,17 +75,19 @@ const ReservationsPage = () => {
     });
   }, [reservations]);
 
-  const deleteReservation = (id) => {
-    axios.delete(`Reservation/${id}`).then(() => {
+  const cancelReservation = (id) => {
+    axios.put(`Reservation/${id}/cancel`).then(() => {
       axios
         .get(`Reservation`, { params })
         .then((response) => setReservations(response.data));
+    });
+  };
 
+  const approveReservation = (id) => {
+    axios.put(`Reservation/${id}/approve`).then(() => {
       axios
-        .get(`Reservation/Count`, { params })
-        .then((response) =>
-          setpageCount(Math.ceil(response.data / params.pageLimit))
-        );
+        .get(`Reservation`, { params })
+        .then((response) => setReservations(response.data));
     });
   };
 
@@ -99,6 +108,7 @@ const ReservationsPage = () => {
             shelterId: e.target.shelters?.value ?? userData.shelterId,
             startTime: e.target.from.value,
             endTime: e.target.to.value,
+            reservationState: e.target.state.value,
             page: 0,
           });
         }}
@@ -134,7 +144,21 @@ const ReservationsPage = () => {
                       </Col>
                     </Row>
                   )}
-
+                  <Row className="filter">
+                    <Label for="state" sm={3} xs={4}>
+                      Būsena
+                    </Label>
+                    <Col md={5} sm={6} xs={8}>
+                      <Input id="state" type="select">
+                        <option value={""}>Visos</option>
+                        {states.map((s, i) => (
+                          <option key={i} value={s}>
+                            {t(s)}
+                          </option>
+                        ))}
+                      </Input>
+                    </Col>
+                  </Row>
                   <Row className="filter">
                     <Label for="from" sm={3} xs={4}>
                       Nuo
@@ -177,7 +201,7 @@ const ReservationsPage = () => {
           <Card style={{ maxWidth: "800px" }} sm="4" lg="4" key={index}>
             <CardBody className="p-4">
               <Row>
-                <Col xs={12} sm={8}>
+                <Col xs={12} sm={8} style={{ margin: "auto" }}>
                   <CardTitle tag="h5">
                     {moment(reservation.startTime).format("ll")} {"  "}
                     {moment(reservation.startTime).format("LT")} {" - "}
@@ -202,19 +226,43 @@ const ReservationsPage = () => {
                     )}
                   </CardSubtitle>
                 </Col>
-                <Col sm={4}>
-                  <Button
-                    color="danger"
-                    style={{ float: "right" }}
-                    className="mt-3 btn-xs-block"
-                    type="button"
-                    onClick={() => {
-                      setToggle(true);
-                      setReservationId(reservation.reservationId);
-                    }}
-                  >
-                    Atšaukti rezervaciją
-                  </Button>
+                <Col sm={4} style={{ textAlign: "center", margin: "auto" }}>
+                  {(role === "User" ||
+                    reservation.reservationState !== "None") && (
+                    <b className={reservation.reservationState.toLowerCase()}>
+                      {t(reservation.reservationState)}
+                    </b>
+                  )}
+                  {reservation.reservationState === "None" &&
+                    role === "Worker" && (
+                      <Button
+                        style={{ width: "100%" }}
+                        color="success"
+                        className="mt-3 btn-xs-block"
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          approveReservation(reservation.reservationId);
+                        }}
+                      >
+                        Patvirtinti rezervaciją
+                      </Button>
+                    )}
+                  {reservation.reservationState !== "Canceled" && (
+                    <Button
+                      style={{ width: "100%" }}
+                      color="danger"
+                      className="mt-3 btn-xs-block"
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setToggle(true);
+                        setReservationId(reservation.reservationId);
+                      }}
+                    >
+                      Atšaukti rezervaciją
+                    </Button>
+                  )}
                 </Col>
               </Row>
             </CardBody>
@@ -246,7 +294,7 @@ const ReservationsPage = () => {
         isOpen={toggle}
         toggle={changeToggle}
       >
-        <ModalHeader toggle={changeToggle}>Ištrinti?</ModalHeader>
+        <ModalHeader toggle={changeToggle}>Atšaukti?</ModalHeader>
         <ModalBody>Ar tikrai norite atšaukti rezervaciją?</ModalBody>
         <ModalFooter>
           <Button
@@ -254,7 +302,7 @@ const ReservationsPage = () => {
             type="button"
             onClick={() => {
               changeToggle();
-              deleteReservation(reservationId);
+              cancelReservation(reservationId);
             }}
           >
             Atšaukti rezervaciją

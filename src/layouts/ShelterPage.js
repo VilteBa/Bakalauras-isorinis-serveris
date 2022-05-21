@@ -180,7 +180,7 @@ const ShelterPage = () => {
               showPopperArrow={false}
               minDate={new Date()}
             ></DatePicker>
-            <div className="mt-3">Laikas:</div>
+            <div className="mt-3">Pradžia:</div>
             <DatePicker
               locale="lt"
               showPopperArrow={false}
@@ -201,7 +201,7 @@ const ShelterPage = () => {
                   : setHours(setMinutes(new Date(), 0), 18)
               }
             />
-            <div className="mt-3">Laikas:</div>
+            <div className="mt-3">Pabaiga:</div>
             <DatePicker
               locale="lt"
               showPopperArrow={false}
